@@ -1,0 +1,8 @@
+# The weekly Vital Sync intelligence routine appends one JSON line per run
+# from a fresh branch each week. Two branches based on the same older commit
+# (e.g. an interactive session merges one PR while the next week's cloud run
+# was already in flight) produce a textual conflict here even though both
+# sides are just non-overlapping appends. Union merge concatenates both
+# sides instead of asking for manual resolution — safe for an append-only
+# log where line order across runs doesn't matter for correctness.
+reports/vital_sync/automation_log.jsonl merge=union
