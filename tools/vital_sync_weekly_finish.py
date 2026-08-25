@@ -47,6 +47,8 @@ import sys
 from datetime import datetime, timezone
 from typing import Optional
 
+from dotenv import load_dotenv
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG_PATH = os.path.join(REPO_ROOT, "reports", "vital_sync", "automation_log.jsonl")
 REMOTE_URL = "https://github.com/faristjohar04-sketch/vital-sync-intelligence-workflow.git"
@@ -176,6 +178,8 @@ def _cli():
     parser.add_argument("--trigger", default="manual", choices=["manual", "scheduled"])
     args = parser.parse_args()
     live = args.live and not args.dry_run
+
+    load_dotenv()
 
     print(f"=== Vital Sync weekly-finish ({args.trigger}) at {datetime.now(timezone.utc).isoformat()} ===")
     print(f"Mode: {'LIVE' if live else 'DRY-RUN'}")
