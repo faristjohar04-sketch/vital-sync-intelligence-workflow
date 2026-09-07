@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-09-07T14:00:00Z",
+  "conflicts": [
+    {
+      "finding": "Per-user data scoping",
+      "source_a": {
+        "label": "GitHub mirror, direct source read",
+        "value": "MISSING — no route filters by userId; getOrCreateProfile() and equivalents select a single global row",
+        "date": "2026-08-12",
+        "confirmed_unchanged_through": "2026-09-07 (weekly re-fetch, identical commit each time)"
+      },
+      "source_b": {
+        "label": "User chat message",
+        "value": "COMPLETE — implemented",
+        "date": "2026-09-07",
+        "artifact_provided": false
+      },
+      "conflict": "Source A is a directly-verified but confirmed-stale (26-day-old, unchanged) snapshot. Source B is a more recent claim with no independently checkable artifact attached.",
+      "resolution": "UNRESOLVED — PENDING VERIFICATION",
+      "winning_source": "NEITHER (yet)",
+      "reason": "Per the no-fabrication rule, a claim without a checkable source cannot override a directly-verified (if stale) finding, but a stale finding also cannot be asserted as still-true against a specific claim that it has changed. Both are held as open until an accessible, verifiable source (updated GitHub mirror, export, or equivalent) exists.",
+      "next_step": "Re-run this check the moment a fresher source is available. If the GitHub mirror updates, that becomes the new source_a with a fresh date."
+    },
+    {
+      "finding": "Squad member/activity calculation",
+      "source_a": {
+        "label": "GitHub mirror, direct source read",
+        "value": "SIMULATED — getGhostCompletions() generates activity via seeded pseudo-randomness; no real other users drive the shown numbers",
+        "date": "2026-08-12",
+        "confirmed_unchanged_through": "2026-09-07"
+      },
+      "source_b": {
+        "label": "User chat message",
+        "value": "Real membership/activity calculations now exist",
+        "date": "2026-09-07",
+        "artifact_provided": false
+      },
+      "conflict": "Same shape as the scoping conflict above — stale-but-verified vs. recent-but-unverified.",
+      "resolution": "UNRESOLVED — PENDING VERIFICATION",
+      "winning_source": "NEITHER (yet)",
+      "reason": "Same reasoning as the scoping conflict.",
+      "next_step": "Same as above. Note separately that Squad invites/roles/authorization were never claimed as resolved and remain a tracked open gap regardless of this conflict's outcome."
+    }
+  ]
+}

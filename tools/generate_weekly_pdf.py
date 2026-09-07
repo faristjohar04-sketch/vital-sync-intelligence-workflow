@@ -34,6 +34,7 @@ Usage:
 """
 
 import argparse
+import json
 import os
 from datetime import datetime
 
@@ -736,12 +737,18 @@ def _styles():
 def _status_hex(status):
     """Plain hex string (for inline <font color> markup) per status keyword."""
     s = status.upper()
+    if "RESOLVED" in s or "COMPLETE" in s or "CURRENT_VERIFIED" in s:
+        return "#2E6B44"
     if "LIVE" in s:
         return "#2E6B44"
     if "NOT FOUND" in s:
         return "#8A362E"
-    if "UNKNOWN" in s:
+    if "CONFLICT" in s or "STALE" in s:
+        return "#8A362E"
+    if "UNVERIFIED" in s or "UNKNOWN" in s:
         return "#63665F"
+    if "LIKELY_CURRENT" in s:
+        return "#93630F"
     return "#93630F"  # partial / prototype / planned
 
 
@@ -813,6 +820,33 @@ def _section_table(rows, col_widths, styles, header=None, status_col=None):
     return t
 
 
+PRODUCT_STATE_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "reports", "vital_sync", "vital_sync_product_state.json",
+)
+EVIDENCE_CONFLICTS_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "reports", "vital_sync", "evidence_conflicts.json",
+)
+
+
+def load_product_state():
+    """Read the persistent product-state registry. Returns None if absent —
+    callers must degrade gracefully (report UNKNOWN freshness), never
+    fabricate a state to fill the gap."""
+    if not os.path.exists(PRODUCT_STATE_PATH):
+        return None
+    with open(PRODUCT_STATE_PATH) as f:
+        return json.load(f)
+
+
+def load_evidence_conflicts():
+    if not os.path.exists(EVIDENCE_CONFLICTS_PATH):
+        return None
+    with open(EVIDENCE_CONFLICTS_PATH) as f:
+        return json.load(f)
+
+
 def build_pdf(data, output_path):
     doc = SimpleDocTemplate(
         output_path, pagesize=LETTER,
@@ -846,6 +880,38 @@ def build_pdf(data, output_path):
     # ---------------- Executive summary ----------------
     story.append(Paragraph("Executive Summary", styles["h1"]))
     story.append(Paragraph(data["exec_summary"], styles["body"]))
+
+    # ---------------- Product Source Freshness (must precede recommendations) ----------------
+    product_state = load_product_state()
+    story.append(Paragraph("Product Source Freshness", styles["h1"]))
+    if product_state is None:
+        story.append(Paragraph(
+            "<b>WARNING: CURRENT VITAL SYNC PRODUCT STATE COULD NOT BE VERIFIED.</b> "
+            "No product-state registry was found. PRODUCT BUILD RECOMMENDATIONS ARE "
+            "PROVISIONAL.", styles["body"]))
+    else:
+        overall = product_state.get("overall_freshness", "UNKNOWN")
+        if overall in ("STALE", "UNKNOWN", "CONFLICTING"):
+            story.append(Paragraph(
+                f'<font color="{_status_hex(overall)}"><b>WARNING: CURRENT VITAL SYNC '
+                f'PRODUCT STATE COULD NOT BE VERIFIED ({overall}).</b></font> '
+                f'{product_state.get("warning", "PRODUCT BUILD RECOMMENDATIONS ARE PROVISIONAL.")}',
+                styles["body"]))
+        rows = []
+        for key, src in product_state.get("source_freshness", {}).items():
+            rows.append((
+                f"<b>{key.replace('_', ' ').title()}</b>",
+                src.get("classification", "UNKNOWN"),
+                src.get("commit", src.get("source_type", "")) or "—",
+                src.get("reason", ""),
+            ))
+        if rows:
+            story.append(_section_table(
+                rows, [1.3 * inch, 1.05 * inch, 1.3 * inch, 2.85 * inch], styles,
+                header=["Source", "Freshness", "Commit / Type", "Notes"], status_col=1))
+        story.append(Paragraph(
+            f"Overall confidence: <b>{product_state.get('overall_confidence', 'UNKNOWN')}</b>",
+            styles["body"]))
 
     story.append(Paragraph("This Week's Actions", styles["h1"]))
     action_rows = []
@@ -921,6 +987,42 @@ def build_pdf(data, output_path):
     story.append(Spacer(1, 4))
     story.append(col)
 
+    # ---------------- Product State Delta + Resolved Findings ----------------
+    if product_state:
+        story.append(PageBreak())
+        story.append(Paragraph("Product State Delta", styles["h1"]))
+        delta_rows = []
+        for area, info in product_state.get("areas", {}).items():
+            status = info.get("status", "UNKNOWN")
+            lifecycle = info.get("lifecycle", "UNVERIFIED")
+            delta_rows.append((
+                f"<b>{area.replace('_', ' ').title()}</b>",
+                status,
+                lifecycle,
+                info.get("evidence", info.get("repo_evidence", ""))[:220],
+            ))
+        story.append(_section_table(
+            delta_rows, [1.35 * inch, 1.15 * inch, 0.95 * inch, 3.05 * inch], styles,
+            header=["Area", "Status", "Lifecycle", "Evidence (truncated)"], status_col=1))
+
+        resolved = product_state.get("resolved_findings", [])
+        story.append(Paragraph("Resolved Findings", styles["h2"]))
+        if resolved:
+            for r in resolved:
+                story.append(Paragraph(
+                    f"<b>{r.get('area', '').replace('_', ' ').title()}</b> — "
+                    f"discovered {r.get('originally_discovered', '?')}, "
+                    f"resolved {r.get('resolved', '?')}. "
+                    f"Current status: {r.get('current_status', '?')}",
+                    styles["body"]))
+        else:
+            story.append(Paragraph("None recorded yet.", styles["body"]))
+
+        unverified = product_state.get("unverified_findings", [])
+        if unverified:
+            story.append(Paragraph("Unverified / Conflicting Findings", styles["h2"]))
+            story.extend(_bullets(unverified, styles))
+
     story.append(Paragraph("Cross-System Audit", styles["h1"]))
     rows = [(f"<b>{a}</b>", s, e) for a, s, e in data["cross_system_audit"]]
     story.append(_section_table(
@@ -981,6 +1083,25 @@ def build_pdf(data, output_path):
     else:
         story.extend(_bullets(data["opportunity_movement"], styles))
     story.append(PageBreak())
+
+    # ---------------- Evidence Conflicts ----------------
+    conflicts = load_evidence_conflicts()
+    story.append(Paragraph("Evidence Conflicts", styles["h1"]))
+    if not conflicts or not conflicts.get("conflicts"):
+        story.append(Paragraph("None open.", styles["body"]))
+    else:
+        for c in conflicts["conflicts"]:
+            story.append(Paragraph(f"<b>{c['finding']}</b>", styles["h2"]))
+            a, b = c["source_a"], c["source_b"]
+            story.append(Paragraph(
+                f"<b>{a['label']}</b> ({a['date']}): {a['value']}", styles["body"]))
+            story.append(Paragraph(
+                f"<b>{b['label']}</b> ({b['date']}): {b['value']}", styles["body"]))
+            story.append(Paragraph(
+                f'Resolution: <font color="{_status_hex(c["resolution"])}"><b>'
+                f'{c["resolution"]}</b></font> — {c.get("reason", "")}',
+                styles["body"]))
+            story.append(Spacer(1, 6))
 
     # ---------------- Sources ----------------
     story.append(Paragraph("Sources / Evidence", styles["h1"]))
