@@ -86,98 +86,102 @@ GAP_D = colors.HexColor("#93630F")
 # gap.
 # ---------------------------------------------------------------------------
 WEEK_DATA = {
-    "report_date": "2026-08-31",
-    "run_label": "Brief 05 — no Vital Sync product changes since Brief 04; marketing mismatch re-verified via repo source; Fitbit Premium rebranded Google Health Premium with wider app rollout",
+    "report_date": "2026-09-07",
+    "run_label": "Brief 06 — no Vital Sync product changes since Brief 05; marketing mismatch re-verified for a 5th straight week; new MONITOR-tier entrant RazFit found; Bitletics' Q2/Q3 2026 window now weeks from expiring",
     "exec_summary": (
-        "Vital Sync's source repository shows zero commits since Brief 04 — HEAD is "
+        "Vital Sync's source repository shows zero commits since Brief 05 — HEAD is "
         "still ef43285, confirmed via `git log`/`git diff` against both the local "
-        "clone and origin/main, not assumed. Nothing about the product itself has "
-        "changed, so all four BUILD NOW items stand exactly as reported. This week's "
-        "one genuine methodology win: vitalsyncify.com's direct fetch is STILL blocked "
-        "by the sandbox's network egress proxy (4th consecutive week), but the "
-        "marketing site's own source file (artifacts/vital-sync/src/pages/landing.tsx) "
-        "lives in the same Vital-Sync repo already available to this workflow, and it "
-        "was last touched Aug 11 — unchanged for the entire period HEAD has been "
-        "frozen. Reading it directly re-confirms, from fresh evidence rather than a "
-        "3-week-old caveat, that the marketing copy still labels the AI Coach "
-        "\"Coming Soon\" / \"in active development\" and says \"Pricing will be "
-        "announced before launch,\" while the real GPT-4o-mini chat coach and Stripe "
-        "$9.99/mo billing are both live in the backend, and Squads is not mentioned "
-        "anywhere on the page. This is a re-verification of the source that generates "
-        "the page, not proof the deployed site hasn't been hand-edited outside "
-        "version control, so the live-fetch block is still worth escalating if it "
-        "persists — but it materially raises confidence that opportunity #3 is real "
-        "and unresolved, not a stale finding. The five tracked competitors (Vora, "
-        "Cora, FitCraft, Workout Quest, Habitica) are all confirmed stable on pricing "
-        "and features again this week. The indirect-competitor picture sharpened: "
-        "Google rebranded the Fitbit app and Fitbit Premium into the \"Google Health "
-        "app\" and \"Google Health Premium\" (the Gemini-powered coach itself launched "
-        "May 19, 2026), and this month widened the redesigned Google Health app to all "
-        "Android/iOS users — the Gemini Coach itself stays Premium-gated at $9.99/mo, "
-        "but the app's top-of-funnel reach is no longer limited to Fitbit/Pixel Watch "
-        "owners. Bitletics remains pre-launch beta with no confirmed ship date beyond "
-        "its already-announced Q2/Q3 2026 window, now closer to slipping. New market "
-        "data this week: a 2026 industry analysis puts fitness apps at a 31% "
-        "subscription-cancellation rate (2nd highest category after video streaming, "
-        "with 41% of consumers reporting active subscription fatigue overall), and a "
-        "Sensor Tower Q4 2025 report shows fitness-app monthly churn rising from 8.2% "
-        "(2023) to 11.7% (2025) with only 3% Day-30 retention — directionally the same "
-        "story as prior weeks' churn figures, worse in this newer dataset. Separately, "
-        "Strava's acquisition of Runna and Garmin's acquisition of TrainingPeaks signal "
-        "the category consolidating around AI-coaching-plus-hardware plays, adding "
-        "urgency to Vital Sync differentiating on cross-system Alignment before that "
-        "consolidation squeezes out boutique competitors."
+        "clone and a fresh origin/main fetch, not assumed. Nothing about the product "
+        "itself has changed, so all four BUILD NOW items stand exactly as reported. "
+        "vitalsyncify.com's direct fetch is STILL blocked by the sandbox's network "
+        "egress proxy — a 5th consecutive week — but landing.tsx (the marketing "
+        "page's own source) is confirmed unchanged again (still last touched Aug 11, "
+        "the same commit as every prior run): AI Coach is still labeled \"Coming "
+        "Soon\"/\"in active development,\" pricing still \"will be announced before "
+        "launch,\" and Squads still isn't mentioned, while the real GPT-4o-mini chat "
+        "coach and $9.99/mo Stripe billing remain live in the backend. Five straight "
+        "weeks of the live-fetch block is now a standing process gap, not a blip — "
+        "flagged again this week as worth a human manually checking the deployed "
+        "site, since this workflow can only confirm the source hasn't changed, not "
+        "that the deployed page matches it. All five tracked competitors (Vora, Cora, "
+        "FitCraft, Workout Quest, Habitica) are confirmed stable on pricing and core "
+        "features again this week, with only cosmetic/incidental detail refinement "
+        "(FitCraft's AI coach is named \"Ty\"; no material pricing or feature change). "
+        "Bitletics remains pre-launch beta with no confirmed ship date, and its "
+        "already-announced Q2/Q3 2026 launch window is now down to roughly three "
+        "weeks before it expires unmet (Q3 2026 ends Sept 30). Google Health Premium "
+        "(the renamed Fitbit Premium/Gemini coach) shows no new movement this week — "
+        "still $9.99/mo, still Fitbit/Pixel-Watch-first with other devices "
+        "\"forthcoming\" per Google's own materials, no new expansion confirmed since "
+        "last week's wider Android/iOS rollout. This week's one genuinely new find: a "
+        "broad competitor-discovery sweep surfaced RazFit, a previously untracked "
+        "gamified fitness app built around 1-10 minute equipment-free bodyweight "
+        "sessions, 32 badges, and a \"consistency over intensity\" pitch distinct from "
+        "the loot/RPG mechanics of FitCraft and Workout Quest — added to Competitor "
+        "Watch as a new MONITOR-tier entrant (pricing beyond a 3-day trial is "
+        "UNKNOWN). Refreshed churn/retention data this week comes from different "
+        "sources than last week's Sensor Tower figures and paints a somewhat less "
+        "extreme picture (median 10-13% monthly churn, top-quartile 4-6%, 5% median "
+        "Day-30 retention) alongside new detail on causes (failed payments drive "
+        "30-50% of total churn; a pronounced January sign-up/February cancellation "
+        "cycle) — treated as additional context on the same subscription-fatigue "
+        "story, not a contradiction requiring rescoring, since the two datasets use "
+        "different methodologies. Gentler Streak shipped no further updates since "
+        "last week's cosmetic-only refresh, so opportunity #6's confidence is carried "
+        "forward unchanged."
     ),
     "top_actions": [
         ("Implement real per-user data scoping — still unresolved",
-         "Confirmed unchanged this week (commit ef43285, identical to Brief 04). Every "
+         "Confirmed unchanged this week (commit ef43285, identical to Brief 05). Every "
          "route (profile, workouts, meals, recovery, etc.) still queries a single "
          "global row with no userId filter anywhere. Still more foundational than any "
          "feature gap — nothing this week changes that."),
-        ("Fix the marketing/product mismatch — now re-verified, not just carried forward",
-         "vitalsyncify.com's live fetch is still blocked (4th consecutive week), but "
-         "this week the workflow read the page's own source directly from the "
-         "Vital-Sync repo (landing.tsx, unchanged since Aug 11): AI Coach is still "
-         "labeled \"Coming Soon\" and pricing \"will be announced before launch\" while "
-         "the real chat coach and $9.99/mo Stripe billing are both live, and Squads "
-         "isn't mentioned at all. Confidence in this finding just went up, not down."),
+        ("Fix the marketing/product mismatch — re-verified for a 5th straight week",
+         "vitalsyncify.com's live fetch is still blocked (5th consecutive week), but "
+         "this week the workflow again read the page's own source directly from the "
+         "Vital-Sync repo (landing.tsx, unchanged since Aug 11, the same commit as "
+         "every prior run): AI Coach is still labeled \"Coming Soon\" and pricing "
+         "\"will be announced before launch\" while the real chat coach and $9.99/mo "
+         "Stripe billing are both live, and Squads isn't mentioned at all. The finding "
+         "stands, but five straight weeks of the live-fetch failing is now itself "
+         "worth a human manually checking the deployed site."),
         ("Connect a first wearable (Apple Health) — competitive backdrop keeps sharpening",
          "Confirmed unchanged in Vital Sync's source this week: zero wearable "
-         "integrations. Google's Gemini-powered health coach (now rebranded Google "
-         "Health Premium, $9.99/mo) delivers the same 'read HRV/sleep, tell you what "
-         "to do' output Vital Sync's Alignment engine already computes, and this "
-         "month widened its redesigned app to all Android/iOS users — broader "
-         "top-of-funnel reach than a Fitbit/Pixel-Watch-only audience. The algorithm "
+         "integrations. Google's Gemini-powered health coach (Google Health Premium, "
+         "$9.99/mo) delivers the same 'read HRV/sleep, tell you what to do' output "
+         "Vital Sync's Alignment engine already computes, and its app was widened to "
+         "all Android/iOS users last month — broader top-of-funnel reach than a "
+         "Fitbit/Pixel-Watch-only audience, unchanged again this week. The algorithm "
          "gap was already closed; the data-supply gap is now competing against a "
          "bigger, more widely distributed rival every week it stays unaddressed."),
     ],
     "biggest_threat": (
-        "Unchanged in substance, sharper in distribution — Google's Gemini-powered "
-        "health coach, now formally rebranded from \"Fitbit Premium\" to \"Google "
-        "Health Premium\" as part of a broader Google Health app redesign ($9.99/mo or "
-        "$99/yr, coach launched May 19 2026): reads HRV/sleep/activity-load trends and "
-        "generates continuously-adapting recovery-and-training guidance. This month "
-        "Google widened the redesigned Google Health app to all Android/iOS users, not "
-        "just Fitbit/Pixel Watch owners — the Gemini Coach itself stays Premium-gated, "
-        "but the app's top-of-funnel reach just got meaningfully bigger. Cora and Vora "
-        "remain live and stable (both confirmed unchanged on pricing/features this "
-        "week) and are still the sharper boutique threat on specificity — but Google's "
-        "version of the same idea now has a wider on-ramp than any direct competitor, "
-        "Vital Sync included, can match."
+        "Unchanged this week — Google's Gemini-powered health coach, rebranded from "
+        "\"Fitbit Premium\" to \"Google Health Premium\" as part of the broader Google "
+        "Health app redesign ($9.99/mo or $99/yr, coach launched May 19 2026): reads "
+        "HRV/sleep/activity-load trends and generates continuously-adapting "
+        "recovery-and-training guidance. No new expansion confirmed this week beyond "
+        "last month's widening to all Android/iOS users — Google's own materials still "
+        "describe the Gemini Coach itself as launching first for Fitbit/Pixel Watch "
+        "users with other devices \"forthcoming.\" Cora and Vora remain live and stable "
+        "(both confirmed unchanged on pricing/features this week) and are still the "
+        "sharper boutique threat on specificity — but Google's version of the same "
+        "idea still has a wider on-ramp than any direct competitor, Vital Sync "
+        "included, can match."
     ),
     "biggest_gap": (
         "Unchanged — nobody in the competitive set ties streak/gamification mechanics "
         "to real fatigue data, or eases gamification off for experienced users. "
-        "Gentler Streak (last week's market-validation find) shipped only cosmetic "
-        "updates this week (new app icon, morning check-in notifications, new workout "
-        "types) — nothing that changes the underlying case. Vital Sync's backlogged "
-        "fatigue-aware streak opportunity (#6) remains a proven, currently-unaddressed "
-        "pattern that nobody in the direct fitness-gamification set (Vora, Cora, "
-        "FitCraft, Workout Quest, Habitica, Bitletics) has shipped yet."
+        "Gentler Streak shipped no further updates since last week's cosmetic-only "
+        "refresh (new app icon, morning check-in notifications, new workout types) — "
+        "nothing new this week either. Vital Sync's backlogged fatigue-aware streak "
+        "opportunity (#6) remains a proven, currently-unaddressed pattern that nobody "
+        "in the direct fitness-gamification set (Vora, Cora, FitCraft, Workout Quest, "
+        "Habitica, Bitletics, RazFit) has shipped yet."
     ),
     "biggest_weakness": (
         "Unchanged and re-verified — there is still no per-user data scoping anywhere "
-        "in the backend (commit ef43285, identical to Brief 04); every route reads/"
+        "in the backend (commit ef43285, identical to Brief 05); every route reads/"
         "writes one single global profile row. Until this is built, Vital Sync "
         "structurally cannot serve more than one real user at a time, regardless of "
         "how good any individual feature is."
@@ -187,23 +191,27 @@ WEEK_DATA = {
         "composite, confidence-rated, gracefully degrades with missing data) and the "
         "real GPT-4o-mini coach chat are both genuinely well-built. Vital Sync's "
         "$9.99/mo Pro price sits almost exactly on the 2026 Health & Fitness app "
-        "pricing median ($9.70 median / $9.99 most common price point) and now also "
-        "matches Google Health Premium's own $9.99/mo entry point — the engineering "
-        "quality and price are both right for the category; the gap is still data "
-        "supply and surfacing, not engineering or pricing."
+        "pricing median ($9.70 median / $9.99 most common price point) and matches "
+        "Google Health Premium's own $9.99/mo entry point — the engineering quality "
+        "and price are both right for the category; the gap is still data supply and "
+        "surfacing, not engineering or pricing."
     ),
     "one_to_ignore": (
         "Still: chasing deeper RPG mechanics (pets, gear, cosmetic avatars) to match "
         "FitCraft, Habitica or Workout Quest — saturated ground, low differentiation, "
         "and it plays away from Vital Sync's real structural advantage. Also not worth "
-        "chasing this week: Bitletics' real-reward redemption model — its pricing has "
-        "been confirmed for two weeks now (freemium, Pro adds challenges/raffle "
-        "tickets), but it is still pre-launch beta with no user base to validate "
-        "demand against and no confirmed date beyond its original Q2/Q3 2026 window, "
-        "and trying to out-reward Google's platform-scale coach on distribution is not "
-        "a fight Vital Sync can win directly — better to compete on the cross-system "
-        "Alignment intelligence Google doesn't build (nutrition/training/recovery tied "
-        "together, not just recovery alone)."
+        "chasing this week: RazFit's short, equipment-free 1-10 minute session format "
+        "— a real and different niche, but it's a small, unproven entrant (pricing "
+        "beyond a 3-day trial is UNKNOWN) and copying its exact format would mean "
+        "abandoning Vital Sync's cross-system Training/Nutrition/Recovery breadth for "
+        "a narrower habit-app play; worth only continued monitoring, not a build. "
+        "Bitletics' real-reward redemption model also stays off the list: still "
+        "pre-launch beta with no user base to validate demand against, and its "
+        "original Q2/Q3 2026 launch window is now down to about three weeks with no "
+        "confirmed ship date — trying to out-reward Google's platform-scale coach on "
+        "distribution is not a fight Vital Sync can win directly either way; better to "
+        "compete on the cross-system Alignment intelligence Google doesn't build "
+        "(nutrition/training/recovery tied together, not just recovery alone)."
     ),
     "vital_sync_current_state": [
         ("Engagement / Gamification", "LIVE", "XP, Levels, Identity Ranks, Discipline "
@@ -252,52 +260,57 @@ WEEK_DATA = {
     ],
     "changes_this_week": [
         "NO PRODUCT CHANGES: Vital-Sync repo HEAD is unchanged at ef43285 — zero "
-        "commits since Brief 04 (`git log ef43285..origin/main` and `git diff --stat` "
+        "commits since Brief 05 (`git log ef43285..origin/main` and `git diff --stat` "
         "both empty, verified against both the local clone and a fresh origin/main "
         "fetch). Every finding in the Current State table below is carried forward "
         "as-is, not re-derived from memory.",
-        "COVERAGE GAP PARTIALLY CLOSED: vitalsyncify.com's direct fetch is STILL "
-        "blocked (4th consecutive week, same sandbox egress-proxy failure as Briefs "
-        "02-04), but this run found and used an alternate verification path flagged "
-        "in Brief 04's log: the marketing page's own source, "
-        "artifacts/vital-sync/src/pages/landing.tsx, lives in the already-accessible "
-        "Vital-Sync repo and was last modified Aug 11 (unchanged for the entire period "
-        "HEAD has been frozen). Reading it directly confirms the AI Coach section "
-        "still says \"Coming Soon\"/\"in active development\" and pricing \"will be "
-        "announced before launch,\" and Squads is not mentioned anywhere on the page — "
-        "while the real chat coach and $9.99/mo Stripe billing are both live in the "
-        "backend. Opportunity #3 is now re-verified from this week's own evidence, not "
-        "carried forward on a stale caveat (with the standing caveat that this checks "
-        "the source, not a possible out-of-band edit to the deployed site — worth "
-        "raising to a human if the live-fetch block doesn't clear soon).",
-        "COMPETITOR REBRAND: Google renamed \"Fitbit Premium\" to \"Google Health "
-        "Premium\" and the Fitbit app to the \"Google Health app\" as part of a wider "
-        "redesign (the Gemini-powered coach itself launched May 19 2026 and is "
-        "unchanged in function/price, $9.99/mo or $99/yr). This month Google expanded "
-        "the redesigned app to all Android/iOS users — the Coach stays Premium-gated, "
-        "but the app's distribution is no longer limited to Fitbit/Pixel Watch owners. "
-        "Competitor Watch and Biggest Threat updated to reflect the rebrand and wider "
-        "reach.",
+        "COVERAGE GAP PERSISTS, RE-VERIFIED AGAIN: vitalsyncify.com's direct fetch is "
+        "STILL blocked (5th consecutive week, same sandbox egress-proxy failure as "
+        "Briefs 02-05). The marketing page's own source, "
+        "artifacts/vital-sync/src/pages/landing.tsx, is confirmed unchanged again — "
+        "still last modified Aug 11, the same commit read in every prior run. AI "
+        "Coach is still \"Coming Soon\"/\"in active development,\" pricing still \"will "
+        "be announced before launch,\" Squads still not mentioned, while the real chat "
+        "coach and $9.99/mo Stripe billing remain live in the backend. Five straight "
+        "weeks of the live-fetch failing is itself now a finding worth escalating: "
+        "recommend a human manually check the deployed site directly, since this "
+        "workflow can only confirm the generating source hasn't changed, not that the "
+        "deployed page matches it.",
+        "NEW ENTRANT FOUND: A broad competitor-discovery sweep this week surfaced "
+        "RazFit, a previously untracked gamified fitness app not seen in any prior "
+        "brief. It centers on 1-10 minute equipment-free bodyweight sessions with a "
+        "32-badge reward system, pitched as \"consistency over intensity\" rather than "
+        "the loot/RPG mechanics FitCraft and Workout Quest lead with. A 3-day free "
+        "trial is confirmed; ongoing subscription pricing is UNKNOWN (not found in "
+        "search results). Added to Competitor Watch as a new MONITOR-tier entry (new "
+        "opportunity #13).",
         "CONFIRMED UNCHANGED: Vora, Cora, FitCraft, Workout Quest, and Habitica are all "
-        "re-checked this week with no material change in pricing or features from "
-        "Brief 04. Bitletics is also unchanged (still pre-launch beta) — its "
-        "previously-announced Q2/Q3 2026 launch window is now closer to slipping, with "
-        "no confirmed ship date found this week.",
-        "MINOR UPDATE, NOT MARKET-MOVING: Gentler Streak (last week's fatigue-aware-"
-        "streak market validation) shipped cosmetic updates this week — a new app "
-        "icon, morning check-in notifications, and new workout types. Doesn't change "
-        "the core validation for opportunity #6, so it isn't re-scored.",
-        "MARKET CONTEXT: A 2026 industry analysis puts fitness apps at a 31% "
-        "subscription-cancellation rate (2nd highest category after video streaming, "
-        "against 41% of consumers reporting active subscription fatigue overall), and "
-        "a Sensor Tower Q4 2025 report shows fitness-app monthly churn rising from "
-        "8.2% (2023) to 11.7% (2025) with only 3% Day-30 retention — worse than the "
-        "churn figures cited in earlier briefs, though from a different underlying "
-        "dataset, so treated as a directional confirmation rather than a like-for-like "
-        "trend line. Separately, Strava's acquisition of Runna and Garmin's "
-        "acquisition of TrainingPeaks this year signal the category consolidating "
-        "around AI-coaching-plus-hardware plays — added as new market-trend context, "
-        "not tied to a specific opportunity.",
+        "re-checked this week with no material change in pricing or core features from "
+        "Brief 05. One incidental detail surfaced for FitCraft (its AI coach persona "
+        "is named \"Ty\") — noted in Competitor Watch but not treated as a scored "
+        "change since pricing/features are identical. Google Health Premium is also "
+        "unchanged this week — no new expansion confirmed beyond last month's wider "
+        "Android/iOS rollout.",
+        "DEADLINE SHARPENING: Bitletics remains pre-launch beta with no confirmed ship "
+        "date. Its previously-announced Q2/Q3 2026 launch window is now down to "
+        "roughly three weeks (Q3 2026 ends Sept 30) with still nothing shipped — "
+        "opportunity #11's note updated to flag the window is close to expiring "
+        "unmet, not just \"closer to slipping.\"",
+        "MINOR UPDATE, NOT MARKET-MOVING: Gentler Streak shipped no further updates "
+        "since last week's cosmetic-only refresh (new app icon, morning check-in "
+        "notifications, new workout types) — opportunity #6's HIGH confidence is "
+        "carried forward unchanged, not re-derived from memory.",
+        "MARKET CONTEXT REFRESHED, NOT CONTRADICTED: This week's churn/retention "
+        "research drew on different sources than last week's Sensor Tower figures — "
+        "lifecyclearchitect.com and retentioncheck.com put 2026 fitness-app churn at "
+        "a median 10-13% monthly (top-quartile apps 4-6%, ~9.2% average) with 5% "
+        "median Day-30 retention (8-12% for top performers), plus new causal detail: "
+        "failed payments drive 30-50% of total churn, and a pronounced January "
+        "sign-up surge is followed by 40-60% cancellations by February. These numbers "
+        "are somewhat less extreme than last week's Sensor Tower 11.7%/3% figures, "
+        "but the two use different methodologies and samples — treated as additional "
+        "context on the same subscription-fatigue story, not a correction, and not "
+        "tied to a change in any opportunity's score.",
     ],
     "strengths": [
         "The Alignment engine and the AI chat coach are both genuinely well-engineered "
@@ -320,7 +333,7 @@ WEEK_DATA = {
         "unused, in the one pillar most fitness-serious users will judge first.",
         "Marketing site materially understates the product — re-verified this week via "
         "the landing page's own source (vitalsyncify.com's live fetch is still "
-        "blocked, 4th consecutive week, but the repo source it's built from is "
+        "blocked, 5th consecutive week, but the repo source it's built from is "
         "unchanged since Aug 11): Squads, billing, and the real AI chat coach aren't "
         "mentioned; the AI section is still labeled \"Coming Soon\" and pricing "
         "\"will be announced before launch\" despite both already shipping.",
@@ -350,16 +363,18 @@ WEEK_DATA = {
          "named \"Body Charge\" (0-100) score; 7-day trial, price still undisclosed. "
          "Confirmed unchanged this week."),
         ("FitCraft", "Direct", "\"Deepest gamification on the market\"; streaks, "
-         "collectible cards, AI coach; pricing now confirmed $0-$19.99/mo tiered "
-         "(free tier, no card required) — unlisted in Brief 02. Still no nutrition/"
-         "recovery features found."),
+         "collectible cards, AI coach (named \"Ty\" — new detail, not previously "
+         "confirmed); pricing confirmed unchanged this week, still $0-$19.99/mo "
+         "tiered (free tier, no card required). Still no nutrition/recovery features "
+         "found."),
         ("Workout Quest", "Direct", "RPG workout tracker; free-to-start, no "
          "subscription required; guilds, raid-boss workouts, loot chests, seasonal "
-         "battle passes, leaderboards; still no nutrition tracking found."),
+         "battle passes, leaderboards; confirmed unchanged this week. Still no "
+         "nutrition tracking found."),
         ("Habitica", "Specialist", "Gamification pioneer (2013); pure RPG habit layer, "
-         "no fitness-specific programming. NEW: confirmed (June 2026 update) that its "
-         "subscription is purely cosmetic — every core habit-tracking feature, "
-         "including gamification, is free."),
+         "no fitness-specific programming. Cosmetic-only subscription (confirmed June "
+         "2026) unchanged this week; only activity found was a routine Sept 1-3 "
+         "limited-time gem sale, not a structural change."),
         ("Trainera / Bevel / NATE", "Direct (surface-level)", "All-in-one training + "
          "nutrition + recovery + wearables; Bevel went free with a Pro tier "
          "($14.99mo/$99.99yr). Not re-checked this week (surface-level watch only)."),
@@ -370,22 +385,29 @@ WEEK_DATA = {
          "loot and raffle-ticket rewards (gaming gift cards); live races and weekly "
          "leagues matched by fitness level; reads sleep/HR/recovery. Confirmed "
          "unchanged this week (freemium, Pro adds skill-based challenges + extra "
-         "raffle tickets). Still pre-launch beta with no confirmed ship date beyond "
-         "its original Q2/Q3 2026 window, which is now closer to slipping — MONITOR, "
-         "not yet a deep-dive threat."),
+         "raffle tickets). UPDATED THIS WEEK: still pre-launch beta with no confirmed "
+         "ship date, and its original Q2/Q3 2026 window is now down to roughly three "
+         "weeks (Q3 2026 ends Sept 30) with nothing shipped — MONITOR, not yet a "
+         "deep-dive threat."),
         ("Google Health Premium (Gemini Health Coach, formerly Fitbit Premium)",
          "Indirect / Platform-scale",
-         "UPDATED THIS WEEK: Google renamed Fitbit/Fitbit Premium to Google Health "
-         "app/Google Health Premium as part of a wider redesign, and this month "
-         "expanded that redesigned app to all Android/iOS users (previously "
-         "Fitbit/Pixel-Watch-centric) — broader top-of-funnel reach, though the "
-         "Gemini Coach itself stays Premium-gated at $9.99/mo or $99/yr. The coach "
-         "(launched May 19 2026) reads HRV/sleep/activity-load trends and generates "
+         "Confirmed unchanged this week: still $9.99/mo or $99/yr, coach (launched "
+         "May 19 2026) still described by Google as launching first for Fitbit/Pixel "
+         "Watch users with other devices \"forthcoming.\" No new expansion confirmed "
+         "beyond last month's widening of the redesigned Google Health app to all "
+         "Android/iOS users. Reads HRV/sleep/activity-load trends and generates "
          "adaptive, continuously-updated recovery-and-training recommendations — the "
          "same category of output as Vital Sync's Alignment engine, at "
          "hardware-platform distribution scale. Not a fitness-gamification competitor "
          "(no XP/streaks/badges), but a direct threat to the 'wearable-driven "
          "adaptive coaching' value proposition."),
+        ("RazFit", "Emerging / Live", "NEW ENTRANT THIS WEEK: gamified fitness app "
+         "built around 1-10 minute equipment-free bodyweight sessions and a 32-badge "
+         "reward system, pitched as \"consistency over intensity\" rather than the "
+         "loot/RPG mechanics FitCraft and Workout Quest lead with. 3-day free trial "
+         "confirmed; ongoing subscription price is UNKNOWN (not found in search "
+         "results). No nutrition or recovery tracking found. Small/unproven scale — "
+         "MONITOR, low confidence."),
     ],
     "pain_clusters": [
         ("Streak anxiety / burnout", "Missing a streak is reported as demotivating; "
@@ -431,15 +453,22 @@ WEEK_DATA = {
         "Wearables are the retention lever — health monitoring has overtaken fitness "
         "tracking as the primary wearable use case; app-side integration is now table "
         "stakes for retention.",
-        "Fitness app churn is brutal and, per this week's data, getting worse — a "
-        "Sensor Tower Q4 2025 report shows monthly churn rising from 8.2% (2023) to "
-        "11.7% (2025) with only 3% Day-30 retention; lost motivation is still cited in "
-        "38% of cancellations.",
+        "Fitness app churn is brutal across every dataset checked, though the exact "
+        "numbers vary by source and methodology — a Sensor Tower Q4 2025 report shows "
+        "monthly churn rising from 8.2% (2023) to 11.7% (2025) with only 3% Day-30 "
+        "retention; separately, lifecyclearchitect.com/retentioncheck.com's 2026 "
+        "benchmarks put median monthly churn at 10-13% (top-quartile apps 4-6%, ~9.2% "
+        "average) with 5% median Day-30 retention (8-12% for top performers). Lost "
+        "motivation is cited in 38% of cancellations; new this week, failed payments "
+        "alone drive 30-50% of total churn, and a pronounced January sign-up surge is "
+        "followed by 40-60% cancellations by February — a seasonal pattern worth "
+        "noting for any future launch-timing decision.",
         "Subscription fatigue is now a named, measured problem — fitness apps carry a "
         "31% cancellation rate, 2nd highest of any app category after video streaming, "
         "against 41% of consumers reporting active subscription fatigue overall "
         "(2026 industry analysis); the average user now carries 4+ health "
-        "subscriptions.",
+        "subscriptions. Free alternatives account for 25% of cancellations, and cost "
+        "consolidation plus data-privacy concerns are the two most-cited reasons.",
         "Gamification's evidence base is real but bounded — small-to-medium, "
         "statistically significant effect across multiple RCT meta-analyses; long-term "
         "(multi-year) durability still under-studied.",
@@ -531,84 +560,114 @@ WEEK_DATA = {
          "redeemable in-game loot/raffle tickets rather than only in-app XP/badges — "
          "a genuinely different reward mechanic than any of the 5 deep-dived "
          "competitors. Unchanged this week (freemium, Pro adds challenges/raffle "
-         "tickets); still pre-launch beta with no confirmed ship date beyond its "
-         "original Q2/Q3 2026 window, which is now closer to slipping. Too early to "
-         "act on, worth tracking.", "MONITOR", "D", "No AI Needed", "LOW"),
+         "tickets); still pre-launch beta with no confirmed ship date, and its "
+         "original Q2/Q3 2026 window is now down to roughly three weeks (Q3 2026 ends "
+         "Sept 30) with nothing shipped. Too early to act on, worth tracking.",
+         "MONITOR", "D", "No AI Needed", "LOW"),
         (12, "Monitor Google Health Premium's Gemini Coach as a platform-scale threat, "
-         "not a build target", "Formerly Fitbit Premium — Google renamed it this year "
-         "and this month widened the redesigned Google Health app to all Android/iOS "
-         "users (the Coach itself stays Premium-gated). Google now ships the same "
-         "'wearable data -> adaptive recovery/training guidance' output Vital Sync's "
-         "Alignment engine produces, at a growing distribution scale. Not something "
-         "Vital Sync can out-build directly; sharpens the case for #4 (connect a "
-         "wearable) and for leaning on cross-system Alignment (training+nutrition+"
-         "recovery together) as the differentiator Google doesn't offer.", "MONITOR",
-         "A", "No AI Needed", "MEDIUM"),
+         "not a build target", "Formerly Fitbit Premium — confirmed unchanged this "
+         "week (no new expansion beyond last month's widened Android/iOS rollout). "
+         "Google ships the same 'wearable data -> adaptive recovery/training "
+         "guidance' output Vital Sync's Alignment engine produces, at a growing "
+         "distribution scale. Not something Vital Sync can out-build directly; "
+         "sharpens the case for #4 (connect a wearable) and for leaning on "
+         "cross-system Alignment (training+nutrition+recovery together) as the "
+         "differentiator Google doesn't offer.", "MONITOR", "A", "No AI Needed",
+         "MEDIUM"),
+        (13, "Track RazFit as a new low-friction, short-session entrant", "NEW THIS "
+         "WEEK: found via broad competitor-discovery search, not previously tracked "
+         "in any brief. Built around 1-10 minute equipment-free bodyweight sessions "
+         "and a 32-badge reward system, pitched as \"consistency over intensity\" — a "
+         "genuinely different angle than the loot/RPG mechanics FitCraft and Workout "
+         "Quest lead with, and a possible answer to the 'gamification fatigue in "
+         "experienced users' pain cluster if it proves out. Ongoing subscription "
+         "price is UNKNOWN; scale/traction unconfirmed. Too early to act on beyond "
+         "tracking.", "MONITOR", "D", "No AI Needed", "LOW"),
     ],
     "opportunity_movement": [
         "#1, #2 (BUILD NOW) — UNCHANGED, RE-VERIFIED, not re-asserted from memory. "
-        "Vital-Sync HEAD is still ef43285 (`git log`/`git diff` against Brief 04's "
+        "Vital-Sync HEAD is still ef43285 (`git log`/`git diff` against Brief 05's "
         "stored commit, and against a fresh origin/main fetch, both empty) — both "
         "stand exactly as evidenced last week, still unresolved.",
-        "#3 (Fix the marketing/product mismatch, BUILD NOW) — RE-VERIFIED THIS WEEK "
-        "on fresh evidence, ending a four-week run of 'source unavailable.' "
-        "vitalsyncify.com's live fetch is still blocked, but this run read the "
-        "marketing page's own source directly from the Vital-Sync repo "
-        "(landing.tsx, unchanged since Aug 11) and confirmed the mismatch stands: "
-        "AI Coach still \"Coming Soon,\" pricing still \"will be announced before "
-        "launch,\" Squads not mentioned. Stays at BUILD NOW/HIGH, now on this week's "
-        "own evidence rather than a rolling caveat. Standing caveat: this verifies "
-        "the source, not a possible out-of-band edit to the deployed site — worth "
-        "escalating to a human if the direct-fetch block doesn't clear soon.",
-        "#4 (Connect Apple Health as first wearable) — STILL BUILD NOW/HIGH, urgency "
-        "reinforced further: Google's coach (renamed Google Health Premium this "
-        "year) widened its app to all Android/iOS users this month, broadening the "
-        "distribution gap Vital Sync is racing against.",
+        "#3 (Fix the marketing/product mismatch, BUILD NOW) — UNCHANGED at BUILD "
+        "NOW/HIGH, re-verified for a 5th straight week via the same alternate path "
+        "(landing.tsx, unchanged since Aug 11, same commit read every prior run). "
+        "Not re-scored, since nothing about the evidence changed from last week — "
+        "but the persistence of the live-fetch block itself is now flagged as worth "
+        "escalating to a human, separate from the opportunity's own score.",
+        "#4 (Connect Apple Health as first wearable) — STILL BUILD NOW/HIGH, no new "
+        "movement this week: Google Health Premium is confirmed unchanged (no "
+        "further expansion beyond last month's rollout), so the urgency case is "
+        "carried forward rather than sharpened further.",
         "#6 (Fatigue-aware streak mechanic, BUILD NEXT) — UNCHANGED at HIGH "
-        "confidence (raised last week when Gentler Streak surfaced as market "
-        "validation). Gentler Streak's updates this week were cosmetic only "
-        "(app icon, notifications, workout types) — no change to the underlying "
-        "case, so not re-scored again.",
-        "#12 (MONITOR) — RENAMED, not re-ranked: the competitor is the same entity "
-        "as last week's 'Fitbit Premium Gemini Coach,' now reflecting Google's "
-        "rebrand to Google Health Premium and this month's wider app rollout. Still "
-        "MONITOR/MEDIUM — sharpens the case for #4, not a build target itself.",
-        "#11 (Track Bitletics, MONITOR) — NOT RE-RANKED; confirmed unchanged this "
-        "week, still pre-launch beta with its original Q2/Q3 2026 window now closer "
-        "to slipping. Stays at LOW confidence.",
+        "confidence (raised two weeks ago when Gentler Streak surfaced as market "
+        "validation). Gentler Streak shipped no further updates this week — no "
+        "change to the underlying case.",
+        "#11 (Track Bitletics, MONITOR) — NOT RE-RANKED, still LOW confidence, but "
+        "evidence sharpened: its original Q2/Q3 2026 launch window is now down to "
+        "roughly three weeks (Q3 2026 ends Sept 30) with still no confirmed ship "
+        "date. Worth watching closely over the next few briefs — if it slips past "
+        "Q3, the window claim itself becomes stale and should be re-evaluated; if it "
+        "ships, it moves out of MONITOR immediately.",
+        "#12 (MONITOR) — NOT RE-RANKED; Google Health Premium confirmed unchanged "
+        "this week, no new expansion found. Stays MONITOR/MEDIUM — sharpens the "
+        "case for #4, not a build target itself.",
+        "#13 (Track RazFit, MONITOR) — NEW THIS WEEK. Found via broad "
+        "competitor-discovery search, not previously tracked. Added at LOW "
+        "confidence given its small/unproven scale and unknown pricing beyond a "
+        "3-day trial; its 'consistency over intensity' short-session positioning is "
+        "different enough from existing tracked competitors to be worth a line item "
+        "rather than folding into the surface-level watch list.",
         "#9 (Gamification that tapers with Identity Rank, EXPERIMENT) — NOT "
         "RE-SCORED this week; no new evidence moved it.",
         "#5, #7, #8, #10 — UNCHANGED. No evidence this week (product-side or "
         "competitive) moved any of these; carried forward exactly as ranked in "
-        "Brief 04.",
+        "Brief 05.",
     ],
     "sources": [
         "github.com/faristjohar04-sketch/Vital-Sync (source code; re-verified via "
         "`git log`/`git diff` against both the local clone and a fresh origin/main "
-        "fetch — HEAD unchanged at ef43285, zero commits since Brief 04)",
+        "fetch — HEAD unchanged at ef43285, zero commits since Brief 05)",
         "github.com/faristjohar04-sketch/Vital-Sync — "
         "artifacts/vital-sync/src/pages/landing.tsx (marketing-page source, read "
-        "directly this week as an alternate verification path for opportunity #3; "
-        "last modified Aug 11, unchanged for the entire period HEAD has been frozen)",
-        "vitalsyncify.com — SOURCE UNAVAILABLE this run, 4th consecutive week "
+        "directly again this week as an alternate verification path for opportunity "
+        "#3; still last modified Aug 11, unchanged for the entire period HEAD has "
+        "been frozen)",
+        "vitalsyncify.com — SOURCE UNAVAILABLE this run, 5th consecutive week "
         "(sandbox network egress proxy blocked it, EGRESS_BLOCKED on WebFetch); the "
         "repo-source check above is a partial substitute, not full re-verification "
         "of the deployed site",
         "askvora.com, corahealth.app, getfitcraft.com, workoutquestapp.com, "
-        "habitica.com — direct fetch also SOURCE UNAVAILABLE this run (same egress "
-        "block); competitor data instead drawn from WebSearch-indexed pages on each "
-        "domain (see individual Competitor Watch entries for specifics)",
-        "bitletics.com (via WebSearch-indexed pages) — reconfirmed unchanged, still "
-        "pre-launch beta",
-        "support.google.com/googlehealth, androidauthority.com, howtogeek.com, "
-        "mobihealthnews.com, techcrunch.com, blog.google, gadgetbond.com (via "
-        "WebSearch) — Fitbit Premium -> Google Health Premium rebrand, wider "
-        "Android/iOS app rollout this month, Gemini Health Coach pricing/features",
-        "WebSearch: new fitness gamification app launches (no new direct entrants "
-        "found this week), Gentler Streak feature updates, fitness startup funding "
-        "and M&A landscape (valueaddvc.com — Strava/Runna, Garmin/TrainingPeaks), "
-        "subscription-fatigue and churn statistics (techrt.com, adapty.io — Sensor "
-        "Tower Q4 2025 churn data)",
+        "habitica.com, bitletics.com, razfit.app — direct fetch also SOURCE "
+        "UNAVAILABLE this run (same egress block); competitor data instead drawn "
+        "from WebSearch-indexed pages on each domain (see individual Competitor "
+        "Watch entries for specifics)",
+        "play.google.com, apps.apple.com, askvora.com/pricing (via WebSearch) — Vora "
+        "pricing/features reconfirmed unchanged",
+        "trycora.io, corahealth.app, appshunter.io (via WebSearch) — Cora Body "
+        "Charge score and features reconfirmed unchanged; full subscription price "
+        "still UNKNOWN/undisclosed",
+        "getfitcraft.com (via WebSearch) — FitCraft pricing reconfirmed unchanged "
+        "($0-$19.99/mo tiered); AI coach persona name (\"Ty\") is a new incidental "
+        "detail, not a scored change",
+        "workoutquestapp.com, play.google.com, apps.apple.com (via WebSearch) — "
+        "Workout Quest features reconfirmed unchanged",
+        "blog.habitrpg.com, play.google.com (via WebSearch) — Habitica reconfirmed "
+        "unchanged aside from a routine Sept 1-3 gem sale (not structural)",
+        "bitletics.com/blog (via WebSearch) — still described as launching Q2/Q3 "
+        "2026, iOS and Android together, free at launch; no ship date confirmed",
+        "razfit.app (via WebSearch) — NEW THIS WEEK: RazFit discovered via broad "
+        "competitor-discovery search; 1-10 minute bodyweight sessions, 32 badges, "
+        "3-day free trial confirmed, ongoing price UNKNOWN",
+        "store.google.com/product/google_health_premium, support.google.com/"
+        "googlehealth, mobihealthnews.com, blog.google, 9to5google.com (via "
+        "WebSearch) — Google Health Premium/Gemini Health Coach reconfirmed "
+        "unchanged this week, no new expansion found",
+        "WebSearch: new fitness gamification app launches (RazFit surfaced as the "
+        "one new entrant this week), Gentler Streak feature updates (no change since "
+        "last week), fitness-app churn/retention benchmarks (lifecyclearchitect.com, "
+        "retentioncheck.com, mobile-squad.com) — different sources/methodology than "
+        "last week's Sensor Tower figures, treated as additional context",
         "JMIR mHealth 2022 meta-analysis; 36-RCT gamification meta-analysis "
         "(10,079 participants); Oct 2025 British Journal of Health Psychology "
         "(app-set unreachable goals drive churn) — carried as background, not "
