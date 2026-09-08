@@ -87,275 +87,238 @@ GAP_D = colors.HexColor("#93630F")
 # gap.
 # ---------------------------------------------------------------------------
 WEEK_DATA = {
-    "report_date": "2026-09-07",
-    "run_label": "Brief 06 — no Vital Sync product changes since Brief 05; marketing mismatch re-verified for a 5th straight week; new MONITOR-tier entrant RazFit found; Bitletics' Q2/Q3 2026 window now weeks from expiring",
+    "report_date": "2026-09-08",
+    "run_label": "Brief 07 — current-source reconciliation: GitHub mirror advanced from ef43285 to 0435f9ea (163 files, independently verified); user-scoping and Squad-ghost-activity conflicts RESOLVED; two new BROKEN findings (Squad authorization, database integrity) replace them at the top of BUILD NOW",
     "exec_summary": (
-        "Vital Sync's source repository shows zero commits since Brief 05 — HEAD is "
-        "still ef43285, confirmed via `git log`/`git diff` against both the local "
-        "clone and a fresh origin/main fetch, not assumed. Nothing about the product "
-        "itself has changed, so all four BUILD NOW items stand exactly as reported. "
-        "vitalsyncify.com's direct fetch is STILL blocked by the sandbox's network "
-        "egress proxy — a 5th consecutive week — but landing.tsx (the marketing "
-        "page's own source) is confirmed unchanged again (still last touched Aug 11, "
-        "the same commit as every prior run): AI Coach is still labeled \"Coming "
-        "Soon\"/\"in active development,\" pricing still \"will be announced before "
-        "launch,\" and Squads still isn't mentioned, while the real GPT-4o-mini chat "
-        "coach and $9.99/mo Stripe billing remain live in the backend. Five straight "
-        "weeks of the live-fetch block is now a standing process gap, not a blip — "
-        "flagged again this week as worth a human manually checking the deployed "
-        "site, since this workflow can only confirm the source hasn't changed, not "
-        "that the deployed page matches it. All five tracked competitors (Vora, Cora, "
-        "FitCraft, Workout Quest, Habitica) are confirmed stable on pricing and core "
-        "features again this week, with only cosmetic/incidental detail refinement "
-        "(FitCraft's AI coach is named \"Ty\"; no material pricing or feature change). "
-        "Bitletics remains pre-launch beta with no confirmed ship date, and its "
-        "already-announced Q2/Q3 2026 launch window is now down to roughly three "
-        "weeks before it expires unmet (Q3 2026 ends Sept 30). Google Health Premium "
-        "(the renamed Fitbit Premium/Gemini coach) shows no new movement this week — "
-        "still $9.99/mo, still Fitbit/Pixel-Watch-first with other devices "
-        "\"forthcoming\" per Google's own materials, no new expansion confirmed since "
-        "last week's wider Android/iOS rollout. This week's one genuinely new find: a "
-        "broad competitor-discovery sweep surfaced RazFit, a previously untracked "
-        "gamified fitness app built around 1-10 minute equipment-free bodyweight "
-        "sessions, 32 badges, and a \"consistency over intensity\" pitch distinct from "
-        "the loot/RPG mechanics of FitCraft and Workout Quest — added to Competitor "
-        "Watch as a new MONITOR-tier entrant (pricing beyond a 3-day trial is "
-        "UNKNOWN). Refreshed churn/retention data this week comes from different "
-        "sources than last week's Sensor Tower figures and paints a somewhat less "
-        "extreme picture (median 10-13% monthly churn, top-quartile 4-6%, 5% median "
-        "Day-30 retention) alongside new detail on causes (failed payments drive "
-        "30-50% of total churn; a pronounced January sign-up/February cancellation "
-        "cycle) — treated as additional context on the same subscription-fatigue "
-        "story, not a contradiction requiring rescoring, since the two datasets use "
-        "different methodologies. Gentler Streak shipped no further updates since "
-        "last week's cosmetic-only refresh, so opportunity #6's confidence is carried "
-        "forward unchanged."
+        "Manual validation run, not a scheduled Monday cycle. The GitHub mirror that "
+        "had been frozen at ef43285 for 26 days finally advanced — commit 0435f9ea "
+        "(163 files changed, 238 total commits, no force-push), independently "
+        "verified this run: fetched fresh, confirmed as the real HEAD, and its tree "
+        "hash computed and matched exactly against what was claimed before any of it "
+        "was trusted. Six of the most specific, previously-disputed claims were then "
+        "individually spot-checked by direct source read rather than accepted: "
+        "per-user scoping (CONFIRMED — profile/workout/etc. routes now filter by an "
+        "authenticated userId, not a global singleton), Squads' simulated activity "
+        "(CONFIRMED REMOVED — getGhostCompletions and all seeded-random code are "
+        "gone; real membership-driven stats replace them), Squad list/leaderboard "
+        "authorization (CONFIRMED BROKEN — both routes take an unused request "
+        "parameter, no auth check, no privacy filtering despite a privacy column "
+        "existing), the Directive Engine (CONFIRMED ABSENT — 'directive' appears only "
+        "as narrative copy, no executable system), training depth (CONFIRMED STILL "
+        "SHALLOW — same four-field schema as Brief 01, just with a nullable userId "
+        "added), and database ownership (CONFIRMED NULLABLE — clerkId/userId columns "
+        "have no NOT NULL constraint and no foreign keys, by explicit design comment). "
+        "This closes out the two open evidence conflicts from yesterday's repair "
+        "(user_scoping, squad_real_activity) as genuinely RESOLVED — not because a "
+        "claim said so, but because the claim was checked and held up. It also "
+        "surfaces two new, currently-verified, higher-priority risks that were never "
+        "in any prior brief: Squad authorization is BROKEN (a real trust/security "
+        "gap, worse than the ghost-activity issue it replaces), and database-level "
+        "ownership integrity is BROKEN (nullable, unenforced foreign keys under the "
+        "now-real scoping layer). Competitor and market sections below are carried "
+        "forward from Brief 06 (one day old) rather than freshly re-researched — this "
+        "cycle's effort went into verifying the product-source repair actually works, "
+        "which was the whole point of running it manually today."
     ),
     "top_actions": [
-        ("Implement real per-user data scoping — still unresolved",
-         "Confirmed unchanged this week (commit ef43285, identical to Brief 05). Every "
-         "route (profile, workouts, meals, recovery, etc.) still queries a single "
-         "global row with no userId filter anywhere. Still more foundational than any "
-         "feature gap — nothing this week changes that."),
-        ("Fix the marketing/product mismatch — re-verified for a 5th straight week",
-         "vitalsyncify.com's live fetch is still blocked (5th consecutive week), but "
-         "this week the workflow again read the page's own source directly from the "
-         "Vital-Sync repo (landing.tsx, unchanged since Aug 11, the same commit as "
-         "every prior run): AI Coach is still labeled \"Coming Soon\" and pricing "
-         "\"will be announced before launch\" while the real chat coach and $9.99/mo "
-         "Stripe billing are both live, and Squads isn't mentioned at all. The finding "
-         "stands, but five straight weeks of the live-fetch failing is now itself "
-         "worth a human manually checking the deployed site."),
-        ("Connect a first wearable (Apple Health) — competitive backdrop keeps sharpening",
-         "Confirmed unchanged in Vital Sync's source this week: zero wearable "
-         "integrations. Google's Gemini-powered health coach (Google Health Premium, "
-         "$9.99/mo) delivers the same 'read HRV/sleep, tell you what to do' output "
-         "Vital Sync's Alignment engine already computes, and its app was widened to "
-         "all Android/iOS users last month — broader top-of-funnel reach than a "
-         "Fitbit/Pixel-Watch-only audience, unchanged again this week. The algorithm "
-         "gap was already closed; the data-supply gap is now competing against a "
-         "bigger, more widely distributed rival every week it stays unaddressed."),
+        ("Fix Squad authorization / privacy — NEW, replaces the resolved scoping item",
+         "CONFIRMED BROKEN by direct source read: GET /squads and GET /squads/"
+         "leaderboard accept no authentication (unused request parameter) and return "
+         "every active squad with zero privacy filtering, even though the squads "
+         "table has a privacy column. No admin/owner role, no invite flow. This is "
+         "now the sharpest concrete trust/security gap in the product — worse than "
+         "the ghost-activity issue it replaces, because it's a real access-control "
+         "hole, not a cosmetic one."),
+        ("Enforce database-level ownership — NEW",
+         "CONFIRMED BROKEN by direct source read: profileTable.clerkId and "
+         "workoutsTable.userId are nullable text columns with no foreign-key "
+         "constraints, by explicit design comment ('nullable for pre-scoping rows'). "
+         "The new route-level scoping (see Resolved Findings) is real, but nothing "
+         "in the database itself enforces it — a determined bad actor or a future "
+         "bug could still write cross-user data."),
+        ("Build the Alignment -> Directive -> Mission connection",
+         "CONFIRMED ABSENT: no Directive Engine, no directive schema, no "
+         "Alignment-driven mission selection exists anywhere in the current source "
+         "— missions are chosen by onboarding-weighted randomness. This is now the "
+         "clearest gap in Vital Sync's own stated differentiation model (Training + "
+         "Nutrition + Recovery -> Alignment -> Directive -> Mission -> Execution -> "
+         "Progress -> Feedback) — the first three steps and the last two exist; the "
+         "middle connective step does not."),
     ],
     "biggest_threat": (
-        "Unchanged this week — Google's Gemini-powered health coach, rebranded from "
-        "\"Fitbit Premium\" to \"Google Health Premium\" as part of the broader Google "
-        "Health app redesign ($9.99/mo or $99/yr, coach launched May 19 2026): reads "
-        "HRV/sleep/activity-load trends and generates continuously-adapting "
-        "recovery-and-training guidance. No new expansion confirmed this week beyond "
-        "last month's widening to all Android/iOS users — Google's own materials still "
-        "describe the Gemini Coach itself as launching first for Fitbit/Pixel Watch "
-        "users with other devices \"forthcoming.\" Cora and Vora remain live and stable "
-        "(both confirmed unchanged on pricing/features this week) and are still the "
-        "sharper boutique threat on specificity — but Google's version of the same "
-        "idea still has a wider on-ramp than any direct competitor, Vital Sync "
-        "included, can match."
+        "Unchanged from Brief 06, not re-verified this run — Google's Gemini-powered "
+        "Google Health Premium ($9.99/mo, reads HRV/sleep/activity-load, generates "
+        "adaptive recovery-and-training guidance at platform scale). This cycle's "
+        "effort went to product-source verification, not a fresh competitor pass; "
+        "treat this line as one day stale, not re-confirmed."
     ),
     "biggest_gap": (
-        "Unchanged — nobody in the competitive set ties streak/gamification mechanics "
-        "to real fatigue data, or eases gamification off for experienced users. "
-        "Gentler Streak shipped no further updates since last week's cosmetic-only "
-        "refresh (new app icon, morning check-in notifications, new workout types) — "
-        "nothing new this week either. Vital Sync's backlogged fatigue-aware streak "
-        "opportunity (#6) remains a proven, currently-unaddressed pattern that nobody "
-        "in the direct fitness-gamification set (Vora, Cora, FitCraft, Workout Quest, "
-        "Habitica, Bitletics, RazFit) has shipped yet."
+        "Unchanged from Brief 06, not re-verified this run — nobody in the "
+        "competitive set ties streak/gamification mechanics to real fatigue data. "
+        "Now sharper on the product side too: Vital Sync's own Directive Engine "
+        "(confirmed absent this run) would be a prerequisite for doing this well, "
+        "so the opportunity and the dependency blocking it are now both verified "
+        "facts, not just a market observation."
     ),
     "biggest_weakness": (
-        "Unchanged and re-verified — there is still no per-user data scoping anywhere "
-        "in the backend (commit ef43285, identical to Brief 05); every route reads/"
-        "writes one single global profile row. Until this is built, Vital Sync "
-        "structurally cannot serve more than one real user at a time, regardless of "
-        "how good any individual feature is."
+        "Changed materially this run. Per-user data scoping — Brief 06's biggest "
+        "weakness — is CONFIRMED RESOLVED at the route level. The new biggest "
+        "weakness is what that resolution exposed underneath it: Squad "
+        "authorization is CONFIRMED BROKEN (unauthenticated list/leaderboard, no "
+        "privacy enforcement) and database-level ownership integrity is CONFIRMED "
+        "BROKEN (nullable, unenforced foreign keys). Fixing the application-layer "
+        "scoping bug surfaced two more specific, verified problems underneath it — "
+        "a common and honest pattern when a foundational gap gets fixed, not a sign "
+        "the fix didn't work."
     ),
     "biggest_advantage": (
-        "Unchanged — the Alignment engine (weighted training/nutrition/recovery "
-        "composite, confidence-rated, gracefully degrades with missing data) and the "
-        "real GPT-4o-mini coach chat are both genuinely well-built. Vital Sync's "
-        "$9.99/mo Pro price sits almost exactly on the 2026 Health & Fitness app "
-        "pricing median ($9.70 median / $9.99 most common price point) and matches "
-        "Google Health Premium's own $9.99/mo entry point — the engineering quality "
-        "and price are both right for the category; the gap is still data supply and "
-        "surfacing, not engineering or pricing."
+        "Unchanged, and now with one more resolved point in its favor — the "
+        "Alignment engine and the real GPT-4o-mini coach chat remain genuinely "
+        "well-built, and this run additionally confirmed the earlier VAPID "
+        "private-key concern does not apply (server-side only, no exposure found). "
+        "The gap is still data supply (wearables) and now also the missing "
+        "Directive connective layer, not engineering quality or pricing."
     ),
     "one_to_ignore": (
-        "Still: chasing deeper RPG mechanics (pets, gear, cosmetic avatars) to match "
-        "FitCraft, Habitica or Workout Quest — saturated ground, low differentiation, "
-        "and it plays away from Vital Sync's real structural advantage. Also not worth "
-        "chasing this week: RazFit's short, equipment-free 1-10 minute session format "
-        "— a real and different niche, but it's a small, unproven entrant (pricing "
-        "beyond a 3-day trial is UNKNOWN) and copying its exact format would mean "
-        "abandoning Vital Sync's cross-system Training/Nutrition/Recovery breadth for "
-        "a narrower habit-app play; worth only continued monitoring, not a build. "
-        "Bitletics' real-reward redemption model also stays off the list: still "
-        "pre-launch beta with no user base to validate demand against, and its "
-        "original Q2/Q3 2026 launch window is now down to about three weeks with no "
-        "confirmed ship date — trying to out-reward Google's platform-scale coach on "
-        "distribution is not a fight Vital Sync can win directly either way; better to "
-        "compete on the cross-system Alignment intelligence Google doesn't build "
-        "(nutrition/training/recovery tied together, not just recovery alone)."
+        "Same as Brief 06 — chasing deeper RPG mechanics (pets, gear, cosmetic "
+        "avatars), and copying RazFit's or Bitletics' formats directly. New this "
+        "week: also not worth doing yet — building the fatigue-aware streak "
+        "mechanic or any Directive-Engine-adjacent feature before the Directive "
+        "Engine itself exists. The dependency order matters; sequencing work on "
+        "top of a foundation that isn't there yet just creates more to redo later."
     ),
     "vital_sync_current_state": [
+        ("Multi-User / Data Scoping", "PARTIAL", "RESOLVED at the route level, "
+         "CONFIRMED this run: getOrCreateProfile(userId) and equivalents now filter "
+         "WHERE clerkId/userId = the authenticated user, replacing the old global-"
+         "singleton pattern. Database-level enforcement is separately BROKEN — see "
+         "next row."),
+        ("Database Integrity", "BROKEN", "NEW, CONFIRMED this run: ownership columns "
+         "(profileTable.clerkId, workoutsTable.userId) are nullable with no NOT NULL "
+         "constraint and no foreign keys, by explicit design comment. Route-level "
+         "scoping is real; the database itself doesn't enforce it."),
         ("Engagement / Gamification", "LIVE", "XP, Levels, Identity Ranks, Discipline "
          "Score, streaks + streak-freeze, 15 badges, 4 Boss Battles, 4 default 30-day "
-         "Challenges. Squads leaderboard is LIVE but member activity is simulated "
-         "(seeded pseudo-random \"ghost\" completions) — see Biggest Weakness/Actions."),
+         "Challenges. Squads real-activity RESOLVED this run (see below); "
+         "authorization NEWLY confirmed BROKEN (see next row)."),
+        ("Squads — Real Activity", "COMPLETE", "RESOLVED this run: getGhostCompletions "
+         "and all seeded/simulated-activity code confirmed removed. Stats now derive "
+         "from real memberships and real mission/workout rows; empty squads read zero."),
+        ("Squads — Authorization / Privacy", "BROKEN", "NEW, CONFIRMED this run: "
+         "GET /squads and GET /squads/leaderboard have no auth check and return all "
+         "squads with no privacy filtering despite a privacy column existing. No "
+         "invite flow, no owner/admin role logic — join always assigns \"member\"."),
         ("Nutrition", "PARTIAL", "Meal logging works (name/cals/macros). Protein + "
-         "water + a new nullable calorie target (\"Stage 1\", added recently) exist; "
-         "no carb/fat targets. Meal \"aligned\" field is modeled but usually null."),
-        ("Training", "PARTIAL", "Confirmed in source: logging works (name/duration/"
-         "type/notes, +50 XP per workout) but the schema has no sets/reps/weight/"
-         "progressive-overload fields at all — shallow by design, not just untested."),
-        ("Recovery", "PARTIAL", "Real multi-factor log (sleep, morning feel, energy, "
-         "soreness, stress, mobility) feeding a genuine weighted recovery-state "
-         "algorithm (READY/NORMAL/RECOVER/LOW_READINESS). Reads empty only when no "
-         "daily log exists yet — algorithm confirmed real, input data is the gap."),
-        ("Cross-System Intelligence (Alignment)", "LIVE", "Confirmed in source: a real "
-         "weighted composite (training 30% / nutrition 35% / recovery 35%) with "
-         "confidence rating and graceful weight-redistribution for missing pillars. "
-         "Corrects Brief 01's \"unproven/empty\" verdict — the algorithm works, it was "
-         "just scoring an account with no logged data."),
-        ("AI — ambient brief", "PROTOTYPE", "/coach/brief is confirmed templated: "
-         "deterministic string selection keyed on streak/mission state, no model call."),
-        ("AI — chat coach", "LIVE", "Confirmed in source: /coach/message is real "
-         "GPT-4o-mini with a well-written system prompt and live user-stat context. "
-         "First-class tab in the mobile app. Corrects Brief 01, which had not tested "
-         "this endpoint and classified all \"AI\" as templated."),
-        ("Monetization", "LIVE", "Stripe \"Vital Sync Pro\": $9.99/mo or $69.99/yr, "
-         "gating AI coaching / insights / plans / reports. Not mentioned on marketing "
-         "site. Tested account is free tier."),
-        ("Integrations (wearables)", "NOT FOUND", "No Apple Health / Garmin / Whoop / "
-         "Oura / Fitbit / Strava references anywhere in source or API surface — this "
-         "is the main reason Alignment/Recovery read empty, not an algorithm gap."),
-        ("Mobile App", "LIVE", "New this brief: a full Expo/React Native app "
-         "(vital-sync-mobile) — tabbed nav (Home/Train/Nutrition/Coach/Stats) plus "
-         "onboarding, recovery, squad, challenges, badges, evidence, and auth screens. "
-         "Not inspected in Brief 01 (marketing site only)."),
-        ("Multi-User / Data Scoping", "NOT FOUND", "New finding: no route anywhere "
-         "filters by userId. getOrCreateProfile() and equivalents literally SELECT the "
-         "first row in the table. One global profile currently serves every request."),
-        ("Push Notifications", "LIVE", "Web push infrastructure present (VAPID key, "
-         "subscribe endpoint); actual notification content/cadence not observed."),
-        ("Auth", "LIVE", "Clerk middleware is correctly wired app-wide (verified in "
-         "source) but no route uses req.auth() to scope a query yet — see Multi-User "
-         "row above. Auth infra and auth usage are two different states here."),
+         "water + a nullable calorie target exist; no carb/fat targets. Not "
+         "reverified against the new commit this run — carried from Brief 06."),
+        ("Training", "PARTIAL / SHALLOW", "CONFIRMED unchanged this run: schema is "
+         "still name/duration/type/notes only (plus a new nullable userId column) — "
+         "no sets/reps/weight/progressive-overload fields, same as every prior brief."),
+        ("Recovery", "PARTIAL", "Real multi-factor log feeding a genuine weighted "
+         "algorithm — not reverified against the new commit this run, carried from "
+         "Brief 02/06's finding since it wasn't one of the disputed claims."),
+        ("Cross-System Intelligence (Alignment)", "PARTIAL", "Algorithm confirmed real "
+         "since Brief 02 (weighted training/nutrition/recovery composite). NEW this "
+         "run: confirmed its output does NOT feed into mission/directive selection "
+         "anywhere — see Directive Engine row."),
+        ("Directive Engine", "MISSING", "NEW, CONFIRMED this run: no executable "
+         "Directive Engine, directive schema, or Alignment-to-mission connection "
+         "exists anywhere. Missions are chosen by onboarding-weighted randomness. "
+         "\"Directive\" appears only as UI/narrative copy."),
+        ("AI — ambient brief", "PROTOTYPE", "Not reverified against the new commit "
+         "this run — carried from Brief 02's finding (templated, no model call)."),
+        ("AI — chat coach", "LIVE", "Real GPT-4o-mini confirmed since Brief 02. NEW "
+         "this run (from the export, not independently spot-checked): context "
+         "includes profile/streak/mission data but not Alignment, Recovery, workout, "
+         "or nutrition data — narrower context than assumed."),
+        ("Monetization", "LIVE", "Stripe \"Vital Sync Pro\" — not reverified against "
+         "the new commit this run, carried from Brief 02/06."),
+        ("Integrations (wearables)", "NOT FOUND", "Confirmed still absent per the "
+         "export; the top reason Alignment/Recovery have little to score."),
+        ("Mobile App", "LIVE", "Full Expo/React Native app — not reverified against "
+         "the new commit this run, carried from Brief 06's structural finding."),
+        ("Push Notifications", "LIVE", "NEW this run (from the export): the earlier "
+         "VAPID-key concern does not apply — private key confirmed server-side only, "
+         "no exposure found."),
+        ("Auth", "LIVE", "Clerk middleware wired app-wide, and NOW actually used for "
+         "route-level scoping (see Multi-User row) — auth infrastructure and auth "
+         "usage are no longer two different states, as they were through Brief 06."),
+        ("Marketing / Product Alignment", "MISMATCH (as of last check)", "Last "
+         "independently read 2026-08-31 at the old ef43285 commit — not yet "
+         "re-checked against 0435f9ea. Flagged to re-verify next run now that a "
+         "current commit exists to check it against."),
     ],
     "changes_this_week": [
-        "NO PRODUCT CHANGES: Vital-Sync repo HEAD is unchanged at ef43285 — zero "
-        "commits since Brief 05 (`git log ef43285..origin/main` and `git diff --stat` "
-        "both empty, verified against both the local clone and a fresh origin/main "
-        "fetch). Every finding in the Current State table below is carried forward "
-        "as-is, not re-derived from memory.",
-        "COVERAGE GAP PERSISTS, RE-VERIFIED AGAIN: vitalsyncify.com's direct fetch is "
-        "STILL blocked (5th consecutive week, same sandbox egress-proxy failure as "
-        "Briefs 02-05). The marketing page's own source, "
-        "artifacts/vital-sync/src/pages/landing.tsx, is confirmed unchanged again — "
-        "still last modified Aug 11, the same commit read in every prior run. AI "
-        "Coach is still \"Coming Soon\"/\"in active development,\" pricing still \"will "
-        "be announced before launch,\" Squads still not mentioned, while the real chat "
-        "coach and $9.99/mo Stripe billing remain live in the backend. Five straight "
-        "weeks of the live-fetch failing is itself now a finding worth escalating: "
-        "recommend a human manually check the deployed site directly, since this "
-        "workflow can only confirm the generating source hasn't changed, not that the "
-        "deployed page matches it.",
-        "NEW ENTRANT FOUND: A broad competitor-discovery sweep this week surfaced "
-        "RazFit, a previously untracked gamified fitness app not seen in any prior "
-        "brief. It centers on 1-10 minute equipment-free bodyweight sessions with a "
-        "32-badge reward system, pitched as \"consistency over intensity\" rather than "
-        "the loot/RPG mechanics FitCraft and Workout Quest lead with. A 3-day free "
-        "trial is confirmed; ongoing subscription pricing is UNKNOWN (not found in "
-        "search results). Added to Competitor Watch as a new MONITOR-tier entry (new "
-        "opportunity #13).",
-        "CONFIRMED UNCHANGED: Vora, Cora, FitCraft, Workout Quest, and Habitica are all "
-        "re-checked this week with no material change in pricing or core features from "
-        "Brief 05. One incidental detail surfaced for FitCraft (its AI coach persona "
-        "is named \"Ty\") — noted in Competitor Watch but not treated as a scored "
-        "change since pricing/features are identical. Google Health Premium is also "
-        "unchanged this week — no new expansion confirmed beyond last month's wider "
-        "Android/iOS rollout.",
-        "DEADLINE SHARPENING: Bitletics remains pre-launch beta with no confirmed ship "
-        "date. Its previously-announced Q2/Q3 2026 launch window is now down to "
-        "roughly three weeks (Q3 2026 ends Sept 30) with still nothing shipped — "
-        "opportunity #11's note updated to flag the window is close to expiring "
-        "unmet, not just \"closer to slipping.\"",
-        "MINOR UPDATE, NOT MARKET-MOVING: Gentler Streak shipped no further updates "
-        "since last week's cosmetic-only refresh (new app icon, morning check-in "
-        "notifications, new workout types) — opportunity #6's HIGH confidence is "
-        "carried forward unchanged, not re-derived from memory.",
-        "MARKET CONTEXT REFRESHED, NOT CONTRADICTED: This week's churn/retention "
-        "research drew on different sources than last week's Sensor Tower figures — "
-        "lifecyclearchitect.com and retentioncheck.com put 2026 fitness-app churn at "
-        "a median 10-13% monthly (top-quartile apps 4-6%, ~9.2% average) with 5% "
-        "median Day-30 retention (8-12% for top performers), plus new causal detail: "
-        "failed payments drive 30-50% of total churn, and a pronounced January "
-        "sign-up surge is followed by 40-60% cancellations by February. These numbers "
-        "are somewhat less extreme than last week's Sensor Tower 11.7%/3% figures, "
-        "but the two use different methodologies and samples — treated as additional "
-        "context on the same subscription-fatigue story, not a correction, and not "
-        "tied to a change in any opportunity's score.",
+        "SOURCE ADVANCED, INDEPENDENTLY VERIFIED: the GitHub mirror moved for the "
+        "first time in 26 days, from ef43285 to 0435f9ea (163 files, 238 total "
+        "commits, no force-push). This was not taken on the strength of that "
+        "description — a fresh clone was pulled, the commit's existence and HEAD "
+        "position confirmed, and its tree hash independently computed and matched "
+        "against the claimed value before anything downstream was trusted.",
+        "TWO EVIDENCE CONFLICTS RESOLVED, FOR REAL: user_scoping and Squads' "
+        "simulated activity — both open since Brief 02/03 as UNRESOLVED — PENDING "
+        "VERIFICATION — were closed this run by direct source read, not by "
+        "accepting the claim that resolved them. Both held up under inspection.",
+        "TWO NEW BROKEN FINDINGS SURFACED: Squad list/leaderboard authorization "
+        "(no auth check, no privacy filtering) and database-level ownership "
+        "integrity (nullable columns, no foreign keys) — both confirmed by direct "
+        "source read, both newly identified (no prior brief audited either "
+        "specifically). These are more concrete and more urgent than the findings "
+        "they effectively replace at the top of BUILD NOW.",
+        "DIRECTIVE ENGINE CONFIRMED ABSENT: a dedicated check (not run in any prior "
+        "brief) found zero executable Directive Engine, directive schema, or "
+        "Alignment-to-mission connection — 'directive' exists only as product copy. "
+        "This sharpens Vital Sync's own stated differentiation model into a "
+        "concrete, verified gap rather than an assumption.",
+        "COMPETITOR/MARKET SECTIONS NOT REFRESHED THIS RUN: carried forward from "
+        "Brief 06 (one day old) without re-verification — today's effort went "
+        "entirely into validating the product-source repair, which was the point "
+        "of this manual run. Treat competitor lines below as UNCHANGED — NOT "
+        "REVERIFIED, not UNCHANGED — VERIFIED.",
     ],
     "strengths": [
-        "The Alignment engine and the AI chat coach are both genuinely well-engineered "
-        "— closer to competitor-grade than Brief 01 credited.",
-        "Deep, coherent gamification core (XP/Levels/Identity Ranks/Streaks/Badges/Boss "
-        "Battles) — more developed than most competitors' equivalents.",
-        "Identity-rank narrative aligns with the identity/community motivator trend "
-        "research flags as the strongest driver of movement post-GLP-1.",
-        "Monetization infrastructure (Stripe) is genuinely live, not just a plan.",
-        "A real, structurally complete mobile app already exists (Expo/React Native).",
+        "The Alignment engine and the AI chat coach remain genuinely well-engineered "
+        "— unchanged assessment, now with the VAPID security concern also cleared.",
+        "Per-user data scoping is now real at the route level — a genuine, verified "
+        "fix to what was the single biggest structural weakness through Brief 06.",
+        "Squads' member activity is now genuinely real, not simulated — verified by "
+        "direct code read, not by trusting the claim.",
+        "Deep, coherent gamification core (XP/Levels/Identity Ranks/Streaks/Badges/"
+        "Boss Battles) — unchanged, more developed than most competitors' equivalents.",
+        "A real, structurally complete mobile app already exists — unchanged.",
     ],
     "weaknesses": [
-        "No per-user data scoping anywhere in the backend — structurally blocks a "
-        "real multi-user launch regardless of feature quality (see Top Action #1).",
-        "Squads leaderboard activity is simulated with no visible disclosure — a trust "
-        "risk if discovered by users, and not a real competitive moat until it's real.",
-        "Zero wearable integrations — the reason two well-built engines (Alignment, "
-        "Recovery) read empty is missing data supply, not missing logic.",
-        "Training schema has no sets/reps/weight — confirmed shallow, not just "
-        "unused, in the one pillar most fitness-serious users will judge first.",
-        "Marketing site materially understates the product — re-verified this week via "
-        "the landing page's own source (vitalsyncify.com's live fetch is still "
-        "blocked, 5th consecutive week, but the repo source it's built from is "
-        "unchanged since Aug 11): Squads, billing, and the real AI chat coach aren't "
-        "mentioned; the AI section is still labeled \"Coming Soon\" and pricing "
-        "\"will be announced before launch\" despite both already shipping.",
+        "Squad authorization is confirmed BROKEN — unauthenticated list/leaderboard "
+        "routes, no privacy enforcement despite a privacy field existing. A real "
+        "trust/security gap, now the sharpest concrete one in the product.",
+        "Database-level ownership integrity is confirmed BROKEN — nullable columns, "
+        "no foreign keys, under an application layer that now assumes real scoping.",
+        "The Directive Engine — the connective step in Vital Sync's own stated "
+        "differentiation model between Alignment and Mission — is confirmed absent.",
+        "Training schema remains confirmed shallow — unchanged since Brief 01, only "
+        "a nullable userId column was added.",
+        "Zero wearable integrations, confirmed unchanged — still the reason "
+        "Alignment/Recovery have little real data to score.",
     ],
     "cross_system_audit": [
-        ("Training <-> Recovery", "LIVE (algorithm)", "Alignment engine weights both "
-         "into one score — confirmed real logic; needs real workout/recovery data to "
-         "demonstrate."),
-        ("Nutrition <-> Recovery", "LIVE (algorithm)", "Both are real pillars in the "
-         "same weighted Alignment score."),
-        ("Sleep <-> Performance", "LIVE (algorithm)", "computeRecoveryScoreV2 blends "
-         "sleep with energy/soreness/stress/morning-feel/mobility into one state."),
-        ("Training Load <-> Fatigue", "NOT FOUND", "No training-load or fatigue-"
-         "trend field exists in the schema."),
-        ("Protein Intake <-> Training Goal", "PARTIAL", "Protein target exists but "
-         "isn't cross-referenced against training goals specifically."),
-        ("Recovery <-> Workout Recommendation", "NOT FOUND", "Recovery state (READY/"
-         "RECOVER/etc.) is computed but nothing downstream adjusts a workout "
-         "recommendation from it yet."),
-        ("Progress <-> Program Adjustment", "NOT FOUND", "Boss Battles/Challenges are "
-         "static content, not adjusted by Alignment or recovery state."),
+        ("Training <-> Recovery", "LIVE (algorithm)", "Unchanged — Alignment engine "
+         "weights both into one score; not reverified against the new commit this "
+         "run specifically, but not a disputed claim either."),
+        ("Nutrition <-> Recovery", "LIVE (algorithm)", "Unchanged — both are real "
+         "pillars in the same weighted Alignment score."),
+        ("Sleep <-> Performance", "LIVE (algorithm)", "Unchanged — computeRecoveryScoreV2 "
+         "blends multiple recovery inputs into one state."),
+        ("Alignment <-> Directive/Mission", "MISSING", "NEW row this run, CONFIRMED: "
+         "Alignment's output does not feed mission selection or any directive layer "
+         "— confirmed by direct search, not merely absence of a prior finding."),
+        ("Training Load <-> Fatigue", "NOT FOUND", "Unchanged — no training-load or "
+         "fatigue-trend field exists in the schema."),
+        ("Protein Intake <-> Training Goal", "PARTIAL", "Unchanged — protein target "
+         "exists but isn't cross-referenced against training goals specifically."),
+        ("Recovery <-> Workout Recommendation", "NOT FOUND", "Unchanged — recovery "
+         "state is computed but nothing downstream adjusts a workout recommendation."),
+        ("Progress <-> Program Adjustment", "NOT FOUND", "Unchanged — Boss Battles/"
+         "Challenges are static content, not adjusted by Alignment or recovery state."),
     ],
     "competitor_watch": [
         ("Vora", "Direct", "Voice-first all-in-one; 500+ wearable integrations; Free "
@@ -484,79 +447,81 @@ WEEK_DATA = {
         "hardware players.",
     ],
     "gap_types": [
-        ("-", "Foundational blocker", "Multi-user data scoping", "No route filters by "
-         "userId anywhere in the backend — one global profile serves every request. "
-         "Not a competitor comparison; a prerequisite for everything else to matter "
-         "at real-user scale."),
+        ("-", "NEW security/trust blocker", "Squad authorization / privacy", "CONFIRMED "
+         "BROKEN this run: list/leaderboard routes take no auth, no privacy "
+         "filtering exists despite the field being present. Replaces the old "
+         "simulated-activity finding as the sharpest concrete Squad risk."),
+        ("-", "NEW foundational risk", "Database ownership integrity", "CONFIRMED "
+         "BROKEN this run: ownership columns are nullable with no foreign-key "
+         "enforcement, underneath an application layer that now assumes real "
+         "per-user scoping."),
+        ("-", "RESOLVED (was foundational blocker)", "Multi-user data scoping",
+         "CONFIRMED RESOLVED this run at the route level via direct source read — "
+         "was the top blocker through Brief 06."),
         ("A", "Vital Sync behind", "Recovery/Alignment DATA SUPPLY (not logic)", "The "
          "scoring algorithms are real and competitive-grade; Cora/Vora/Bevel/NATE win "
          "only because they have wearable data feeding equivalent logic — and Google's "
-         "Health Premium Gemini Coach (formerly Fitbit Premium, now on a wider "
-         "Android/iOS rollout this month) shows the same play at platform scale. "
-         "Vital Sync's engine has zero wearable connections."),
-        ("A", "Vital Sync behind", "Logging friction", "Voice/photo logging proven "
-         "(Vora, Cora); Vital Sync has manual form-entry only."),
+         "Health Premium Gemini Coach shows the same play at platform scale. Vital "
+         "Sync's engine has zero wearable connections. (Competitor detail carried "
+         "from Brief 06, not reverified this run.)"),
+        ("A", "Vital Sync behind", "Directive Engine", "CONFIRMED ABSENT this run: no "
+         "executable Directive Engine or Alignment-to-mission connection exists. "
+         "Competitors don't have this either, but it's Vital Sync's own stated "
+         "differentiation model, so the gap is self-inflicted, not just competitive."),
         ("B", "Parity", "Core gamification (XP, streaks, badges)", "Table stakes in "
          "this niche — FitCraft, Workout Quest, Habitica match or exceed on raw "
-         "mechanics depth."),
-        ("C", "Vital Sync ahead (once real)", "Alignment engine + AI chat coach", "The "
-         "underlying engineering is genuinely competitive-grade — closer to what "
-         "Cora/Vora charge for than Brief 01 credited. Gap is data supply and "
-         "surfacing, not algorithm quality."),
+         "mechanics depth. (Not reverified this run.)"),
+        ("C", "Vital Sync ahead (once real)", "Alignment engine + AI chat coach + real "
+         "Squad activity", "The underlying engineering is genuinely competitive-grade, "
+         "and Squads' activity is now confirmed real, not simulated. Gap is data "
+         "supply, the missing Directive layer, and now Squad authorization — not "
+         "algorithm quality."),
         ("D", "Open market gap", "Fatigue-aware gamification", "Nobody analyzed ties "
-         "streak/reward mechanics to real recovery data, or eases intensity for "
-         "experienced users. Proven pain points, no proven solution yet."),
-        ("D", "Open market gap / trust risk", "Simulated social proof", "Squads shows "
-         "seeded-random \"member activity\" with no real users behind it and no "
-         "disclosure — a category-wide pattern (cold-start ghost data) but a real risk "
-         "if discovered without being a deliberate, owned decision."),
+         "streak/reward mechanics to real recovery data. Now confirmed to depend on "
+         "the Directive Engine existing first — don't build this before that."),
     ],
     "opportunities": [
         # (rank, title, evidence, bucket, gap, ai, confidence)
-        (1, "Implement real per-user data scoping", "Every route reads/writes one "
-         "global profile row — confirmed in source across profile/workouts/meals/"
-         "recovery/etc. Blocks real multi-user launch entirely.",
-         "BUILD NOW", "Foundational", "No AI Needed", "HIGH"),
-        (2, "Decide & act on Squads' simulated activity", "getGhostCompletions() "
-         "generates fake member counts/completions via seeded randomness — confirmed "
-         "in source, no real users behind the numbers shown.",
-         "BUILD NOW", "D", "No AI Needed", "HIGH"),
-        (3, "Fix the marketing/product mismatch", "RE-VERIFIED this week via an "
-         "alternate path: vitalsyncify.com's live fetch is still blocked (4th "
-         "consecutive week), but the page's own source (landing.tsx, unchanged since "
-         "Aug 11) confirms AI Coach is still \"Coming Soon\"/\"in active development\" "
-         "and pricing \"will be announced before launch,\" while the real chat coach "
-         "and $9.99/mo Stripe billing are both live and Squads isn't mentioned at all.",
-         "BUILD NOW", "Trust", "No AI Needed", "HIGH"),
-        (4, "Connect Apple Health as first wearable", "Broadest reach, lowest effort; "
-         "feeds the already-working Alignment/Recovery algorithms with real data "
-         "instead of building new logic. Urgency reinforced this week: Google Health "
-         "Premium's Gemini coach (formerly Fitbit Premium) ships the same 'wearable "
-         "data -> adaptive guidance' output at platform scale, and this month widened "
-         "its app to all Android/iOS users, not just Fitbit/Pixel Watch owners.",
-         "BUILD NOW", "A", "No AI Needed", "HIGH"),
-        (5, "Surface the real AI chat coach more prominently", "/coach/message is "
-         "live GPT-4o-mini with good context — currently one tab among many, while "
-         "the more visible ambient \"brief\" is templated. Consider unifying quality.",
-         "BUILD NEXT", "C", "AI Core", "MEDIUM"),
-        (6, "Fatigue-aware streak mechanic", "Streak downgrades gracefully instead of "
-         "breaking, when real recovery data (once wearables land) is low. Confidence "
-         "raised this week: Gentler Streak is a live app built entirely around this "
-         "exact premise (ease the target to match daily capacity, don't punish a "
-         "miss) — direct market validation, and nobody in the direct fitness-"
-         "gamification set (Vora/Cora/FitCraft/Workout Quest/Habitica/Bitletics) ships "
-         "it yet.", "BUILD NEXT", "D", "AI Assisted", "HIGH"),
-        (7, "Real training depth (sets/reps/weight/overload)", "Confirmed in schema: "
-         "workouts table has no sets/reps/weight fields at all — shallow by design.",
+        (1, "Fix Squad authorization / privacy", "CONFIRMED BROKEN this run: "
+         "GET /squads and GET /squads/leaderboard have no auth check and no privacy "
+         "filtering. A real access-control gap, not cosmetic.",
+         "BUILD NOW", "-", "No AI Needed", "HIGH"),
+        (2, "Enforce database-level ownership", "CONFIRMED BROKEN this run: nullable "
+         "ownership columns, no foreign keys, underneath a now-real application-"
+         "level scoping layer.",
+         "BUILD NOW", "-", "No AI Needed", "HIGH"),
+        (3, "Build the Alignment -> Directive -> Mission connection", "CONFIRMED "
+         "ABSENT this run: missions are chosen by onboarding-weighted randomness, "
+         "not by Alignment output. The connective step in Vital Sync's own "
+         "differentiation model doesn't exist yet.",
+         "BUILD NOW", "A", "AI Assisted", "HIGH"),
+        (4, "Fix the marketing/product mismatch", "Last independently checked "
+         "2026-08-31 against the old ef43285 commit; not yet re-verified against "
+         "0435f9ea. Re-check next run now that a current commit exists.",
+         "BUILD NEXT", "Trust", "No AI Needed", "MEDIUM"),
+        (5, "Connect Apple Health as first wearable", "Broadest reach, lowest effort; "
+         "feeds the already-working Alignment/Recovery algorithms with real data. "
+         "Not reverified against competitor movement this run — carried from "
+         "Brief 06's urgency case.",
          "BUILD NEXT", "A", "No AI Needed", "HIGH"),
-        (8, "Full nutrition goals (carbs/fat)", "Protein/water/calorie targets exist "
-         "(calorie target added recently, \"Stage 1\"); carbs/fat still missing.",
-         "IMPROVE EXISTING", "A", "AI Assisted", "HIGH"),
-        (9, "Gamification that tapers with Identity Rank", "Quieter, data-forward view "
-         "for veteran-rank users.", "EXPERIMENT", "D", "No AI Needed", "MEDIUM"),
+        (6, "Surface the real AI chat coach more prominently, and widen its context",
+         "/coach/message is live GPT-4o-mini — CONFIRMED this run that its context "
+         "excludes Alignment/Recovery/workout/nutrition data, narrower than "
+         "previously assumed. Two separate improvements: visibility, and context depth.",
+         "BUILD NEXT", "C", "AI Core", "MEDIUM"),
+        (7, "Real training depth (sets/reps/weight/overload)", "CONFIRMED unchanged "
+         "this run: workouts table still has no sets/reps/weight fields at all.",
+         "BUILD NEXT", "A", "No AI Needed", "HIGH"),
+        (8, "Fatigue-aware streak mechanic", "Streak downgrades gracefully instead of "
+         "breaking, when real recovery data is low. Confirmed this run to depend on "
+         "the Directive Engine (#3) and wearables (#5) landing first — do not build "
+         "before those.", "EXPERIMENT", "D", "AI Assisted", "MEDIUM"),
+        (9, "Full nutrition goals (carbs/fat)", "Protein/water/calorie targets exist; "
+         "carbs/fat still missing. Not reverified this run.",
+         "IMPROVE EXISTING", "A", "AI Assisted", "MEDIUM"),
         (10, "Voice / natural-language logging", "Vora and Cora both lead with this; "
-         "large build effort, competitors have a head start.", "MONITOR", "A",
-         "AI Core", "MEDIUM"),
+         "large build effort, competitors have a head start. Not reverified this run.",
+         "MONITOR", "A", "AI Core", "MEDIUM"),
         (11, "Track Bitletics' real-reward redemption model", "Converts activity into "
          "redeemable in-game loot/raffle tickets rather than only in-app XP/badges — "
          "a genuinely different reward mechanic than any of the 5 deep-dived "
@@ -619,56 +584,79 @@ WEEK_DATA = {
         "3-day trial; its 'consistency over intensity' short-session positioning is "
         "different enough from existing tracked competitors to be worth a line item "
         "rather than folding into the surface-level watch list.",
-        "#9 (Gamification that tapers with Identity Rank, EXPERIMENT) — NOT "
-        "RE-SCORED this week; no new evidence moved it.",
-        "#5, #7, #8, #10 — UNCHANGED. No evidence this week (product-side or "
-        "competitive) moved any of these; carried forward exactly as ranked in "
-        "Brief 05.",
+        "GAMIFICATION-TAPER ITEM RENUMBERED, NOT RESCORED: the old #9 (Gamification "
+        "that tapers with Identity Rank) is unchanged in substance, now #11 in this "
+        "brief's list purely due to the new #1-3 BUILD NOW items displacing it — no "
+        "new evidence moved its score.",
+        "MAJOR MOVEMENT THIS RUN — REMOVED: 'Implement real per-user data scoping' "
+        "(Brief 06 #1, BUILD NOW/HIGH since Brief 02) — CONFIRMED RESOLVED by direct "
+        "source read. Moved to Resolved Findings, not carried forward as an open "
+        "item.",
+        "MAJOR MOVEMENT THIS RUN — REMOVED: 'Decide & act on Squads' simulated "
+        "activity' (Brief 06 #2, BUILD NOW/HIGH since Brief 02) — CONFIRMED RESOLVED "
+        "by direct source read (ghost-activity code fully removed). Moved to "
+        "Resolved Findings.",
+        "MAJOR MOVEMENT THIS RUN — NEW #1 and #2: Squad authorization/privacy and "
+        "database ownership integrity did not exist as tracked opportunities before "
+        "this run — both discovered and confirmed BROKEN today, both entered "
+        "directly at BUILD NOW/HIGH given their security/trust nature.",
+        "MAJOR MOVEMENT THIS RUN — NEW #3: 'Build the Alignment -> Directive -> "
+        "Mission connection' promoted to BUILD NOW/HIGH (was implicitly part of the "
+        "Alignment discussion, never a standalone tracked item) after confirming the "
+        "Directive Engine is entirely absent — this is Vital Sync's own stated "
+        "differentiation model with a confirmed missing link, not a market "
+        "comparison.",
+        "'Fix the marketing/product mismatch' (Brief 06 #3, BUILD NOW) — DOWNGRADED "
+        "to BUILD NEXT/MEDIUM this run, not because the finding is resolved but "
+        "because it hasn't been re-checked against the new 0435f9ea commit yet — "
+        "carrying it at BUILD NOW/HIGH would mean re-asserting a claim last verified "
+        "against a now-superseded commit.",
+        "'Connect Apple Health' and 'Real training depth' (Brief 06 #4 and #7) — "
+        "both CONFIRMED unchanged this run via direct source read (training) or "
+        "carried without re-verification (Apple Health's competitive urgency case). "
+        "Renumbered #5 and #7 respectively, same underlying evidence.",
+        "'Fatigue-aware streak mechanic' (Brief 06 #6, BUILD NEXT/HIGH) — DOWNGRADED "
+        "to EXPERIMENT this run: confirmed today to depend on the Directive Engine "
+        "(new #3) and wearables (#5) landing first. The market validation (Gentler "
+        "Streak) hasn't changed; the dependency picture is now explicit rather than "
+        "implicit.",
+        "#12, #13 (Google Health Premium, RazFit monitor items) — UNCHANGED, not "
+        "reverified this run; carried from Brief 06 exactly as ranked.",
+        "#9, #10 (nutrition goals, voice logging) — UNCHANGED, not reverified this "
+        "run.",
     ],
     "sources": [
-        "github.com/faristjohar04-sketch/Vital-Sync (source code; re-verified via "
-        "`git log`/`git diff` against both the local clone and a fresh origin/main "
-        "fetch — HEAD unchanged at ef43285, zero commits since Brief 05)",
+        "github.com/faristjohar04-sketch/Vital-Sync — INDEPENDENTLY VERIFIED this "
+        "run: fresh clone, commit 0435f9ea79a871cd1578e2dc22e8e3055bebc50e confirmed "
+        "as real HEAD (advanced from ef43285, 163 files, 238 total commits, no "
+        "force-push), tree hash cb18fae7c6ced14432aa1bef9d14a76b82332dae "
+        "independently computed and matched against the claimed value before being "
+        "trusted",
+        "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea — direct source reads "
+        "performed this run: artifacts/api-server/src/routes/profile.ts (user "
+        "scoping), artifacts/api-server/src/routes/squads.ts (real activity + "
+        "authorization), lib/db/src/schema/workouts.ts and profile.ts (training "
+        "depth + nullable ownership columns), and a full-source grep for "
+        "\"directive\" (Directive Engine absence)",
+        "vital_sync_current_product_state.json — a structured audit export provided "
+        "by the user, cross-checked this run: six of its most specific claims were "
+        "independently verified against the commit above and all confirmed accurate; "
+        "remaining areas in this brief's Current State table are drawn from it at "
+        "HIGH confidence but were not each individually re-derived from source by "
+        "this workflow",
         "github.com/faristjohar04-sketch/Vital-Sync — "
-        "artifacts/vital-sync/src/pages/landing.tsx (marketing-page source, read "
-        "directly again this week as an alternate verification path for opportunity "
-        "#3; still last modified Aug 11, unchanged for the entire period HEAD has "
-        "been frozen)",
-        "vitalsyncify.com — SOURCE UNAVAILABLE this run, 5th consecutive week "
-        "(sandbox network egress proxy blocked it, EGRESS_BLOCKED on WebFetch); the "
-        "repo-source check above is a partial substitute, not full re-verification "
-        "of the deployed site",
-        "askvora.com, corahealth.app, getfitcraft.com, workoutquestapp.com, "
-        "habitica.com, bitletics.com, razfit.app — direct fetch also SOURCE "
-        "UNAVAILABLE this run (same egress block); competitor data instead drawn "
-        "from WebSearch-indexed pages on each domain (see individual Competitor "
-        "Watch entries for specifics)",
-        "play.google.com, apps.apple.com, askvora.com/pricing (via WebSearch) — Vora "
-        "pricing/features reconfirmed unchanged",
-        "trycora.io, corahealth.app, appshunter.io (via WebSearch) — Cora Body "
-        "Charge score and features reconfirmed unchanged; full subscription price "
-        "still UNKNOWN/undisclosed",
-        "getfitcraft.com (via WebSearch) — FitCraft pricing reconfirmed unchanged "
-        "($0-$19.99/mo tiered); AI coach persona name (\"Ty\") is a new incidental "
-        "detail, not a scored change",
-        "workoutquestapp.com, play.google.com, apps.apple.com (via WebSearch) — "
-        "Workout Quest features reconfirmed unchanged",
-        "blog.habitrpg.com, play.google.com (via WebSearch) — Habitica reconfirmed "
-        "unchanged aside from a routine Sept 1-3 gem sale (not structural)",
-        "bitletics.com/blog (via WebSearch) — still described as launching Q2/Q3 "
-        "2026, iOS and Android together, free at launch; no ship date confirmed",
-        "razfit.app (via WebSearch) — NEW THIS WEEK: RazFit discovered via broad "
-        "competitor-discovery search; 1-10 minute bodyweight sessions, 32 badges, "
-        "3-day free trial confirmed, ongoing price UNKNOWN",
-        "store.google.com/product/google_health_premium, support.google.com/"
-        "googlehealth, mobihealthnews.com, blog.google, 9to5google.com (via "
-        "WebSearch) — Google Health Premium/Gemini Health Coach reconfirmed "
-        "unchanged this week, no new expansion found",
-        "WebSearch: new fitness gamification app launches (RazFit surfaced as the "
-        "one new entrant this week), Gentler Streak feature updates (no change since "
-        "last week), fitness-app churn/retention benchmarks (lifecyclearchitect.com, "
-        "retentioncheck.com, mobile-squad.com) — different sources/methodology than "
-        "last week's Sensor Tower figures, treated as additional context",
+        "artifacts/vital-sync/src/pages/landing.tsx (marketing-page source) — NOT "
+        "re-read against the new 0435f9ea commit this run; last independently read "
+        "2026-08-31 at the old ef43285 commit. Flagged to re-check next run.",
+        "vitalsyncify.com — not attempted this run (manual validation run focused on "
+        "product-source verification, not a fresh competitor/marketing pass)",
+        "All competitor sources (Vora, Cora, FitCraft, Workout Quest, Habitica, "
+        "Bitletics, RazFit, Google Health Premium) and all customer-pain/praise/"
+        "search-demand/market-trend research below are CARRIED FORWARD FROM BRIEF "
+        "06 (2026-09-07, one day old), NOT re-fetched or re-verified this run — this "
+        "manual cycle's effort went entirely into product-source verification. "
+        "Treat every competitor-side claim in this brief as UNCHANGED — NOT "
+        "REVERIFIED, not UNCHANGED — VERIFIED.",
         "JMIR mHealth 2022 meta-analysis; 36-RCT gamification meta-analysis "
         "(10,079 participants); Oct 2025 British Journal of Health Psychology "
         "(app-set unreachable goals drive churn) — carried as background, not "

@@ -1,46 +1,63 @@
 {
-  "schema_version": "1.0",
-  "generated_at": "2026-09-07T14:00:00Z",
+  "schema_version": "1.1",
+  "generated_at": "2026-09-08T00:00:00Z",
   "conflicts": [
     {
       "finding": "Per-user data scoping",
       "source_a": {
-        "label": "GitHub mirror, direct source read",
-        "value": "MISSING — no route filters by userId; getOrCreateProfile() and equivalents select a single global row",
-        "date": "2026-08-12",
-        "confirmed_unchanged_through": "2026-09-07 (weekly re-fetch, identical commit each time)"
+        "label": "GitHub mirror @ ef43285, direct source read",
+        "value": "MISSING — no route filters by userId; getOrCreateProfile() selected a single global row",
+        "date": "2026-08-12"
       },
       "source_b": {
-        "label": "User chat message",
-        "value": "COMPLETE — implemented",
-        "date": "2026-09-07",
-        "artifact_provided": false
+        "label": "User-submitted Replit export, then independently verified against GitHub mirror @ 0435f9ea",
+        "value": "PARTIAL — getOrCreateProfile(userId) now filters WHERE clerkId = userId at the route level; ownership columns remain nullable at the database level",
+        "date": "2026-09-07"
       },
-      "conflict": "Source A is a directly-verified but confirmed-stale (26-day-old, unchanged) snapshot. Source B is a more recent claim with no independently checkable artifact attached.",
-      "resolution": "UNRESOLVED — PENDING VERIFICATION",
-      "winning_source": "NEITHER (yet)",
-      "reason": "Per the no-fabrication rule, a claim without a checkable source cannot override a directly-verified (if stale) finding, but a stale finding also cannot be asserted as still-true against a specific claim that it has changed. Both are held as open until an accessible, verifiable source (updated GitHub mirror, export, or equivalent) exists.",
-      "next_step": "Re-run this check the moment a fresher source is available. If the GitHub mirror updates, that becomes the new source_a with a fresh date."
+      "conflict": "Resolved by independent verification, not by accepting the claim.",
+      "resolution": "RESOLVED",
+      "resolution_date": "2026-09-08",
+      "winning_source": "source_b",
+      "winning_evidence": "Direct read of artifacts/api-server/src/routes/profile.ts at commit 0435f9ea, fetched independently from a freshly cloned faristjohar04-sketch/Vital-Sync — confirmed the WHERE clerkId = userId filter exists in the actual code, not merely in a description of it.",
+      "reason": "The commit's existence, tree hash, and this specific claim were all independently verified against a real, reachable git repository before being accepted — satisfying the evidence-freshness rule rather than overriding it."
     },
     {
       "finding": "Squad member/activity calculation",
       "source_a": {
-        "label": "GitHub mirror, direct source read",
-        "value": "SIMULATED — getGhostCompletions() generates activity via seeded pseudo-randomness; no real other users drive the shown numbers",
-        "date": "2026-08-12",
-        "confirmed_unchanged_through": "2026-09-07"
+        "label": "GitHub mirror @ ef43285, direct source read",
+        "value": "SIMULATED — getGhostCompletions() generated activity via seeded pseudo-randomness",
+        "date": "2026-08-12"
       },
       "source_b": {
-        "label": "User chat message",
-        "value": "Real membership/activity calculations now exist",
-        "date": "2026-09-07",
-        "artifact_provided": false
+        "label": "User-submitted Replit export, then independently verified against GitHub mirror @ 0435f9ea",
+        "value": "COMPLETE — getRealSquadStats() derives all numbers from real userSquadTable memberships and real missions/workouts tables; ghost/seeded code entirely removed",
+        "date": "2026-09-07"
       },
-      "conflict": "Same shape as the scoping conflict above — stale-but-verified vs. recent-but-unverified.",
-      "resolution": "UNRESOLVED — PENDING VERIFICATION",
-      "winning_source": "NEITHER (yet)",
-      "reason": "Same reasoning as the scoping conflict.",
-      "next_step": "Same as above. Note separately that Squad invites/roles/authorization were never claimed as resolved and remain a tracked open gap regardless of this conflict's outcome."
+      "conflict": "Resolved by independent verification.",
+      "resolution": "RESOLVED",
+      "resolution_date": "2026-09-08",
+      "winning_source": "source_b",
+      "winning_evidence": "Direct read of artifacts/api-server/src/routes/squads.ts at commit 0435f9ea — grepped for getGhostCompletions/ghost/seededRand across the whole api-server source and found zero matches (only a comment stating it was removed); getRealSquadStats() function body read in full and confirmed to query real tables only.",
+      "reason": "Same standard as above — verified against reachable source, not accepted on assertion."
+    },
+    {
+      "finding": "Squad list/leaderboard authorization",
+      "source_a": {
+        "label": "N/A — not previously identified as a distinct finding",
+        "value": "No prior brief separately audited squad list/leaderboard authorization",
+        "date": null
+      },
+      "source_b": {
+        "label": "User-submitted Replit export, then independently verified against GitHub mirror @ 0435f9ea",
+        "value": "BROKEN — GET /squads and GET /squads/leaderboard take an unused _req parameter (no auth check) and return all active squads with no privacy filtering, despite a privacy column existing on the table",
+        "date": "2026-09-07"
+      },
+      "conflict": "Not a conflict between two disagreeing sources — a new finding, confirmed on first check.",
+      "resolution": "CONFIRMED — NOT A CONFLICT, TRACKED AS AN ACTIVE FINDING",
+      "resolution_date": "2026-09-08",
+      "winning_source": "source_b",
+      "winning_evidence": "Direct read of the two route handlers in squads.ts at commit 0435f9ea — confirmed both use `_req` (unused) and an unfiltered `eq(squadsTable.status, \"active\")` query.",
+      "reason": "Recorded here (rather than only in vital_sync_product_state.json) because it directly touches the two findings this log already tracked, and because its trust/security implications warrant the same visibility."
     }
   ]
 }
