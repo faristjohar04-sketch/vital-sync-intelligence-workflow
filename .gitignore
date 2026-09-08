@@ -8,6 +8,17 @@ token.json.bak*
 tmp/*
 !tmp/.gitkeep
 
+# Vital Sync Marketing Intelligence (Workflow 02) — regenerable runtime
+# state/cache, not source of truth (the checked-in Workflow 01 reports and
+# marketing_intelligence/config/schedule.json are). Every run rewrites
+# these or adds a new one; keeping them out of git avoids repo bloat and
+# noisy diffs without touching any real workflow logic.
+marketing_intelligence/config/product_reality.json
+marketing_intelligence/state/*.json
+marketing_intelligence/state/backups/
+reports/vital_sync_marketing/*_PREVIEW.pdf
+!marketing_intelligence/state/.gitkeep
+
 # Python
 __pycache__/
 *.pyc
