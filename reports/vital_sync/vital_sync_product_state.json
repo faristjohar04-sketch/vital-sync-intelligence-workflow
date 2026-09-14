@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-09-08T00:00:00Z",
-  "generated_by": "Workflow 01 current-source reconciliation (manual, interactive)",
+  "generated_at": "2026-09-14T04:13:00Z",
+  "generated_by": "Workflow 01 weekly run (scheduled)",
   "source_freshness": {
     "github_mirror": {
       "source": "github.com/faristjohar04-sketch/Vital-Sync",
@@ -9,17 +9,26 @@
       "commit": "0435f9ea79a871cd1578e2dc22e8e3055bebc50e",
       "commit_date": "2026-09-07T16:44:57+04:00",
       "tree_hash": "cb18fae7c6ced14432aa1bef9d14a76b82332dae",
-      "checked_at": "2026-09-08T00:00:00Z",
-      "verification_method": "Fresh git clone; commit existence, HEAD position, and tree hash independently computed and matched against the claimed value without trusting the claim to get there. Six specific claims (user_scoping, squad_real_activity, squad_authorization, directive_engine absence, training schema shallowness, nullable ownership columns) additionally spot-checked by direct source read and all confirmed accurate.",
+      "checked_at": "2026-09-14T04:13:00Z",
+      "consecutive_unchanged_runs": 1,
+      "verification_method": "`git log --oneline 0435f9ea..HEAD` and `git diff --stat` run against both the locally stored commit AND a fresh `origin/main` fetch — both empty, commit unchanged since last run. This is check #1 of 'unchanged' since the 2026-09-07 advance (not yet the 2+ consecutive threshold this workflow uses to reclassify a frozen commit as STALE). Beyond the diff check, the actual code was independently re-read this run — artifacts/api-server/src/routes/squads.ts and profile.ts, lib/db/src/schema/workouts.ts and profile.ts, a full-source grep for 'directive', and artifacts/vital-sync/src/pages/landing.tsx — and matches the prior run's findings exactly.",
       "classification": "CURRENT_VERIFIED",
-      "reason": "Real advance from the previously-frozen ef43285 (163 files changed, 238 total commits, non-force-pushed history). This is now Priority-2 evidence that has earned CURRENT_VERIFIED status through independent corroboration, not asserted status."
+      "reason": "Commit unchanged from last run, but confirmed by direct re-read of the actual source (not merely a clean diff) — every spot-checked finding from 2026-09-08 still holds at this exact commit. Would require one more consecutive unchanged run (i.e. still 0435f9ea two weeks from now) before this workflow reclassifies the mirror as STALE per the freshness gate's 2+-consecutive-runs rule."
     },
     "replit_current_export": {
       "source": "vital_sync_current_product_state.json, pasted by user 2026-09-07/08",
       "source_type": "structured audit export, cross-checked against the commit above",
       "checked_at": "2026-09-08T00:00:00Z",
-      "verification_method": "Six of its most specific and previously-disputed claims independently spot-checked against the actual commit 0435f9ea and confirmed accurate. Remaining areas accepted at HIGH confidence given the export's demonstrated accuracy on the highest-stakes claims, but were not each individually re-derived from source by this workflow.",
-      "classification": "CURRENT_VERIFIED (spot-checked areas) / HIGH_CONFIDENCE (remaining areas, not independently re-derived)"
+      "verification_method": "Six of its most specific and previously-disputed claims independently spot-checked against the actual commit 0435f9ea and confirmed accurate. Remaining areas accepted at HIGH confidence given the export's demonstrated accuracy on the highest-stakes claims, but were not each individually re-derived from source by this workflow. No newer export was provided this run; areas resting solely on this export were carried forward, not re-derived, this run.",
+      "classification": "CURRENT_VERIFIED (spot-checked areas, as of 2026-09-08) / HIGH_CONFIDENCE (remaining areas, not independently re-derived)"
+    },
+    "marketing_site_live": {
+      "source": "https://vitalsyncify.com",
+      "source_type": "deployed marketing site (direct fetch)",
+      "checked_at": "2026-09-14T04:13:00Z",
+      "verification_method": "WebFetch attempted directly this run.",
+      "classification": "SOURCE_UNAVAILABLE",
+      "reason": "EGRESS_BLOCKED from this sandbox — the 6th consecutive weekly run this has failed. This is a coverage gap, not evidence that the deployed marketing site is unchanged; the repo's own landing-page source (a separate, checkable proxy) was used instead — see areas.marketing_product_alignment."
     }
   },
   "overall_freshness": "CURRENT_VERIFIED",
@@ -29,165 +38,165 @@
   "areas": {
     "user_scoping": {
       "status": "PARTIAL",
-      "evidence": "CONFIRMED by direct read: getOrCreateProfile(userId) now filters WHERE clerkId = userId (was a global singleton). Same pattern present in workouts/meals/recovery/missions per export. Ownership columns (clerkId, userId) remain nullable at the schema level for historical rows, so route-level scoping is real but stored-data integrity is not enforced by the database itself.",
+      "evidence": "RE-VERIFIED this run by direct read at the same commit (0435f9ea, unchanged): getOrCreateProfile(userId) still filters WHERE clerkId = userId (was a global singleton pre-fix). Ownership columns (clerkId, userId) remain nullable at the schema level for historical rows, so route-level scoping is real but stored-data integrity is still not enforced by the database itself (see database_integrity).",
       "source": "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea, artifacts/api-server/src/routes/profile.ts",
-      "source_date": "2026-09-07",
-      "freshness": "CURRENT_VERIFIED",
+      "source_date": "2026-09-14",
+      "freshness": "UNCHANGED — VERIFIED",
       "confidence": "HIGH",
       "lifecycle": "RESOLVED (from CONFLICT) — real per-user scoping now exists; nullable-column enforcement remains a distinct, lesser gap tracked under database_integrity"
     },
     "squads_real_activity": {
       "status": "COMPLETE",
-      "evidence": "CONFIRMED by direct read: getGhostCompletions/seeded-randomness code is gone entirely. getRealSquadStats() queries userSquadTable for active members, then real missionsTable/workoutsTable rows scoped to those member IDs. Empty squads correctly return zero.",
+      "evidence": "RE-VERIFIED this run by direct read at the same commit: getGhostCompletions/seeded-randomness code is still gone entirely. getRealSquadStats() still queries userSquadTable for active members, then real missionsTable/workoutsTable rows scoped to those member IDs.",
       "source": "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea, artifacts/api-server/src/routes/squads.ts",
-      "source_date": "2026-09-07",
-      "freshness": "CURRENT_VERIFIED",
+      "source_date": "2026-09-14",
+      "freshness": "UNCHANGED — VERIFIED",
       "confidence": "HIGH",
       "lifecycle": "RESOLVED (from CONFLICT) — the simulated-activity finding no longer applies."
     },
     "squad_authorization": {
       "status": "BROKEN",
-      "evidence": "CONFIRMED by direct read: GET /squads and GET /squads/leaderboard use an unused `_req` parameter (no auth check) and return ALL active squads with zero privacy filtering, even though squadsTable has a privacy column. Join hardcodes role:\"member\" with no admin/owner logic anywhere; no invite table or route exists.",
+      "evidence": "RE-VERIFIED this run by direct read at the same commit: GET /squads and GET /squads/leaderboard still use an unused `_req` parameter (no auth check) and return ALL active squads with zero privacy filtering, even though squadsTable has a privacy column. Join still hardcodes role:\"member\"; still no invite table or route. No fix has landed.",
       "source": "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea, artifacts/api-server/src/routes/squads.ts",
-      "source_date": "2026-09-07",
-      "freshness": "CURRENT_VERIFIED",
+      "source_date": "2026-09-14",
+      "freshness": "UNCHANGED — VERIFIED",
       "confidence": "HIGH",
-      "lifecycle": "NEW — a real, currently-verified security/trust gap, distinct from and more specific than anything reported in Brief 06."
+      "lifecycle": "ACTIVE — still the sharpest concrete trust/security gap in the product; unresolved for a full week now."
     },
     "squad_invites": {
       "status": "MISSING",
-      "evidence": "No invite table, route, or UI flow found.",
-      "source": "vital_sync_current_product_state.json export, consistent with squad_authorization spot-check",
+      "evidence": "No invite table, route, or UI flow found. Not independently re-derived this run (no new export) — carried forward from the 2026-09-07 export, consistent with this run's squad_authorization re-read.",
+      "source": "vital_sync_current_product_state.json export (2026-09-07), consistent with this run's squad_authorization spot-check",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "HIGH",
       "lifecycle": "ACTIVE"
     },
     "directive_engine": {
       "status": "MISSING",
-      "evidence": "CONFIRMED by direct search: no directive route, schema, or service exists anywhere. \"Directive\" only appears as UI/narrative copy in missions.ts, coach.ts, and mobile screens — not an executable system. Mission selection is onboarding-weighted randomness, not Alignment-driven.",
+      "evidence": "RE-VERIFIED this run by direct search at the same commit: no directive route, schema, or service exists anywhere. \"Directive\" still only appears as UI/narrative copy (mobile hooks/screens, mission/coach copy) — not an executable system. Mission selection remains onboarding-weighted randomness, not Alignment-driven.",
       "source": "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea (grep across artifacts/ and lib/)",
-      "source_date": "2026-09-07",
-      "freshness": "CURRENT_VERIFIED",
+      "source_date": "2026-09-14",
+      "freshness": "UNCHANGED — VERIFIED",
       "confidence": "HIGH",
-      "lifecycle": "ACTIVE — now the clearest product-differentiation gap (see Alignment note below)."
+      "lifecycle": "ACTIVE — still the clearest product-differentiation gap; unresolved for a full week now."
     },
     "directive_mission_connection": {
       "status": "MISSING",
-      "evidence": "Mission schema has no directive identifier; Alignment output is not consumed by mission selection.",
-      "source": "vital_sync_current_product_state.json export, consistent with directive_engine spot-check",
+      "evidence": "Mission schema has no directive identifier; Alignment output is not consumed by mission selection. Not independently re-derived this run — carried forward, consistent with directive_engine's re-verified absence.",
+      "source": "vital_sync_current_product_state.json export (2026-09-07), consistent with this run's directive_engine spot-check",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "HIGH",
       "lifecycle": "ACTIVE"
     },
     "alignment": {
       "status": "PARTIAL",
-      "evidence": "Alignment V2 (Training 30% / Nutrition 35% / Recovery 35%, missing-pillar redistribution, confidence states) — unchanged from Brief 02's finding, still real. No Alignment history table or write path, and its output does not drive Directive/Mission selection (see directive_engine).",
-      "source": "vital_sync_current_product_state.json export; algorithm itself previously directly verified in Brief 02",
+      "evidence": "Alignment V2 (Training 30% / Nutrition 35% / Recovery 35%, missing-pillar redistribution, confidence states) — not reverified this run beyond confirming its consumer-side gap (directive_engine) is still absent. No Alignment history table or write path.",
+      "source": "vital_sync_current_product_state.json export (2026-09-07); algorithm itself previously directly verified in Brief 02",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "HIGH",
       "lifecycle": "RESOLVED (algorithm, already recorded Brief 02) — the real remaining gap is Alignment feeding into anything downstream, tracked as directive_engine."
     },
     "recovery": {
       "status": "PARTIAL",
-      "evidence": "Daily user-scoped logging and V2 readiness scoring exist; validation and transactional consistency for XP writes and longitudinal reporting are incomplete.",
-      "source": "vital_sync_current_product_state.json export",
+      "evidence": "Daily user-scoped logging and V2 readiness scoring exist; validation and transactional consistency for XP writes and longitudinal reporting are incomplete. Not reverified this run.",
+      "source": "vital_sync_current_product_state.json export (2026-09-07)",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "HIGH",
       "lifecycle": "ACTIVE (algorithm already RESOLVED per Brief 02; data-supply/wearables remains the gap)"
     },
     "training": {
       "status": "MISSING (substantive model)",
-      "evidence": "CONFIRMED by direct read: workoutsTable schema is still only id/userId/name/duration/type/notes/loggedAt — zero exercise/set/rep/weight/RPE/volume/PR/progressive-overload fields. Unchanged in substance since Brief 01; only a nullable userId column was added.",
+      "evidence": "RE-VERIFIED this run by direct read at the same commit: workoutsTable schema is still only id/userId/name/duration/type/notes/loggedAt — zero exercise/set/rep/weight/RPE/volume/PR/progressive-overload fields. Unchanged in substance since Brief 01.",
       "source": "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea, lib/db/src/schema/workouts.ts",
-      "source_date": "2026-09-07",
-      "freshness": "CURRENT_VERIFIED",
+      "source_date": "2026-09-14",
+      "freshness": "UNCHANGED — VERIFIED",
       "confidence": "HIGH",
-      "lifecycle": "ACTIVE — confirmed unchanged, not merely un-reverified."
+      "lifecycle": "ACTIVE — confirmed unchanged for a second consecutive direct read."
     },
     "nutrition": {
       "status": "PARTIAL",
-      "evidence": "User-scoped meals/check-ins/water feed nutrition scoring (protein, hydration, consistency, optional calorie adherence). Mission claims aren't validated against actual logs.",
-      "source": "vital_sync_current_product_state.json export",
+      "evidence": "User-scoped meals/check-ins/water feed nutrition scoring (protein, hydration, consistency, optional calorie adherence). Mission claims aren't validated against actual logs. Not reverified this run.",
+      "source": "vital_sync_current_product_state.json export (2026-09-07)",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "HIGH",
       "lifecycle": "ACTIVE"
     },
     "ai_coach": {
       "status": "PARTIAL",
-      "evidence": "Real GPT-4o-mini chat confirmed (unchanged from Brief 02). New this export: a coach_messages table exists but is UNUSED by the route (client-held history only), and coach context does not query Alignment/Recovery/workout/meal data — it only sees profile/streak/mission data.",
-      "source": "vital_sync_current_product_state.json export; chat-is-real portion previously directly verified Brief 02",
+      "evidence": "Real GPT-4o-mini chat confirmed (unchanged from Brief 02). coach_messages table exists but is UNUSED by the route (client-held history only); coach context does not query Alignment/Recovery/workout/meal data — only profile/streak/mission data. Not reverified this run.",
+      "source": "vital_sync_current_product_state.json export (2026-09-07); chat-is-real portion previously directly verified Brief 02",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "HIGH",
       "lifecycle": "RESOLVED (chat engine, Brief 02) — context depth is a newly-specific, still-open gap."
     },
     "analytics": {
       "status": "PARTIAL",
-      "evidence": "A real foundation exists: validated web/mobile event ingestion, identity/session fields, deduplication, summary + protected export endpoints, in-memory rate limiting. Missing: cohort/retention calculations, a retention/deletion policy, consent controls, distributed rate limiting. This is a genuinely new area — no prior brief audited it at all.",
-      "source": "vital_sync_current_product_state.json export",
+      "evidence": "A real foundation exists: validated web/mobile event ingestion, identity/session fields, deduplication, summary + protected export endpoints, in-memory rate limiting. Missing: cohort/retention calculations, a retention/deletion policy, consent controls, distributed rate limiting. Not reverified this run. Per workflow boundaries, deep cohort/retention analysis belongs to a future Workflow 03 if built; this workflow only tracks that the foundation exists.",
+      "source": "vital_sync_current_product_state.json export (2026-09-07)",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "MEDIUM (not independently spot-checked, but internally detailed and consistent with everything that was checked)",
-      "lifecycle": "NEW — foundation implemented, maturity work remains. Per Workflow boundaries, deep cohort/retention analysis belongs to a future Workflow 03 if built; this workflow only tracks that the foundation exists."
+      "lifecycle": "NEW — foundation implemented, maturity work remains."
     },
     "wearables": {
       "status": "MISSING",
-      "evidence": "No HealthKit/Apple Health/Health Connect/Garmin/WHOOP/Oura/Fitbit/Strava integration found.",
-      "source": "vital_sync_current_product_state.json export, consistent with prior briefs",
+      "evidence": "No HealthKit/Apple Health/Health Connect/Garmin/WHOOP/Oura/Fitbit/Strava integration found as of last check. Not reverified this run (no new export, no targeted grep run against this specific commit this week).",
+      "source": "vital_sync_current_product_state.json export (2026-09-07), consistent with prior briefs",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "HIGH",
-      "lifecycle": "ACTIVE — confirmed still absent, still the top data-supply gap for Alignment/Recovery."
+      "lifecycle": "ACTIVE — still the top data-supply gap for Alignment/Recovery."
     },
     "database_integrity": {
       "status": "BROKEN",
-      "evidence": "CONFIRMED by direct read: profileTable.clerkId and workoutsTable.userId are both plain nullable text columns (no .notNull(), no .references() foreign key) with comments explicitly acknowledging this is for backward compatibility with pre-scoping rows. No foreign-key enforcement on squad membership either.",
+      "evidence": "RE-VERIFIED this run by direct read at the same commit: profileTable.clerkId and workoutsTable.userId are both still plain nullable text columns (no .notNull(), no .references() foreign key), with comments explicitly acknowledging this is for backward compatibility with pre-scoping rows. No fix has landed.",
       "source": "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea, lib/db/src/schema/profile.ts + workouts.ts",
-      "source_date": "2026-09-07",
-      "freshness": "CURRENT_VERIFIED",
+      "source_date": "2026-09-14",
+      "freshness": "UNCHANGED — VERIFIED",
       "confidence": "HIGH",
-      "lifecycle": "NEW — a genuinely new, currently-verified finding not present in any prior brief."
+      "lifecycle": "ACTIVE — confirmed unresolved for a full week now."
     },
     "monetization": {
       "status": "PARTIAL",
-      "evidence": "Stripe checkout/portal/subscription-status live (unchanged from Brief 02); entitlement handling for payment failure/refunds is limited.",
-      "source": "vital_sync_current_product_state.json export",
+      "evidence": "Stripe checkout/portal/subscription-status live (unchanged from Brief 02); entitlement handling for payment failure/refunds is limited. Not reverified this run.",
+      "source": "vital_sync_current_product_state.json export (2026-09-07)",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "HIGH",
       "lifecycle": "ACTIVE"
     },
     "security": {
       "status": "PARTIAL",
-      "evidence": "VAPID private key confirmed server-side only (the earlier VAPID concern does not apply). CORS reflects arbitrary origins with credentials rather than an allowlist; most endpoints lack rate limits; squad_authorization (see above) is the sharpest concrete instance of this category.",
-      "source": "vital_sync_current_product_state.json export",
+      "evidence": "VAPID private key confirmed server-side only. CORS reflects arbitrary origins with credentials rather than an allowlist; most endpoints lack rate limits; squad_authorization (re-verified this run, see above) remains the sharpest concrete instance of this category. Not otherwise reverified this run.",
+      "source": "vital_sync_current_product_state.json export (2026-09-07)",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "HIGH",
       "lifecycle": "ACTIVE — VAPID concern RESOLVED, CORS/rate-limiting/squad-auth remain."
     },
     "mobile": {
       "status": "COMPLETE",
-      "evidence": "Full Expo Router surface — auth, onboarding, dashboard, training, nutrition, stats, coach, profile, badges, squad, evidence, recovery, challenges, analytics, push.",
-      "source": "vital_sync_current_product_state.json export",
+      "evidence": "Full Expo Router surface — auth, onboarding, dashboard, training, nutrition, stats, coach, profile, badges, squad, evidence, recovery, challenges, analytics, push. Not reverified this run.",
+      "source": "vital_sync_current_product_state.json export (2026-09-07)",
       "source_date": "2026-09-07",
-      "freshness": "HIGH_CONFIDENCE",
+      "freshness": "UNCHANGED — NOT REVERIFIED",
       "confidence": "HIGH",
       "lifecycle": "ACTIVE (unchanged from Brief 02's structural finding)"
     },
     "marketing_product_alignment": {
-      "status": "MISMATCH (as of last direct check)",
-      "evidence": "landing.tsx last independently read 2026-08-31 still showed 'Coming Soon'/pricing-TBD copy. Not re-checked against the new 0435f9ea commit this run — deprioritized in favor of verifying the higher-stakes disputed claims above. vitalsyncify.com's live deployed site remains unreachable from the cloud sandbox (5+ consecutive weeks).",
-      "source": "github.com/faristjohar04-sketch/Vital-Sync @ ef43285 (last read), not yet re-verified at 0435f9ea",
-      "source_date": "2026-08-31",
-      "freshness": "STALE (this specific check, not the repo overall)",
-      "confidence": "MEDIUM",
-      "lifecycle": "ACTIVE — flagged for re-check next run now that a current commit exists to check it against."
+      "status": "MISMATCH",
+      "evidence": "RE-VERIFIED THIS RUN AT THE CURRENT COMMIT (the re-check flagged last week): artifacts/vital-sync/src/pages/landing.tsx at 0435f9ea still contains two 'Coming Soon' badges and an FAQ answer reading 'Pricing will be announced before launch.' The mismatch is not a stale artifact of an old commit read — it is confirmed present in the code the product is actually built from today. The deployed vitalsyncify.com site itself remains unreachable from this sandbox (6th consecutive week, EGRESS_BLOCKED) — this finding rests on repo source, not the live site.",
+      "source": "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea, artifacts/vital-sync/src/pages/landing.tsx",
+      "source_date": "2026-09-14",
+      "freshness": "CURRENT_VERIFIED",
+      "confidence": "HIGH",
+      "lifecycle": "ACTIVE — CHANGED THIS WEEK from a stale-commit check to a current-commit confirmation; the underlying mismatch itself is unchanged in substance, but is now verified against the current product source rather than a superseded one."
     }
   },
 
@@ -213,13 +222,13 @@
     {
       "area": "user_scoping",
       "originally_discovered": "2026-08-12 (confirmed MISSING via direct source read at ef43285)",
-      "resolved": "2026-09-08 (confirmed COMPLETE-ROUTE-LEVEL via direct source read at 0435f9ea)",
+      "resolved": "2026-09-08 (confirmed COMPLETE-ROUTE-LEVEL via direct source read at 0435f9ea; re-verified 2026-09-14)",
       "current_status": "PARTIAL — route-level scoping is real; database-level nullable ownership columns remain a distinct, lesser issue (see database_integrity)"
     },
     {
       "area": "squads_real_activity",
       "originally_discovered": "2026-08-12 (confirmed SIMULATED via direct source read at ef43285)",
-      "resolved": "2026-09-08 (confirmed COMPLETE via direct source read at 0435f9ea)",
+      "resolved": "2026-09-08 (confirmed COMPLETE via direct source read at 0435f9ea; re-verified 2026-09-14)",
       "current_status": "COMPLETE — real membership-driven activity confirmed, ghost code entirely removed"
     },
     {
@@ -230,16 +239,16 @@
     }
   ],
   "active_findings": [
-    "training (confirmed still shallow)",
-    "wearables (confirmed still absent)",
-    "squad_authorization (NEW, BROKEN, highest-priority current finding)",
-    "database_integrity (NEW, BROKEN)",
-    "directive_engine (confirmed absent — the real product-differentiation gap)",
-    "directive_mission_connection",
-    "squad_invites",
-    "ai_coach_context (narrowed scope, still open)",
-    "analytics (NEW area, foundation exists, maturity work remains)",
-    "marketing_product_alignment (last checked 2026-08-31, needs re-check against 0435f9ea)"
+    "squad_authorization (BROKEN, re-verified this run, unresolved for a full week — highest-priority current finding)",
+    "database_integrity (BROKEN, re-verified this run, unresolved for a full week)",
+    "directive_engine (confirmed absent, re-verified this run — the real product-differentiation gap)",
+    "training (confirmed still shallow, re-verified this run)",
+    "marketing_product_alignment (CHANGED THIS WEEK — re-verified at the current 0435f9ea commit, mismatch confirmed still present)",
+    "wearables (confirmed still absent, not reverified this run)",
+    "directive_mission_connection (not reverified this run)",
+    "squad_invites (not reverified this run)",
+    "ai_coach_context (narrowed scope, still open, not reverified this run)",
+    "analytics (foundation exists, maturity work remains, not reverified this run)"
   ],
   "unverified_findings": [
     "staging environment/configuration — UNVERIFIED, not a failure",
