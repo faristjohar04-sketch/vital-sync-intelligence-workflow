@@ -71,45 +71,52 @@ GAP_C = colors.HexColor("#2E6B44")
 GAP_D = colors.HexColor("#93630F")
 
 # ---------------------------------------------------------------------------
-# THIS WEEK'S DATA — Brief 09, compiled 2026-09-28. IMPORTANT: there was no
-# automated run on 2026-09-21 (a full weekly cycle was skipped; cause not
-# investigated by this run — worth a human checking the trigger/scheduler
-# config). The GitHub mirror has therefore sat frozen at 0435f9ea for 3
-# calendar weeks but only 2 actual check-ins (2026-09-14, 2026-09-28) have
-# observed it unchanged — which nonetheless meets this workflow's 2+-
-# consecutive-runs threshold, so the mirror is reclassified STALE this run
-# (see Product Source Freshness, auto-rendered from
-# vital_sync_product_state.json). Per the freshness gate, every product-
-# state-dependent recommendation below is explicitly PROVISIONAL this week
-# — re-verified against the mirror, but the mirror's standing as a proxy for
-# the real (possibly Replit-only) product state is unconfirmed. Competitor/
-# market sections are refreshed via WebSearch and are NOT gated by Layer A
-# freshness; several real competitor changes were found this run.
+# THIS WEEK'S DATA — Brief 09, compiled 2026-09-28, CORRECTED same-day after a
+# repo-owner PR comment. Original mistake: this run initially reported "no
+# automated run on 2026-09-21" and counted the GitHub mirror's unchanged
+# streak as only 2 checks. Both were wrong. A run DID fire on 2026-09-21 and
+# produced PR #2, independently reaching the same STALE conclusion a week
+# earlier — it was just never merged into main (this repo's documented local
+# `vitalsync-weeklyfinish` merge cron appears not to be running), so this run
+# started from a main still on Brief 08 content and undercounted. Verified
+# against PR #2 directly (timestamps, base commit, body) before accepting the
+# correction, per this workflow's own "a claim is not evidence" standard. The
+# correct count is 3 consecutive unchanged checks (2026-09-14, 2026-09-21,
+# 2026-09-28) — still STALE, same conclusion, corrected reasoning. This
+# correction also recovers a real finding from PR #2's independent research
+# that would otherwise have been lost: Apple's 2026-09-09 Health app redesign
+# (free Readiness score + AI Insights, no subscription), independently
+# re-verified via WebSearch this run and folded in below.
 # ---------------------------------------------------------------------------
 WEEK_DATA = {
     "report_date": "2026-09-28",
-    "run_label": "Brief 09 — GitHub mirror RECLASSIFIED STALE (2nd consecutive unchanged check at 0435f9ea meets the 2+-run threshold; note a 2026-09-21 run was missed); all three top BUILD NOW findings (Squad authorization, database integrity, Directive Engine) RE-VERIFIED unfixed for 3 weeks of calendar time, now PROVISIONAL pending fresher product-source access; competitor refresh finds real changes at Cora, FitCraft, Workout Quest, Gentler Streak, RazFit, and Strava",
+    "run_label": "Brief 09 — GitHub mirror RECLASSIFIED STALE (3rd consecutive unchanged check at 0435f9ea across 3 real runs, corrected same-day from an initial miscount after a repo-owner PR comment); all four top BUILD NOW findings RE-VERIFIED unfixed for 3 weeks, now PROVISIONAL; competitor refresh finds real changes at Cora, FitCraft, Workout Quest, Gentler Streak, RazFit, Strava, and (recovered from PR #2) Apple Health",
     "exec_summary": (
         "PRODUCT SOURCE FRESHNESS DOWNGRADED TO STALE THIS RUN — see the warning "
         "banner in the Product Source Freshness section below; all product-build "
         "recommendations in this report are provisional. Repository state and "
         "product state continue to be reported as two separate facts, per the "
-        "2026-09-07 repair. Note first: no automated run fired on 2026-09-21, so "
-        "this is a 2-calendar-week gap since Brief 08, not a normal weekly cycle "
-        "(worth a human checking the trigger/scheduler configuration). The GitHub "
-        "mirror's HEAD commit (0435f9ea) has still not moved — `git log`/`git diff` "
-        "against both the locally stored commit and a fresh `origin/main` fetch both "
-        "came back empty, a fresh clone confirmed the same HEAD and commit date. "
-        "This is the 2nd confirmed-unchanged check since the mirror's 2026-09-07 "
-        "advance, which meets this workflow's 2+-consecutive-runs threshold for "
+        "2026-09-07 repair. CORRECTION (same day, after this PR was first opened): "
+        "this brief originally claimed no automated run fired on 2026-09-21 and "
+        "counted only 2 consecutive unchanged checks. Both were wrong. The repo "
+        "owner pointed out, and this run independently verified against the actual "
+        "closed PR #2, that a run did fire on 2026-09-21 and reached this same "
+        "STALE conclusion a week earlier — it was simply never merged into `main` "
+        "(the documented local `vitalsync-weeklyfinish` merge cron appears not to "
+        "be running), so this run started from a `main` still holding Brief 08's "
+        "content. The correct picture: the GitHub mirror's HEAD commit (0435f9ea) "
+        "has now been independently confirmed unchanged across 3 real runs "
+        "(2026-09-14, 2026-09-21, 2026-09-28) — `git log`/`git diff` against both "
+        "the locally stored commit and a fresh `origin/main` fetch came back empty "
+        "each time. This clears this workflow's 2+-consecutive-runs threshold for "
         "reclassifying a frozen commit STALE — not because anything was read "
         "incorrectly, but because a mirror frozen for 3 weeks is no longer a "
         "confirmed-current proxy for a product the user has previously reported "
         "being worked on directly in Replit. Rather than stop at 'no diff,' the "
-        "actual source was independently re-read a third time at this same commit: "
-        "Squad list/leaderboard authorization is still CONFIRMED BROKEN in the "
-        "mirror (GET /squads and GET /squads/leaderboard still take an unused "
-        "request parameter, still no privacy filtering), database-level ownership "
+        "actual source was independently re-read again at this same commit: Squad "
+        "list/leaderboard authorization is still CONFIRMED BROKEN in the mirror "
+        "(GET /squads and GET /squads/leaderboard still take an unused request "
+        "parameter, still no privacy filtering), database-level ownership "
         "integrity is still CONFIRMED BROKEN (clerkId/userId columns still "
         "nullable, no foreign keys), the Directive Engine is still CONFIRMED "
         "ABSENT (a fresh grep found 'directive' only as narrative/UI copy; this "
@@ -118,27 +125,26 @@ WEEK_DATA = {
         "selection), and training depth is still CONFIRMED SHALLOW (same four-"
         "field workouts schema). The marketing/product mismatch (landing.tsx still "
         "shows 'Coming Soon' and undisclosed pricing) is likewise reconfirmed "
-        "unchanged in the mirror. All of these findings are therefore accurate "
-        "descriptions of the mirror as of today, but — per the STALE "
-        "reclassification — carry a live, acknowledged risk that the real product "
-        "in Replit has since diverged further. vitalsyncify.com itself remains "
-        "unreachable from this sandbox for a 7th consecutive check "
-        "(EGRESS_BLOCKED, logged as SOURCE_UNAVAILABLE, not as 'no marketing "
-        "changes'). Competitor and market research, independent of Layer A "
-        "freshness, was refreshed this run and found several real changes: Cora "
-        "expanded into strength and nutrition logging (closing distance toward a "
-        "full training+nutrition+recovery loop, on top of its existing wearable "
-        "integrations), FitCraft shipped multiple new AI trainer personas (beyond "
-        "just 'Ty'), Workout Quest added an 'AI-Fitness Chat' feature, Gentler "
-        "Streak shipped an iOS 27 update adding Siri App Intents and On-Screen "
-        "Awareness support on top of its already-tracked fatigue-aware Morning "
-        "Check-In notifications, RazFit's ongoing subscription price is now "
-        "CONFIRMED ($2.99/week or $29.99/year, resolving a previously-UNKNOWN "
-        "gap), and Strava raised new funding at a $2.2B valuation (Sequoia-led) "
-        "while continuing to push into structured strength training (new workout "
-        "log, muscle maps, expanded WHOOP integration). Bitletics remains "
-        "pre-launch with no ship date found — its Q2/Q3 2026 window (Q3 ends "
-        "2026-09-30) expires in 2 days as of this report, with nothing shipped."
+        "unchanged in the mirror. vitalsyncify.com itself remains unreachable from "
+        "this sandbox for a 7th consecutive check (EGRESS_BLOCKED, logged as "
+        "SOURCE_UNAVAILABLE). Competitor and market research, independent of Layer "
+        "A freshness, found several real changes: Cora expanded into strength and "
+        "nutrition logging, FitCraft shipped multiple new AI trainer personas, "
+        "Workout Quest added an 'AI-Fitness Chat' feature, Gentler Streak shipped "
+        "an iOS 27 Siri-integration update, RazFit's ongoing subscription price is "
+        "now CONFIRMED ($2.99/week or $29.99/year), and Strava raised new funding "
+        "at a $2.2B valuation while pushing into structured strength training. "
+        "Most significant, recovered from PR #2's research and independently "
+        "re-verified this run: Apple announced a major Health app redesign on "
+        "2026-09-09 — a free Readiness score, 'Health Age', and an AI Insights tab "
+        "powered by Apple Intelligence, no subscription required — alongside "
+        "reported Apple Fitness+ team layoffs. This is now arguably the single "
+        "biggest platform-scale threat to Vital Sync's Recovery/Alignment value "
+        "proposition, since it ships free to every iPhone/Watch user. Opportunity "
+        "#5 (Connect Apple Health as first wearable) moves BUILD NEXT -> BUILD NOW "
+        "as a direct result. Bitletics remains pre-launch with no ship date "
+        "found — its Q2/Q3 2026 window (Q3 ends 2026-09-30) expires in 2 days as "
+        "of this report, with nothing shipped."
     ),
     "top_actions": [
         ("Fix Squad authorization / privacy — RE-VERIFIED, unfixed for 3 weeks, PROVISIONAL",
@@ -169,18 +175,26 @@ WEEK_DATA = {
          "Directive -> Mission -> Execution -> Progress -> Feedback)."),
     ],
     "biggest_threat": (
-        "Broadened this run beyond a single competitor — platform- and capital-"
-        "scale pressure is compounding. Google's Gemini-powered Google Health "
-        "Premium ($9.99/mo, reads HRV/sleep/activity-load, generates adaptive "
-        "recovery-and-training guidance) is confirmed unchanged, no new expansion "
-        "found. Separately, Strava raised new funding at a $2.2B valuation "
-        "(Sequoia-led, found this run) while pushing further into structured "
-        "strength training (new workout log, muscle maps, expanded WHOOP "
-        "integration) — a direct incursion into the training-depth territory "
-        "where Vital Sync is confirmed weakest. WHOOP's $575M Series G (March "
-        "2026) reinforces the same pattern: capital keeps flowing to platform-"
-        "scale wearable/AI-coaching plays, not gamification-first apps like "
-        "Vital Sync."
+        "CHANGED THIS WEEK (recovered from PR #2's research, independently "
+        "re-verified via WebSearch): Apple announced a major Health app redesign "
+        "on 2026-09-09 — a free Readiness score ('Recover' / 'Pace Yourself' / "
+        "'Ready' / 'Go for it'), a 'Health Age' computation, and a new AI Insights "
+        "tab powered by Apple Intelligence delivering contextual wellness "
+        "guidance — with no subscription required, rolling out to every iPhone/"
+        "Apple Watch user later in 2026. This produces the same category of "
+        "output as Vital Sync's own Alignment engine (activity+sleep -> adaptive "
+        "daily guidance), for free, at platform scale — a materially bigger threat "
+        "than Google Health Premium's $9.99/mo equivalent, since Apple needs no "
+        "separate subscription and already owns the hardware relationship. "
+        "Apple also had reported Fitness+ team layoffs around 2026-09-20/22 (its "
+        "first under new CEO John Ternus) — read together, this looks like Apple "
+        "deprioritizing premium subscription fitness content in favor of free, "
+        "AI-driven Health features, which sharpens rather than softens the "
+        "threat. Separately (previously tracked): Google Health Premium confirmed "
+        "unchanged; Strava raised new funding at a $2.2B valuation while pushing "
+        "into structured strength training; WHOOP's $575M Series G (March 2026) "
+        "reinforces the same capital pattern favoring platform-scale wearable/AI-"
+        "coaching plays over gamification-first apps like Vital Sync."
     ),
     "biggest_gap": (
         "Unchanged in kind, sharpened further this run — nobody in the "
@@ -301,18 +315,23 @@ WEEK_DATA = {
          "EGRESS_BLOCKED)."),
     ],
     "changes_this_week": [
-        "REPOSITORY STATE RECLASSIFIED STALE: the GitHub mirror's HEAD (0435f9ea) "
-        "has still not moved — `git log`/`git diff` against both the stored commit "
-        "and a fresh `origin/main` fetch both came back empty, and a fresh clone "
-        "confirmed the same commit and commit date. This is the 2nd confirmed-"
-        "unchanged check since the mirror's 09-07 advance, which meets this "
-        "workflow's 2+-consecutive-runs threshold — the mirror moves from "
-        "CURRENT_VERIFIED to STALE this run. NOTE: no run fired on 2026-09-21, so "
-        "this reflects 3 calendar weeks of no movement observed across 2 actual "
-        "check-ins, not a clean weekly cadence. Repository state and product state "
-        "are reported separately, per the repair: STALE means the mirror can no "
-        "longer be trusted as a current proxy for the real product, not that the "
-        "code was read incorrectly.",
+        "REPOSITORY STATE RECLASSIFIED STALE (count corrected same-day): the "
+        "GitHub mirror's HEAD (0435f9ea) has still not moved — `git log`/`git "
+        "diff` against both the stored commit and a fresh `origin/main` fetch "
+        "both came back empty, and a fresh clone confirmed the same commit and "
+        "commit date. This is the 3rd confirmed-unchanged check since the "
+        "mirror's 09-07 advance (2026-09-14, 2026-09-21, 2026-09-28), which "
+        "clears this workflow's 2+-consecutive-runs threshold — the mirror "
+        "moves from CURRENT_VERIFIED to STALE this run. CORRECTION: this brief "
+        "originally claimed no run fired on 2026-09-21 and counted only 2 "
+        "checks; a repo-owner PR comment identified, and this run verified "
+        "against the actual closed PR #2, that a run did fire that day and "
+        "independently reached this same STALE conclusion a week earlier — it "
+        "was simply never merged into main (the documented local "
+        "`vitalsync-weeklyfinish` merge cron appears not to be running). "
+        "Repository state and product state are reported separately, per the "
+        "repair: STALE means the mirror can no longer be trusted as a current "
+        "proxy for the real product, not that the code was read incorrectly.",
         "ALL FOUR BUILD-NOW-TIER FINDINGS RE-VERIFIED, NOW PROVISIONAL: Squad "
         "list/leaderboard authorization, database-level ownership integrity, the "
         "Directive Engine's absence (including a new direct read of "
@@ -334,13 +353,21 @@ WEEK_DATA = {
         "funding at a $2.2B valuation (Sequoia-led) and continues pushing into "
         "structured strength training (new workout log, muscle maps, expanded "
         "WHOOP integration) — direct competitive pressure on Vital Sync's "
-        "confirmed-shallow training schema. Bitletics remains pre-launch with no "
-        "ship date found; its Q2/Q3 2026 window expires within 2 days of this "
-        "report with nothing shipped.",
+        "confirmed-shallow training schema. MOST SIGNIFICANT (recovered from "
+        "PR #2's research, independently re-verified this run): Apple announced "
+        "a free Health app redesign on 2026-09-09 (Readiness score, Health Age, "
+        "AI Insights tab, no subscription) alongside reported Fitness+ layoffs — "
+        "now the single biggest platform-scale threat found to date, moving "
+        "opportunity #5 (connect Apple Health) to BUILD NOW. Bitletics remains "
+        "pre-launch with no ship date found; its Q2/Q3 2026 window expires "
+        "within 2 days of this report with nothing shipped.",
         "NO NEW OR RESOLVED EVIDENCE CONFLICTS THIS RUN: the conflicts closed in "
         "Brief 07 (user_scoping, squad_real_activity RESOLVED; squad_authorization "
         "confirmed as a new finding, not a conflict) stand as they were — nothing "
-        "new was claimed this run without independently checkable evidence.",
+        "new was claimed this run without independently checkable evidence. (The "
+        "same-day correction above was resolved by direct verification against "
+        "PR #2, not by accepting the repo owner's comment on assertion — "
+        "consistent with this workflow's own evidence standard.)",
     ],
     "strengths": [
         "The Alignment engine and the AI chat coach remain genuinely well-engineered "
@@ -377,9 +404,10 @@ WEEK_DATA = {
         "Alignment/Recovery have little real data to score; not independently "
         "re-grepped against the current commit this run.",
         "PRODUCT SOURCE ITSELF IS NOW STALE: the GitHub mirror has sat frozen for "
-        "3 weeks (2 confirmed check-ins), meeting this workflow's threshold for "
-        "downgrading confidence in it as a proxy for the real, possibly-Replit-"
-        "only, current product state.",
+        "3 weeks across 3 confirmed check-ins (2026-09-14, 2026-09-21, "
+        "2026-09-28), meeting this workflow's threshold for downgrading "
+        "confidence in it as a proxy for the real, possibly-Replit-only, current "
+        "product state.",
     ],
     "cross_system_audit": [
         ("Training <-> Recovery", "LIVE (algorithm)", "Unchanged — Alignment engine "
@@ -402,6 +430,22 @@ WEEK_DATA = {
          "Challenges are static content, not adjusted by Alignment or recovery state."),
     ],
     "competitor_watch": [
+        ("Apple Health", "Indirect / Platform-scale", "NEW ROW THIS WEEK "
+         "(recovered from PR #2's 2026-09-21 research, independently "
+         "re-verified via WebSearch this run against Apple's own newsroom and "
+         "TechCrunch): a major Health app redesign announced 2026-09-09 — a "
+         "free Readiness score, a 'Health Age' computation, and a new AI "
+         "Insights tab powered by Apple Intelligence delivering personalized, "
+         "contextual wellness guidance from activity/sleep/other signals. No "
+         "subscription required; ships to every iPhone/Apple Watch user later "
+         "in 2026, starting in U.S. English. Separately, reported Apple "
+         "Fitness+ team layoffs (~2026-09-20/22, first under new CEO John "
+         "Ternus) suggest Apple is deprioritizing premium subscription fitness "
+         "content in favor of free AI-driven Health features. Not a "
+         "gamification competitor (no XP/streaks/badges), but the single "
+         "biggest platform-scale threat to Vital Sync's Recovery/Alignment "
+         "value proposition found to date — free, and Apple already owns the "
+         "hardware relationship Google Health Premium has to pay to approximate."),
         ("Vora", "Direct", "RE-CHECKED this week: voice-first all-in-one, 500+ "
          "wearable integrations. Pricing confirmed unchanged — $12.99/mo or "
          "$89.99/yr on the official App/Play Store listings, though a separate "
@@ -546,6 +590,16 @@ WEEK_DATA = {
         "Wearables are the retention lever — health monitoring has overtaken fitness "
         "tracking as the primary wearable use case; app-side integration is now table "
         "stakes for retention.",
+        "NEW THIS WEEK (recovered from PR #2's research, independently re-verified): "
+        "Apple announced a free Health app redesign on 2026-09-09 (Readiness score, "
+        "'Health Age', Apple-Intelligence-powered AI Insights, no subscription), "
+        "rolling out to every iPhone/Apple Watch user later in 2026. Days later "
+        "(~2026-09-20/22), Apple's Fitness+ subscription team was reportedly hit by "
+        "layoffs — its first under new CEO John Ternus (who took over 2026-09-01). "
+        "Read together, this looks like a platform giant shifting investment away "
+        "from paid fitness subscription content and toward free, AI-driven health "
+        "guidance baked into the OS — the exact category Vital Sync's Alignment "
+        "engine competes in, now available free at platform scale.",
         "Fitness app churn is brutal across every dataset checked (RE-CHECKED this "
         "week, figures consistent with prior briefs), though the exact numbers vary "
         "by source and methodology — a Sensor Tower Q4 2025 report shows "
@@ -603,15 +657,17 @@ WEEK_DATA = {
         ("-", "RESOLVED (was foundational blocker)", "Multi-user data scoping",
          "RE-CONFIRMED RESOLVED this run at the route level via fresh direct source "
          "read — was the top blocker through Brief 06."),
-        ("A", "Vital Sync behind, gap widening", "Recovery/Alignment DATA SUPPLY "
-         "(not logic)", "The scoring algorithms are real and competitive-grade; "
-         "Cora/Vora/Bevel/NATE win only because they have wearable data feeding "
-         "equivalent logic — and Google's Health Premium Gemini Coach shows the "
-         "same play at platform scale. Vital Sync's engine has zero wearable "
-         "connections. CHANGED THIS WEEK: Cora also added strength+nutrition "
-         "logging, meaning it now covers more of the full loop than a pure "
-         "recovery-scheduling tool — the data-supply gap is widening, not just "
-         "holding steady."),
+        ("A", "Vital Sync behind, gap widening sharply", "Recovery/Alignment DATA "
+         "SUPPLY (not logic)", "The scoring algorithms are real and competitive-"
+         "grade; Cora/Vora/Bevel/NATE win only because they have wearable data "
+         "feeding equivalent logic. CHANGED THIS WEEK (recovered from PR #2, "
+         "independently re-verified): Apple's free 2026-09-09 Health redesign "
+         "(Readiness score + AI Insights, no subscription) now offers the same "
+         "category of output at platform scale, for free — a bigger version of "
+         "the threat Google Health Premium's paid equivalent already posed. "
+         "Cora also added strength+nutrition logging this week. Vital Sync's "
+         "engine has zero wearable connections — the data-supply gap is widening "
+         "sharply, not just holding steady."),
         ("A", "Vital Sync behind, PROVISIONAL", "Directive Engine", "RE-CONFIRMED "
          "ABSENT this run (including a direct read of getTomorrowDirective()'s "
          "seed-pool-lookup implementation): no executable Directive Engine or "
@@ -674,15 +730,21 @@ WEEK_DATA = {
          "human manually checking the live deployed site would close this gap "
          "fastest.",
          "BUILD NOW", "Trust", "No AI Needed", "HIGH"),
-        (5, "Connect Apple Health as first wearable", "Broadest reach, lowest effort; "
-         "feeds the already-working Alignment/Recovery algorithms with real data. "
-         "Competitive urgency reinforced further this week: Cora added strength+"
-         "nutrition logging on top of its wearable integrations, and Strava raised "
-         "new funding at a $2.2B valuation while pushing into strength training — "
-         "capital and feature depth both keep flowing to wearable-data-driven "
-         "coaching. Not reverified against Vital Sync's source this run beyond "
-         "confirming wearables remain absent per the last export.",
-         "BUILD NEXT", "A", "No AI Needed", "HIGH"),
+        (5, "Connect Apple Health as first wearable [MOVED UP: BUILD NEXT -> BUILD "
+         "NOW]", "Broadest reach, lowest effort; feeds the already-working "
+         "Alignment/Recovery algorithms with real data. Moved to BUILD NOW this "
+         "run on recovered, independently re-verified evidence: Apple's "
+         "2026-09-09 Health app redesign ships a free Readiness score + AI "
+         "Insights tab to every iPhone/Watch user, no subscription — the exact "
+         "value proposition Vital Sync's Alignment engine offers, now available "
+         "free at platform scale. Reported Apple Fitness+ layoffs the same week "
+         "suggest Apple is doubling down on free AI Health features over paid "
+         "fitness content. Cora's strength+nutrition expansion and Strava's new "
+         "$2.2B funding round (both found this run) add further urgency. Not "
+         "reverified against Vital Sync's own source this run beyond confirming "
+         "wearables remain absent per the last export — the urgency here is "
+         "entirely external/competitive, not a change in Vital Sync's own state.",
+         "BUILD NOW", "A", "No AI Needed", "HIGH"),
         (6, "Surface the real AI chat coach more prominently, and widen its context",
          "/coach/message is live GPT-4o-mini — its context excludes Alignment/"
          "Recovery/workout/nutrition data (confirmed Brief 07, not reverified this "
@@ -765,12 +827,18 @@ WEEK_DATA = {
         "of these four now carries an explicit provisional caveat: the mirror's "
         "standing as a current proxy for the real product is unconfirmed after 3 "
         "weeks frozen (note: a run was skipped on 2026-09-21).",
-        "#5 (Connect Apple Health as first wearable) — STILL BUILD NEXT/HIGH, no "
-        "change in bucket. Competitive backdrop sharpened further this week: Cora "
-        "added strength+nutrition logging on top of its wearables, and Strava "
-        "raised new funding at a $2.2B valuation while pushing into strength "
-        "training. Vital Sync's own wearables status was not independently "
-        "re-grepped this run — carried from the last export.",
+        "#5 (Connect Apple Health as first wearable) — MOVED UP: BUILD NEXT/HIGH "
+        "-> BUILD NOW/HIGH. Driven by recovered, independently re-verified "
+        "evidence: Apple's 2026-09-09 Health app redesign (free Readiness score "
+        "+ AI Insights tab, no subscription, ships to every iPhone/Watch user) "
+        "plus reported Fitness+ layoffs the same period. This finding originated "
+        "in PR #2's 2026-09-21 research and was recovered and independently "
+        "re-verified this run after a repo-owner correction (see this brief's "
+        "opening note) — it is not new research from this run alone. Cora's "
+        "strength+nutrition expansion and Strava's $2.2B funding round add "
+        "further, separately-found urgency. Vital Sync's own wearables status "
+        "was not independently re-grepped this run — carried from the last "
+        "export.",
         "#6 (Surface + widen AI coach context) — STILL BUILD NEXT/MEDIUM, evidence "
         "sharpened: Workout Quest and FitCraft both shipped their own 'AI coach' "
         "features this run (genuineness UNVERIFIED), meaning the bare claim of "
@@ -807,23 +875,43 @@ WEEK_DATA = {
         "market validation for #8, not a threat in its own right.",
         "#9, #10 (nutrition goals, voice logging) — UNCHANGED, not reverified this "
         "run.",
-        "NO ITEMS RESOLVED OR REMOVED THIS RUN. The backlog's shape is stable; "
-        "what changed most this week is the freshness classification itself "
-        "(github_mirror: CURRENT_VERIFIED -> STALE) rather than any individual "
-        "finding's substance — every product-state-dependent item (#1-4, #7, #8, "
-        "gap type A/C rows) now explicitly carries that provisional caveat, which "
-        "is new this run even though none of the underlying evidence changed.",
+        "NO ITEMS RESOLVED OR REMOVED THIS RUN, but ONE MOVED BUCKETS: #5 "
+        "(BUILD NEXT -> BUILD NOW, see above). What changed most this week is "
+        "the freshness classification itself (github_mirror: CURRENT_VERIFIED "
+        "-> STALE, corrected same-day to a 3rd-consecutive-check count after a "
+        "repo-owner correction — see this brief's opening note) and the "
+        "recovery of PR #2's Apple Health finding, rather than any change in "
+        "Vital Sync's own product-state findings — every product-state-"
+        "dependent item (#1-4, #7, #8, gap type A/C rows) now explicitly "
+        "carries a provisional caveat.",
     ],
     "sources": [
+        "CORRECTION NOTE (2026-09-28, same day as this brief's initial publish): "
+        "a repo-owner PR comment identified that this brief originally "
+        "mischaracterized 2026-09-21 as a missed automation run and undercounted "
+        "the GitHub mirror's unchanged streak at 2 checks instead of 3. Verified "
+        "against the actual closed PR #2 (its creation timestamp, base commit, "
+        "and body) before accepting the correction — the 09-21 run did fire and "
+        "reached the same STALE conclusion independently, but was never merged "
+        "into main. This also recovered PR #2's Apple Health finding (below), "
+        "independently re-verified via WebSearch rather than taken on the PR's "
+        "word alone.",
+        "Apple Health redesign — independently re-verified via WebSearch this "
+        "run (not accepted from PR #2's summary alone): apple.com/newsroom "
+        "(2026-09-09 announcement), TechCrunch (2026-09-09 coverage of the "
+        "Readiness/Health-Age redesign), MacRumors and 9to5Mac (Fitness+ layoffs "
+        "coverage, ~2026-09-20/22).",
         "github.com/faristjohar04-sketch/Vital-Sync — RE-CHECKED this run via "
         "`git log`/`git diff` against both the locally stored commit "
         "(0435f9ea79a871cd1578e2dc22e8e3055bebc50e) and a fresh `origin/main` "
         "fetch — both empty, and a fresh clone independently confirmed the same "
-        "HEAD and commit date. This is the 2nd confirmed-unchanged check since "
-        "Brief 07's 2026-09-07 advance, which meets the 2+-consecutive-runs "
-        "threshold — the mirror is reclassified STALE this run. NOTE: no "
-        "automated run fired on 2026-09-21, so 3 calendar weeks have passed "
-        "across only 2 actual check-ins.",
+        "HEAD and commit date. This is the 3rd confirmed-unchanged check since "
+        "Brief 07's 2026-09-07 advance (2026-09-14, 2026-09-21 via PR #2, and "
+        "2026-09-28), which clears the 2+-consecutive-runs threshold — the "
+        "mirror is reclassified STALE this run. CORRECTED: an earlier version "
+        "of this brief wrongly claimed no run fired on 2026-09-21; a run did "
+        "fire and independently reached this same conclusion a week earlier "
+        "(PR #2), it just was never merged into main.",
         "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea — direct source "
         "RE-READS performed this run (same commit, fresh read, not assumed "
         "unchanged from Brief 08): artifacts/api-server/src/routes/profile.ts (user "
