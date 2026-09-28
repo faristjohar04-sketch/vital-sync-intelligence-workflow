@@ -71,72 +71,92 @@ GAP_C = colors.HexColor("#2E6B44")
 GAP_D = colors.HexColor("#93630F")
 
 # ---------------------------------------------------------------------------
-# THIS WEEK'S DATA — Brief 05, compiled 2026-08-31. Vital-Sync-specific
-# sections are carried forward unchanged from Brief 04: the source repo has
-# zero commits since then (HEAD still ef43285, verified via git log/diff
-# against both the local clone and origin/main). vitalsyncify.com's direct
-# fetch is STILL blocked (4th consecutive week, sandbox egress proxy), but
-# this run finds an alternate verification path: the marketing site's own
-# source (artifacts/vital-sync/src/pages/landing.tsx) lives in the same
-# repo we already have read access to, and it is unchanged since Aug 11 —
-# so the marketing/product mismatch is now genuinely re-confirmed this
-# week, not just carried forward on a stale caveat. Competitor/market
-# sections are refreshed via WebSearch; "Changes this week" means real
-# week-over-week comparison — confirmed-unchanged items are stated as
-# such, not silently re-asserted, and nothing here is fabricated to fill a
-# gap.
+# THIS WEEK'S DATA — Brief 09, compiled 2026-09-28, CORRECTED same-day after a
+# repo-owner PR comment. Original mistake: this run initially reported "no
+# automated run on 2026-09-21" and counted the GitHub mirror's unchanged
+# streak as only 2 checks. Both were wrong. A run DID fire on 2026-09-21 and
+# produced PR #2, independently reaching the same STALE conclusion a week
+# earlier — it was just never merged into main (this repo's documented local
+# `vitalsync-weeklyfinish` merge cron appears not to be running), so this run
+# started from a main still on Brief 08 content and undercounted. Verified
+# against PR #2 directly (timestamps, base commit, body) before accepting the
+# correction, per this workflow's own "a claim is not evidence" standard. The
+# correct count is 3 consecutive unchanged checks (2026-09-14, 2026-09-21,
+# 2026-09-28) — still STALE, same conclusion, corrected reasoning. This
+# correction also recovers a real finding from PR #2's independent research
+# that would otherwise have been lost: Apple's 2026-09-09 Health app redesign
+# (free Readiness score + AI Insights, no subscription), independently
+# re-verified via WebSearch this run and folded in below.
 # ---------------------------------------------------------------------------
 WEEK_DATA = {
-    "report_date": "2026-09-14",
-    "run_label": "Brief 08 — first scheduled weekly run since the repair: GitHub mirror CONFIRMED UNCHANGED at 0435f9ea (1st unchanged check since the 09-07 advance, not yet STALE); all three top BUILD NOW findings (Squad authorization, database integrity, Directive Engine) RE-VERIFIED by fresh direct source read, still unfixed a full week later; marketing/product mismatch RE-VERIFIED against the current commit and promoted back to BUILD NOW; competitor/market research refreshed for the first time in two cycles",
+    "report_date": "2026-09-28",
+    "run_label": "Brief 09 — GitHub mirror RECLASSIFIED STALE (3rd consecutive unchanged check at 0435f9ea across 3 real runs, corrected same-day from an initial miscount after a repo-owner PR comment); all four top BUILD NOW findings RE-VERIFIED unfixed for 3 weeks, now PROVISIONAL; competitor refresh finds real changes at Cora, FitCraft, Workout Quest, Gentler Streak, RazFit, Strava, and (recovered from PR #2) Apple Health",
     "exec_summary": (
-        "First scheduled Monday-cadence run since the 2026-09-07 source-of-truth "
-        "repair and the 2026-09-08 manual validation of it. Repository state and "
-        "product state are reported as two separate facts, per that repair: the "
-        "GitHub mirror's HEAD commit (0435f9ea) has not moved since last run — "
-        "`git log`/`git diff` against both the locally stored commit and a fresh "
-        "`origin/main` fetch both came back empty. That is the 1st confirmed-"
-        "unchanged check since the mirror advanced out of its prior 26-day freeze; "
-        "this workflow's own gate requires 2+ consecutive unchanged runs before "
-        "reclassifying a commit STALE, so it stays CURRENT_VERIFIED this week, not "
-        "downgraded. Rather than stop at 'no diff,' the actual source was re-read at "
-        "this same commit: Squad list/leaderboard authorization is still CONFIRMED "
-        "BROKEN (GET /squads and GET /squads/leaderboard still take an unused "
-        "request parameter, still no privacy filtering), database-level ownership "
-        "integrity is still CONFIRMED BROKEN (clerkId/userId columns still nullable, "
-        "no foreign keys), the Directive Engine is still CONFIRMED ABSENT (a fresh "
-        "grep found 'directive' only as narrative/UI copy, no executable system), and "
-        "training depth is still CONFIRMED SHALLOW (same four-field workouts schema). "
-        "All three BUILD NOW items from Brief 07 are therefore unresolved for a full "
-        "week now — this is not new information, but it is newly reconfirmed rather "
-        "than merely carried forward. One real change this run: the marketing/"
-        "product mismatch flagged last week as 'needs re-check against 0435f9ea' was "
-        "re-checked — landing.tsx at the current commit still shows two 'Coming "
-        "Soon' badges and 'Pricing will be announced before launch,' so the finding "
-        "is now verified against current product source rather than a superseded "
-        "commit, and moves back to BUILD NOW from last week's provisional BUILD "
-        "NEXT downgrade. vitalsyncify.com itself remains unreachable from this "
-        "sandbox for a 6th straight week (EGRESS_BLOCKED, logged as SOURCE_UNAVAILABLE, "
-        "not as 'no marketing changes'). Competitor and market research, skipped "
-        "entirely in Brief 07's manual validation run, was refreshed this week: no "
-        "material pricing or positioning changes among the five deep-dived direct "
-        "competitors, Bitletics remains pre-launch with its Q2/Q3 2026 window now "
-        "roughly two weeks from expiring with nothing shipped, and two new market "
-        "signals surfaced — MyFitnessPal's acquisition of nutrition-AI app Cal AI "
-        "(further sector consolidation) and Gentler Streak shipping fatigue-aware "
-        "'Morning Check-In' notifications that flag overreaching/rest days from real "
-        "data, which sharpens (without yet closing) the open 'fatigue-aware "
-        "gamification' market gap this brief already tracks."
+        "PRODUCT SOURCE FRESHNESS DOWNGRADED TO STALE THIS RUN — see the warning "
+        "banner in the Product Source Freshness section below; all product-build "
+        "recommendations in this report are provisional. Repository state and "
+        "product state continue to be reported as two separate facts, per the "
+        "2026-09-07 repair. CORRECTION (same day, after this PR was first opened): "
+        "this brief originally claimed no automated run fired on 2026-09-21 and "
+        "counted only 2 consecutive unchanged checks. Both were wrong. The repo "
+        "owner pointed out, and this run independently verified against the actual "
+        "closed PR #2, that a run did fire on 2026-09-21 and reached this same "
+        "STALE conclusion a week earlier — it was simply never merged into `main` "
+        "(the documented local `vitalsync-weeklyfinish` merge cron appears not to "
+        "be running), so this run started from a `main` still holding Brief 08's "
+        "content. The correct picture: the GitHub mirror's HEAD commit (0435f9ea) "
+        "has now been independently confirmed unchanged across 3 real runs "
+        "(2026-09-14, 2026-09-21, 2026-09-28) — `git log`/`git diff` against both "
+        "the locally stored commit and a fresh `origin/main` fetch came back empty "
+        "each time. This clears this workflow's 2+-consecutive-runs threshold for "
+        "reclassifying a frozen commit STALE — not because anything was read "
+        "incorrectly, but because a mirror frozen for 3 weeks is no longer a "
+        "confirmed-current proxy for a product the user has previously reported "
+        "being worked on directly in Replit. Rather than stop at 'no diff,' the "
+        "actual source was independently re-read again at this same commit: Squad "
+        "list/leaderboard authorization is still CONFIRMED BROKEN in the mirror "
+        "(GET /squads and GET /squads/leaderboard still take an unused request "
+        "parameter, still no privacy filtering), database-level ownership "
+        "integrity is still CONFIRMED BROKEN (clerkId/userId columns still "
+        "nullable, no foreign keys), the Directive Engine is still CONFIRMED "
+        "ABSENT (a fresh grep found 'directive' only as narrative/UI copy; this "
+        "run additionally read getTomorrowDirective()'s actual implementation and "
+        "confirmed it is a fixed seed-indexed pool lookup, not Alignment-driven "
+        "selection), and training depth is still CONFIRMED SHALLOW (same four-"
+        "field workouts schema). The marketing/product mismatch (landing.tsx still "
+        "shows 'Coming Soon' and undisclosed pricing) is likewise reconfirmed "
+        "unchanged in the mirror. vitalsyncify.com itself remains unreachable from "
+        "this sandbox for a 7th consecutive check (EGRESS_BLOCKED, logged as "
+        "SOURCE_UNAVAILABLE). Competitor and market research, independent of Layer "
+        "A freshness, found several real changes: Cora expanded into strength and "
+        "nutrition logging, FitCraft shipped multiple new AI trainer personas, "
+        "Workout Quest added an 'AI-Fitness Chat' feature, Gentler Streak shipped "
+        "an iOS 27 Siri-integration update, RazFit's ongoing subscription price is "
+        "now CONFIRMED ($2.99/week or $29.99/year), and Strava raised new funding "
+        "at a $2.2B valuation while pushing into structured strength training. "
+        "Most significant, recovered from PR #2's research and independently "
+        "re-verified this run: Apple announced a major Health app redesign on "
+        "2026-09-09 — a free Readiness score, 'Health Age', and an AI Insights tab "
+        "powered by Apple Intelligence, no subscription required — alongside "
+        "reported Apple Fitness+ team layoffs. This is now arguably the single "
+        "biggest platform-scale threat to Vital Sync's Recovery/Alignment value "
+        "proposition, since it ships free to every iPhone/Watch user. Opportunity "
+        "#5 (Connect Apple Health as first wearable) moves BUILD NEXT -> BUILD NOW "
+        "as a direct result. Bitletics remains pre-launch with no ship date "
+        "found — its Q2/Q3 2026 window (Q3 ends 2026-09-30) expires in 2 days as "
+        "of this report, with nothing shipped."
     ),
     "top_actions": [
-        ("Fix Squad authorization / privacy — RE-VERIFIED, still unfixed a week later",
-         "RE-CONFIRMED BROKEN by fresh direct source read at the same commit: "
+        ("Fix Squad authorization / privacy — RE-VERIFIED, unfixed for 3 weeks, PROVISIONAL",
+         "RE-CONFIRMED BROKEN in the mirror by fresh direct source read: "
          "GET /squads and GET /squads/leaderboard still accept no authentication "
          "(unused request parameter) and still return every active squad with zero "
          "privacy filtering, even though the squads table has a privacy column. No "
          "admin/owner role, no invite flow. Still the sharpest concrete trust/"
-         "security gap in the product, and now a week old with no fix landed."),
-        ("Enforce database-level ownership — RE-VERIFIED, still unfixed a week later",
+         "security gap in the product. Flagged PROVISIONAL this run only because "
+         "the mirror itself is now STALE-classified (3 weeks frozen) — not because "
+         "the finding is in doubt at this commit."),
+        ("Enforce database-level ownership — RE-VERIFIED, unfixed for 3 weeks, PROVISIONAL",
          "RE-CONFIRMED BROKEN by fresh direct source read: profileTable.clerkId and "
          "workoutsTable.userId are still nullable text columns with no foreign-key "
          "constraints, by explicit design comment ('nullable for pre-scoping rows'). "
@@ -144,90 +164,115 @@ WEEK_DATA = {
          "enforces it — a determined bad actor or a future bug could still write "
          "cross-user data."),
         ("Build the Alignment -> Directive -> Mission connection — RE-VERIFIED, "
-         "still unfixed a week later",
-         "RE-CONFIRMED ABSENT by a fresh full-source grep: no Directive Engine, no "
-         "directive schema, no Alignment-driven mission selection exists anywhere in "
-         "the current source — missions are still chosen by onboarding-weighted "
-         "randomness. Still the clearest gap in Vital Sync's own stated "
+         "unfixed for 3 weeks, PROVISIONAL",
+         "RE-CONFIRMED ABSENT by a fresh full-source grep, and this run additionally "
+         "read getTomorrowDirective()'s actual implementation directly: it is "
+         "`TOMORROW_DIRECTIVE_POOL[seed % pool.length]` — a fixed pool lookup, not "
+         "Alignment-driven selection. No Directive Engine, no directive schema "
+         "exists anywhere in the mirror — missions are still chosen by onboarding-"
+         "weighted randomness. Still the clearest gap in Vital Sync's own stated "
          "differentiation model (Training + Nutrition + Recovery -> Alignment -> "
-         "Directive -> Mission -> Execution -> Progress -> Feedback) — the first "
-         "three steps and the last two exist; the middle connective step does not."),
+         "Directive -> Mission -> Execution -> Progress -> Feedback)."),
     ],
     "biggest_threat": (
-        "Unchanged, and re-verified this run via WebSearch — Google's Gemini-"
-        "powered Google Health Premium ($9.99/mo, reads HRV/sleep/activity-load, "
-        "generates adaptive recovery-and-training guidance at platform scale). No "
-        "expansion beyond May 2026's Fitbit/Pixel-first launch was found this week. "
-        "Separately, WHOOP's $575M Series G (March 2026, found this run) reinforces "
-        "how much capital platform-scale wearable/AI-coaching plays command versus "
-        "gamification-first apps like Vital Sync — a funding-market data point, not "
-        "a feature change."
+        "CHANGED THIS WEEK (recovered from PR #2's research, independently "
+        "re-verified via WebSearch): Apple announced a major Health app redesign "
+        "on 2026-09-09 — a free Readiness score ('Recover' / 'Pace Yourself' / "
+        "'Ready' / 'Go for it'), a 'Health Age' computation, and a new AI Insights "
+        "tab powered by Apple Intelligence delivering contextual wellness "
+        "guidance — with no subscription required, rolling out to every iPhone/"
+        "Apple Watch user later in 2026. This produces the same category of "
+        "output as Vital Sync's own Alignment engine (activity+sleep -> adaptive "
+        "daily guidance), for free, at platform scale — a materially bigger threat "
+        "than Google Health Premium's $9.99/mo equivalent, since Apple needs no "
+        "separate subscription and already owns the hardware relationship. "
+        "Apple also had reported Fitness+ team layoffs around 2026-09-20/22 (its "
+        "first under new CEO John Ternus) — read together, this looks like Apple "
+        "deprioritizing premium subscription fitness content in favor of free, "
+        "AI-driven Health features, which sharpens rather than softens the "
+        "threat. Separately (previously tracked): Google Health Premium confirmed "
+        "unchanged; Strava raised new funding at a $2.2B valuation while pushing "
+        "into structured strength training; WHOOP's $575M Series G (March 2026) "
+        "reinforces the same capital pattern favoring platform-scale wearable/AI-"
+        "coaching plays over gamification-first apps like Vital Sync."
     ),
     "biggest_gap": (
-        "Unchanged, but sharpened by a new market signal this run — nobody in the "
+        "Unchanged in kind, sharpened further this run — nobody in the "
         "competitive set ties streak/gamification mechanics to real fatigue data. "
-        "Gentler Streak (found this run) now ships 'Morning Check-In Notifications' "
-        "that flag overreaching or rest days from real workout/health data — closer "
-        "to the fatigue-aware concept than anything previously tracked, though "
-        "Gentler Streak has no XP/streak-reward gamification layer to fuse it with. "
-        "On the product side, Vital Sync's own Directive Engine (re-confirmed "
-        "absent this run) remains the prerequisite for doing this well — the gap, "
-        "the market validation, and the internal dependency are now all "
-        "independently verified facts, not assumptions."
+        "Gentler Streak shipped an iOS 27 update (Siri App Intents, On-Screen "
+        "Awareness) on top of its already-tracked fatigue-aware Morning Check-In "
+        "notifications — still the closest real-world precedent, still with no "
+        "XP/streak-reward layer to fuse it to. Separately, Cora's expansion into "
+        "strength + nutrition logging (found this run) means a second competitor "
+        "is now closing in on Vital Sync's full training+nutrition+recovery loop "
+        "claim, from the data-supply side rather than the gamification side. On "
+        "the product side, Vital Sync's own Directive Engine (re-confirmed absent "
+        "this run, PROVISIONAL per the STALE mirror) remains the prerequisite for "
+        "doing any of this well."
     ),
     "biggest_weakness": (
-        "Unchanged from Brief 07 in substance, but now a week older with no fix: "
-        "Squad authorization is RE-CONFIRMED BROKEN (unauthenticated list/"
-        "leaderboard, no privacy enforcement) and database-level ownership "
-        "integrity is RE-CONFIRMED BROKEN (nullable, unenforced foreign keys) — "
-        "both re-verified by fresh direct source read against the same commit, not "
-        "re-asserted from last week's finding. Per-user scoping at the route level "
-        "remains genuinely fixed underneath these two open gaps."
+        "Unchanged in substance, now 3 weeks old with no fix and PROVISIONAL "
+        "pending fresher product-source access: Squad authorization is "
+        "RE-CONFIRMED BROKEN (unauthenticated list/leaderboard, no privacy "
+        "enforcement) and database-level ownership integrity is RE-CONFIRMED "
+        "BROKEN (nullable, unenforced foreign keys) — both re-verified by fresh "
+        "direct source read against the same commit. Per-user scoping at the "
+        "route level remains genuinely fixed underneath these two open gaps."
     ),
     "biggest_advantage": (
         "Unchanged — the Alignment engine and the real GPT-4o-mini coach chat "
         "remain genuinely well-built, and the VAPID private-key concern remains "
         "resolved (server-side only, no exposure found). Not reverified line-by-"
         "line this run; no evidence surfaced that would change this assessment. "
-        "The gap is still data supply (wearables) and the missing Directive "
-        "connective layer, not engineering quality or pricing."
+        "Worth watching: Workout Quest added an 'AI-Fitness Chat' feature and "
+        "FitCraft added multiple AI trainer personas this run — neither confirmed "
+        "to be genuinely LLM-backed versus scripted (UNVERIFIED specificity), but "
+        "the 'AI coach' claim is no longer differentiating on its own; depth of "
+        "context is what would keep Vital Sync ahead, and that context depth is "
+        "still the open gap (see ai_coach_context)."
     ),
     "one_to_ignore": (
-        "Same as Brief 07 — chasing deeper RPG mechanics (pets, gear, cosmetic "
-        "avatars), and copying RazFit's or Bitletics' formats directly (Bitletics "
-        "still hasn't shipped — see Competitor Changes). Still not worth doing yet: "
-        "building the fatigue-aware streak mechanic or any Directive-Engine-"
+        "Same guidance as prior briefs — chasing deeper RPG mechanics (pets, "
+        "gear, cosmetic avatars), and copying RazFit's or Bitletics' formats "
+        "directly (Bitletics still hasn't shipped, with its launch window now "
+        "expiring within days — see Competitor Changes). Still not worth doing "
+        "yet: building the fatigue-aware streak mechanic or any Directive-Engine-"
         "adjacent feature before the Directive Engine itself exists, re-confirmed "
         "absent again this run. The dependency order matters; sequencing work on "
         "top of a foundation that isn't there yet just creates more to redo later."
     ),
     "vital_sync_current_state": [
         ("Multi-User / Data Scoping", "PARTIAL", "RE-VERIFIED this run by direct "
-         "source read at the unchanged commit: getOrCreateProfile(userId) and "
-         "equivalents still filter WHERE clerkId/userId = the authenticated user. "
-         "Database-level enforcement is separately BROKEN — see next row."),
-        ("Database Integrity", "BROKEN", "RE-VERIFIED this run, still unfixed: "
-         "ownership columns (profileTable.clerkId, workoutsTable.userId) are "
-         "nullable with no NOT NULL constraint and no foreign keys, by explicit "
-         "design comment. Route-level scoping is real; the database itself still "
-         "doesn't enforce it."),
+         "source read at the unchanged (now STALE-classified) commit: "
+         "getOrCreateProfile(userId) and equivalents still filter WHERE "
+         "clerkId/userId = the authenticated user. Database-level enforcement is "
+         "separately BROKEN — see next row."),
+        ("Database Integrity", "BROKEN", "RE-VERIFIED this run, still unfixed for "
+         "3 weeks of calendar time: ownership columns (profileTable.clerkId, "
+         "workoutsTable.userId) are nullable with no NOT NULL constraint and no "
+         "foreign keys, by explicit design comment. Route-level scoping is real; "
+         "the database itself still doesn't enforce it."),
         ("Engagement / Gamification", "LIVE", "XP, Levels, Identity Ranks, Discipline "
          "Score, streaks + streak-freeze, 15 badges, 4 Boss Battles, 4 default 30-day "
          "Challenges. Not reverified in detail this run beyond the Squads rows below."),
-        ("Squads — Real Activity", "COMPLETE", "RE-VERIFIED this run: "
-         "getGhostCompletions and all seeded/simulated-activity code still confirmed "
-         "removed. Stats still derive from real memberships and real mission/workout "
-         "rows."),
+        ("Squads — Real Activity", "COMPLETE", "RE-VERIFIED this run: a full grep "
+         "for getGhostCompletions/seededRand/ghost across the api-server source "
+         "returned zero matches. Stats still derive from real memberships and real "
+         "mission/workout rows."),
         ("Squads — Authorization / Privacy", "BROKEN", "RE-VERIFIED this run, still "
-         "unfixed a week later: GET /squads and GET /squads/leaderboard still have "
-         "no auth check and return all squads with no privacy filtering despite a "
-         "privacy column existing. No invite flow, no owner/admin role logic."),
+         "unfixed for 3 weeks of calendar time: GET /squads and GET "
+         "/squads/leaderboard still have no auth check and return all squads with "
+         "no privacy filtering despite a privacy column existing. No invite flow, "
+         "no owner/admin role logic."),
         ("Nutrition", "PARTIAL", "Meal logging works (name/cals/macros). Protein + "
          "water + a nullable calorie target exist; no carb/fat targets. Not "
          "reverified against the current commit this run — carried from Brief 07."),
         ("Training", "PARTIAL / SHALLOW", "RE-VERIFIED this run: schema is still "
          "name/duration/type/notes only (plus the nullable userId column) — no "
-         "sets/reps/weight/progressive-overload fields, unchanged since Brief 01."),
+         "sets/reps/weight/progressive-overload fields, unchanged since Brief 01. "
+         "Competitive gap widened this run: Strava's continued strength-training "
+         "push (new workout log, muscle maps) is real depth Vital Sync's schema "
+         "cannot currently express."),
         ("Recovery", "PARTIAL", "Real multi-factor log feeding a genuine weighted "
          "algorithm — not reverified against the current commit this run, carried "
          "from Brief 02/07's finding since it wasn't re-checked this cycle."),
@@ -236,17 +281,21 @@ WEEK_DATA = {
          "still does NOT feed into mission/directive selection — see Directive "
          "Engine row, re-verified this run."),
         ("Directive Engine", "MISSING", "RE-VERIFIED this run by a fresh full-source "
-         "grep: no executable Directive Engine, directive schema, or "
-         "Alignment-to-mission connection exists anywhere. Missions are still chosen "
-         "by onboarding-weighted randomness. \"Directive\" appears only as UI/"
-         "narrative copy."),
+         "grep, plus a direct read of getTomorrowDirective()'s implementation: it "
+         "is a fixed `pool[seed % length]` lookup, not Alignment-driven. No "
+         "executable Directive Engine, directive schema, or Alignment-to-mission "
+         "connection exists anywhere. Missions are still chosen by onboarding-"
+         "weighted randomness. \"Directive\" appears only as UI/narrative copy."),
         ("AI — ambient brief", "PROTOTYPE", "Not reverified against the current "
          "commit this run — carried from Brief 02's finding (templated, no model "
          "call)."),
         ("AI — chat coach", "LIVE", "Real GPT-4o-mini confirmed since Brief 02. Not "
          "reverified this run — context still known (from Brief 07's export) to "
          "include profile/streak/mission data but not Alignment, Recovery, workout, "
-         "or nutrition data."),
+         "or nutrition data. Competitive backdrop: Workout Quest and FitCraft both "
+         "added new AI-branded coach features this run (UNVERIFIED whether "
+         "genuinely LLM-backed) — the 'has an AI coach' claim alone is no longer "
+         "distinguishing; context depth would be."),
         ("Monetization", "LIVE", "Stripe \"Vital Sync Pro\" — not reverified against "
          "the current commit this run, carried from Brief 02/07."),
         ("Integrations (wearables)", "NOT FOUND", "Still absent per the last export; "
@@ -259,50 +308,66 @@ WEEK_DATA = {
          "independently re-checked this run."),
         ("Auth", "LIVE", "Clerk middleware wired app-wide and RE-VERIFIED this run "
          "still actually used for route-level scoping (see Multi-User row)."),
-        ("Marketing / Product Alignment", "MISMATCH", "CHANGED THIS WEEK — RE-"
-         "VERIFIED at the current 0435f9ea commit (last week's flagged re-check): "
-         "landing.tsx still shows two 'Coming Soon' badges and 'Pricing will be "
-         "announced before launch.' The mismatch itself is unchanged in substance, "
-         "but is now confirmed against current source, not a superseded commit."),
+        ("Marketing / Product Alignment", "MISMATCH", "RE-VERIFIED at the same "
+         "0435f9ea commit for a third consecutive run: landing.tsx still shows two "
+         "'Coming Soon' badges and 'Pricing will be announced before launch.' "
+         "vitalsyncify.com itself remains unreachable (7th consecutive check, "
+         "EGRESS_BLOCKED)."),
     ],
     "changes_this_week": [
-        "REPOSITORY STATE, RE-VERIFIED: the GitHub mirror's HEAD (0435f9ea) has not "
-        "moved since last run — `git log`/`git diff` against both the stored commit "
-        "and a fresh `origin/main` fetch both came back empty. This is the 1st "
-        "confirmed-unchanged check since the mirror's 09-07 advance, not yet the "
-        "2+-consecutive-runs threshold this workflow requires before calling a "
-        "commit STALE — so it stays CURRENT_VERIFIED, not downgraded, this week. "
-        "Repository state and product state are reported separately, per the repair: "
-        "an unchanged mirror is not itself proof the real product is unchanged, it "
-        "is only proof the mirror hasn't moved.",
-        "ALL THREE TOP BUILD NOW ITEMS RE-VERIFIED, STILL OPEN A FULL WEEK LATER: "
-        "Squad list/leaderboard authorization, database-level ownership integrity, "
-        "and the Directive Engine's absence were each re-confirmed this run by "
-        "fresh direct source read against the unchanged commit — not re-asserted "
-        "from last week's finding. None has been fixed since Brief 07.",
-        "MARKETING/PRODUCT MISMATCH RE-VERIFIED AT THE CURRENT COMMIT: last week's "
-        "flagged re-check (the finding rested on a now-superseded ef43285 read) was "
-        "completed this run — landing.tsx at 0435f9ea still shows 'Coming Soon' and "
-        "undisclosed pricing. Moves back to BUILD NOW/HIGH from last week's "
-        "provisional BUILD NEXT/MEDIUM downgrade, since it's no longer resting on "
-        "stale evidence.",
-        "COMPETITOR/MARKET RESEARCH REFRESHED for the first time in two cycles "
-        "(skipped entirely in Brief 07's manual validation run). No material "
-        "pricing or feature change found among the five deep-dived direct "
-        "competitors (Vora, Cora, FitCraft, Workout Quest, Habitica); Bitletics "
-        "remains pre-launch with its Q2/Q3 2026 window now roughly two weeks from "
-        "expiring with nothing shipped; Google Health Premium unchanged since its "
-        "May 2026 launch. Two new market signals: MyFitnessPal acquired "
-        "nutrition-AI app Cal AI (further sector consolidation, following the "
-        "Strava/Runna and Garmin/TrainingPeaks moves noted last month), and Gentler "
-        "Streak shipped fatigue-aware 'Morning Check-In' notifications — the "
-        "closest market validation yet found for the 'fatigue-aware gamification' "
-        "opportunity this brief tracks, though it isn't fused with any XP/streak-"
-        "reward layer.",
-        "NO NEW OR RESOLVED EVIDENCE CONFLICTS THIS RUN: the three conflicts closed "
-        "in Brief 07 (user_scoping, squad_real_activity RESOLVED; squad_authorization "
+        "REPOSITORY STATE RECLASSIFIED STALE (count corrected same-day): the "
+        "GitHub mirror's HEAD (0435f9ea) has still not moved — `git log`/`git "
+        "diff` against both the stored commit and a fresh `origin/main` fetch "
+        "both came back empty, and a fresh clone confirmed the same commit and "
+        "commit date. This is the 3rd confirmed-unchanged check since the "
+        "mirror's 09-07 advance (2026-09-14, 2026-09-21, 2026-09-28), which "
+        "clears this workflow's 2+-consecutive-runs threshold — the mirror "
+        "moves from CURRENT_VERIFIED to STALE this run. CORRECTION: this brief "
+        "originally claimed no run fired on 2026-09-21 and counted only 2 "
+        "checks; a repo-owner PR comment identified, and this run verified "
+        "against the actual closed PR #2, that a run did fire that day and "
+        "independently reached this same STALE conclusion a week earlier — it "
+        "was simply never merged into main (the documented local "
+        "`vitalsync-weeklyfinish` merge cron appears not to be running). "
+        "Repository state and product state are reported separately, per the "
+        "repair: STALE means the mirror can no longer be trusted as a current "
+        "proxy for the real product, not that the code was read incorrectly.",
+        "ALL FOUR BUILD-NOW-TIER FINDINGS RE-VERIFIED, NOW PROVISIONAL: Squad "
+        "list/leaderboard authorization, database-level ownership integrity, the "
+        "Directive Engine's absence (including a new direct read of "
+        "getTomorrowDirective()'s seed-pool-lookup implementation), and the "
+        "marketing/product mismatch were each re-confirmed this run by fresh "
+        "direct source read against the same commit — unchanged in substance for "
+        "a third consecutive run, but now flagged PROVISIONAL given the mirror's "
+        "STALE reclassification above.",
+        "COMPETITOR/MARKET RESEARCH REFRESHED, REAL CHANGES FOUND: Cora added "
+        "strength + nutrition logging (closing toward a full training+nutrition+"
+        "recovery loop on top of its existing wearable integrations and Body "
+        "Charge recovery score) — a genuine mechanism expansion, not cosmetic. "
+        "FitCraft shipped multiple new AI trainer personas (previously only "
+        "'Ty' was named). Workout Quest added an 'AI-Fitness Chat' feature. "
+        "Gentler Streak shipped an iOS 27 update (Siri App Intents, On-Screen "
+        "Awareness) layered on its already-tracked Morning Check-In notifications. "
+        "RazFit's ongoing subscription price is now CONFIRMED ($2.99/week or "
+        "$29.99/year), resolving a previously-UNKNOWN gap. Strava raised new "
+        "funding at a $2.2B valuation (Sequoia-led) and continues pushing into "
+        "structured strength training (new workout log, muscle maps, expanded "
+        "WHOOP integration) — direct competitive pressure on Vital Sync's "
+        "confirmed-shallow training schema. MOST SIGNIFICANT (recovered from "
+        "PR #2's research, independently re-verified this run): Apple announced "
+        "a free Health app redesign on 2026-09-09 (Readiness score, Health Age, "
+        "AI Insights tab, no subscription) alongside reported Fitness+ layoffs — "
+        "now the single biggest platform-scale threat found to date, moving "
+        "opportunity #5 (connect Apple Health) to BUILD NOW. Bitletics remains "
+        "pre-launch with no ship date found; its Q2/Q3 2026 window expires "
+        "within 2 days of this report with nothing shipped.",
+        "NO NEW OR RESOLVED EVIDENCE CONFLICTS THIS RUN: the conflicts closed in "
+        "Brief 07 (user_scoping, squad_real_activity RESOLVED; squad_authorization "
         "confirmed as a new finding, not a conflict) stand as they were — nothing "
-        "new was claimed this run without independently checkable evidence.",
+        "new was claimed this run without independently checkable evidence. (The "
+        "same-day correction above was resolved by direct verification against "
+        "PR #2, not by accepting the repo owner's comment on assertion — "
+        "consistent with this workflow's own evidence standard.)",
     ],
     "strengths": [
         "The Alignment engine and the AI chat coach remain genuinely well-engineered "
@@ -319,21 +384,30 @@ WEEK_DATA = {
     "weaknesses": [
         "Squad authorization is RE-CONFIRMED BROKEN this run — unauthenticated "
         "list/leaderboard routes, no privacy enforcement despite a privacy field "
-        "existing. A real trust/security gap, unresolved for a full week now.",
+        "existing. A real trust/security gap, unresolved for 3 weeks of calendar "
+        "time now, PROVISIONAL pending fresher product-source access.",
         "Database-level ownership integrity is RE-CONFIRMED BROKEN this run — "
         "nullable columns, no foreign keys, under an application layer that assumes "
         "real scoping.",
         "The Directive Engine — the connective step in Vital Sync's own stated "
         "differentiation model between Alignment and Mission — is RE-CONFIRMED "
-        "absent this run.",
+        "absent this run (getTomorrowDirective() confirmed to be a fixed "
+        "seed-indexed pool lookup, not Alignment-driven).",
         "Training schema remains RE-CONFIRMED shallow this run — unchanged since "
-        "Brief 01, only a nullable userId column was ever added.",
+        "Brief 01 — and the competitive gap is widening, not just holding steady: "
+        "Strava shipped new workout-log/muscle-map depth this run in the same area.",
         "The marketing/product mismatch (site says 'Coming Soon,' pricing "
-        "undisclosed) is RE-CONFIRMED this run against the current commit — no "
-        "longer resting on stale evidence, and still unresolved.",
+        "undisclosed) is RE-CONFIRMED this run against the same commit — still "
+        "unresolved, and the deployed site remains unreachable for a 7th "
+        "consecutive check.",
         "Zero wearable integrations, per the last export — still the reason "
         "Alignment/Recovery have little real data to score; not independently "
         "re-grepped against the current commit this run.",
+        "PRODUCT SOURCE ITSELF IS NOW STALE: the GitHub mirror has sat frozen for "
+        "3 weeks across 3 confirmed check-ins (2026-09-14, 2026-09-21, "
+        "2026-09-28), meeting this workflow's threshold for downgrading "
+        "confidence in it as a proxy for the real, possibly-Replit-only, current "
+        "product state.",
     ],
     "cross_system_audit": [
         ("Training <-> Recovery", "LIVE (algorithm)", "Unchanged — Alignment engine "
@@ -356,73 +430,105 @@ WEEK_DATA = {
          "Challenges are static content, not adjusted by Alignment or recovery state."),
     ],
     "competitor_watch": [
+        ("Apple Health", "Indirect / Platform-scale", "NEW ROW THIS WEEK "
+         "(recovered from PR #2's 2026-09-21 research, independently "
+         "re-verified via WebSearch this run against Apple's own newsroom and "
+         "TechCrunch): a major Health app redesign announced 2026-09-09 — a "
+         "free Readiness score, a 'Health Age' computation, and a new AI "
+         "Insights tab powered by Apple Intelligence delivering personalized, "
+         "contextual wellness guidance from activity/sleep/other signals. No "
+         "subscription required; ships to every iPhone/Apple Watch user later "
+         "in 2026, starting in U.S. English. Separately, reported Apple "
+         "Fitness+ team layoffs (~2026-09-20/22, first under new CEO John "
+         "Ternus) suggest Apple is deprioritizing premium subscription fitness "
+         "content in favor of free AI-driven Health features. Not a "
+         "gamification competitor (no XP/streaks/badges), but the single "
+         "biggest platform-scale threat to Vital Sync's Recovery/Alignment "
+         "value proposition found to date — free, and Apple already owns the "
+         "hardware relationship Google Health Premium has to pay to approximate."),
         ("Vora", "Direct", "RE-CHECKED this week: voice-first all-in-one, 500+ "
-         "wearable integrations. Pricing confirmed as free-forever core tier plus a "
-         "Pro tier — the official site states $12.99/mo or $89.99/yr, though a "
-         "separate Vora pricing page shows Pro from as low as $7.50/mo (billed "
-         "annually), a discrepancy across the vendor's own pages worth treating as "
+         "wearable integrations. Pricing confirmed unchanged — $12.99/mo or "
+         "$89.99/yr on the official App/Play Store listings, though a separate "
+         "Vora pricing page still shows Pro from as low as $7.50/mo (billed "
+         "annually), the same cross-page discrepancy as last brief — still "
          "UNVERIFIED-EXACT rather than a single confirmed number. Core mechanism "
          "unchanged."),
-        ("Cora", "Direct", "RE-CHECKED this week: still freemium with in-app "
-         "purchases, still no disclosed tier pricing found in search results. App "
-         "last updated 2026-04-02 per store listings — no evidence of a recent "
-         "relaunch or price change. \"Body Charge\" HRV/sleep-driven scheduling "
-         "mechanism unchanged."),
-        ("FitCraft", "Direct", "RE-CHECKED this week: pricing and core mechanism "
-         "(streaks, collectible cards, AI coach, gamified rewards) unchanged. Recent "
-         "product updates found are cosmetic/UX (new visual effects, calendar and "
-         "rewards-gamification polish) — not a new capability. Still no nutrition/"
-         "recovery features found."),
-        ("Workout Quest", "Direct", "Not re-checked this week (surface-level watch "
-         "only) — carried unchanged from Brief 07: RPG workout tracker, free-to-"
-         "start, guilds/raid-boss workouts/loot chests/battle passes. Still no "
-         "nutrition tracking found as of last check."),
+        ("Cora", "Direct", "CHANGED THIS WEEK: Cora has added strength and "
+         "nutrition tracking (\"log lifts and meals\") plus new widgets and Apple "
+         "Watch complications for sleep/body-charge/strain, on top of its existing "
+         "\"Body Charge\" HRV/sleep/training-load recovery score and wearable "
+         "integrations (Apple Watch, Garmin, WHOOP, Oura). This is a genuine "
+         "mechanism expansion, not cosmetic polish — Cora is now closer to "
+         "covering training+nutrition+recovery together than any prior check "
+         "found, narrowing the distance to Vital Sync's own full-loop claim from "
+         "the data-supply side. Tier pricing still not found disclosed in search "
+         "results."),
+        ("FitCraft", "Direct", "CHANGED THIS WEEK: FitCraft shipped a major update "
+         "introducing multiple new AI trainer personas (previously only \"Ty\" was "
+         "named) with different coaching styles, on top of its existing RPG-style "
+         "progression (XP, leveling, collectible cards) and diagnostic-assessment-"
+         "driven programming. Pricing unchanged. Still no nutrition/recovery "
+         "features found."),
+        ("Workout Quest", "Direct", "CHANGED THIS WEEK (first re-check since Brief "
+         "07): a July 17 2026 update added 'AI-Enhanced Workouts' and an "
+         "'AI-Fitness Chat' feature alongside its existing RPG mechanics (XP, "
+         "gold, levels) and 1,000+ movement library. Whether the chat is "
+         "genuinely LLM-backed or scripted is UNVERIFIED from search snippets "
+         "alone. Still no nutrition tracking found."),
         ("Habitica", "Specialist", "Not re-checked this week (surface-level watch "
          "only) — carried unchanged from Brief 07: pure RPG habit layer, cosmetic-"
          "only subscription, no fitness-specific programming."),
         ("Trainera / Bevel / NATE", "Direct (surface-level)", "Not re-checked this "
          "week (surface-level watch only) — carried unchanged from Brief 07."),
-        ("Whoop / Welling / Strava / Freeletics", "Specialist / Indirect", "RE-"
-         "CHECKED partially this week: WHOOP raised a $575M Series G in March 2026 "
-         "(per a Crunchbase News H1-2026 fitness-funding sector snapshot found this "
-         "run) — a scale/capital data point, not a product change. Search results "
-         "on Strava's Runna acquisition date were inconsistent across sources this "
-         "run (2025 vs. 2026); not re-asserting a specific date pending a cleaner "
-         "source. No other changes found."),
-        ("Bitletics", "Emerging / Beta", "RE-CHECKED this week: still pre-launch, "
-         "still described as launching iOS and Android together, free at launch, no "
-         "subscription required, 30+ activity types, Apple Watch/heart-rate "
-         "verified. Its Q2/Q3 2026 launch window is now roughly two weeks from "
-         "expiring (Q3 2026 ends Sept 30) with no ship date found — MONITOR, "
-         "sharpening toward 'window missed' if nothing lands by month end."),
+        ("WHOOP / Strava", "Specialist / Indirect", "CHANGED THIS WEEK: Strava "
+         "raised new funding at a $2.2B valuation (Sequoia-led, joined by TCV, "
+         "Jackson Square Ventures, Go4it Capital — found this run), and continues "
+         "pushing into structured strength training with an overhauled workout "
+         "log, muscle maps, an expanded partner ecosystem, and a deepened WHOOP "
+         "integration (activities now flow both directions between the two "
+         "apps). This is direct competitive movement into training-depth "
+         "territory, where Vital Sync's own schema is confirmed shallow (see "
+         "Current State). WHOOP's $575M Series G (March 2026) previously noted; "
+         "no new WHOOP-specific product change found this week."),
+        ("Bitletics", "Emerging / Beta", "RE-CHECKED this week: still described "
+         "identically across its own blog and store pages as launching iOS and "
+         "Android together in Q2/Q3 2026, free at launch, no subscription "
+         "required, 30+ activity types, Apple Watch/heart-rate verified, weekly "
+         "gift-card raffles (EUR 5-50) and fitness-matched leagues. No evidence "
+         "of an actual launch found in this run's searches. Its Q2/Q3 2026 "
+         "window (Q3 ends 2026-09-30) now expires within 2 days of this report "
+         "with nothing shipped — sharpened to 'window about to lapse,' next "
+         "brief should explicitly check whether it shipped or missed."),
         ("Google Health Premium (Gemini Health Coach, formerly Fitbit Premium)",
          "Indirect / Platform-scale",
-         "RE-CHECKED this week: confirmed unchanged — still $9.99/mo or $99/yr, "
-         "coach (launched May 19 2026) still described as launching first for "
-         "Fitbit/Pixel Watch users with other devices \"forthcoming.\" No new "
-         "expansion found this week. Reads HRV/sleep/activity-load trends and "
+         "RE-CHECKED this week: confirmed unchanged — still $9.99/mo, live in 37 "
+         "countries per this run's sources (consistent with the prior full "
+         "rollout, not a new expansion). Reads HRV/sleep/activity-load trends and "
          "generates adaptive, continuously-updated recovery-and-training "
          "recommendations — the same category of output as Vital Sync's Alignment "
          "engine, at hardware-platform distribution scale. Not a fitness-"
          "gamification competitor (no XP/streaks/badges), but a direct threat to "
          "the 'wearable-driven adaptive coaching' value proposition."),
-        ("RazFit", "Emerging / Live", "RE-CHECKED this week: still built around "
-         "1-10 minute equipment-free bodyweight sessions with a badge reward "
-         "system, pitched as \"consistency over intensity.\" Still no confirmed "
-         "ongoing subscription price beyond a 3-day free trial (not found in "
-         "search results again this week). No nutrition or recovery tracking "
-         "found. Small/unproven scale — MONITOR, low confidence, unchanged."),
-        ("Gentler Streak", "Specialist / Indirect", "NEW ROW THIS WEEK (previously "
-         "referenced only in passing, not tracked as its own line): a wellbeing-"
-         "first workout tracker, $8.99/mo or $39.99/yr. Recently shipped 'Morning "
-         "Check-In Notifications' — a gentle, data-driven flag when yesterday's "
-         "session was an overreach or today should be a rest day, including "
-         "cycle-aware timing for women. No XP/streak-reward gamification layer at "
-         "all (its whole positioning is the opposite — 'gentler' than streak-"
-         "anxiety apps), so it doesn't compete with Vital Sync's core loop, but it "
-         "is the closest real-world validation yet found for tying recovery "
-         "guidance to daily behavior — directly relevant to the fatigue-aware "
-         "gamification opportunity this brief tracks (see Product Opportunities)."),
+        ("RazFit", "Emerging / Live", "CHANGED THIS WEEK: ongoing subscription "
+         "pricing is now CONFIRMED — Weekly Premium $2.99, Annual Premium "
+         "$29.99 (resolving the prior UNKNOWN) — still with a 3-day free trial. "
+         "AI coaches are named Orion and Lyss (previously unnamed in this "
+         "brief). Still built around 1-10 minute equipment-free bodyweight "
+         "sessions with a badge reward system pitched as \"consistency over "
+         "intensity.\" No nutrition or recovery tracking found. Small/unproven "
+         "scale — stays MONITOR, confidence raised from LOW toward MEDIUM now "
+         "that pricing is confirmed."),
+        ("Gentler Streak", "Specialist / Indirect", "CHANGED THIS WEEK: shipped an "
+         "iOS 27 update adding Siri integration — App Intents (health/fitness "
+         "info without opening the app) and On-Screen Awareness (Siri "
+         "contextualizing what's on screen) — plus new workout types and faster "
+         "loading, on top of its already-tracked 'Morning Check-In "
+         "Notifications' (gentle, data-driven flags for overreach/rest days, "
+         "including cycle-aware timing for women). Still $8.99/mo or $39.99/yr, "
+         "still no XP/streak-reward gamification layer at all (its whole "
+         "positioning is the opposite of Vital Sync's core loop), but it keeps "
+         "extending as the clearest real-world precedent for tying daily "
+         "guidance to real recovery signals."),
     ],
     "pain_clusters": [
         ("Streak anxiety / burnout", "Missing a streak is reported as demotivating; "
@@ -484,6 +590,16 @@ WEEK_DATA = {
         "Wearables are the retention lever — health monitoring has overtaken fitness "
         "tracking as the primary wearable use case; app-side integration is now table "
         "stakes for retention.",
+        "NEW THIS WEEK (recovered from PR #2's research, independently re-verified): "
+        "Apple announced a free Health app redesign on 2026-09-09 (Readiness score, "
+        "'Health Age', Apple-Intelligence-powered AI Insights, no subscription), "
+        "rolling out to every iPhone/Apple Watch user later in 2026. Days later "
+        "(~2026-09-20/22), Apple's Fitness+ subscription team was reportedly hit by "
+        "layoffs — its first under new CEO John Ternus (who took over 2026-09-01). "
+        "Read together, this looks like a platform giant shifting investment away "
+        "from paid fitness subscription content and toward free, AI-driven health "
+        "guidance baked into the OS — the exact category Vital Sync's Alignment "
+        "engine competes in, now available free at platform scale.",
         "Fitness app churn is brutal across every dataset checked (RE-CHECKED this "
         "week, figures consistent with prior briefs), though the exact numbers vary "
         "by source and methodology — a Sensor Tower Q4 2025 report shows "
@@ -506,17 +622,22 @@ WEEK_DATA = {
         "(multi-year) durability still under-studied.",
         "Computer-vision form-check and conversational coaching are named 2026 "
         "differentiators industry-wide — neither observed in Vital Sync's surface.",
-        "Consolidation continues — following last month's Strava/Runna and Garmin/"
-        "TrainingPeaks moves, MyFitnessPal acquired nutrition-AI app Cal AI this "
-        "period (a Forbes '30 Under 30'-built app reported at $40M in sales) — "
-        "notable because it's consolidation specifically in the nutrition-AI layer "
-        "adjacent to Vital Sync's own nutrition module, not just training/recovery. "
-        "Startup funding in fitness/wellness topped $3.6B in H1 2026 (on pace to run "
-        "roughly a third higher than 2025), concentrated in fewer, larger AI-enabled "
-        "rounds — WHOOP's $575M Series G (March 2026) is the largest single data "
-        "point found this week. Raises the urgency of Vital Sync differentiating on "
-        "cross-system Alignment intelligence before boutique positioning gets "
-        "squeezed by bigger, AI-coaching-plus-hardware players.",
+        "Consolidation and capital concentration continue — following the Strava/"
+        "Runna, Garmin/TrainingPeaks, and MyFitnessPal/Cal AI moves already "
+        "tracked, Strava itself raised new funding this run at a $2.2B valuation "
+        "(Sequoia-led, with TCV, Jackson Square Ventures, and Go4it Capital), "
+        "reinforcing that capital is concentrating in fewer, larger, AI-enabled "
+        "players rather than spreading across boutique apps. Startup funding in "
+        "fitness/wellness topped $3.6B in H1 2026 (on pace to run roughly a third "
+        "higher than 2025) — WHOOP's $575M Series G (March 2026) and Strava's new "
+        "round are the two largest single data points found across this and prior "
+        "briefs. Raises the urgency of Vital Sync differentiating on cross-system "
+        "Alignment intelligence before boutique positioning gets squeezed by "
+        "bigger, AI-coaching-plus-hardware players — and that pressure is no "
+        "longer purely hypothetical: Strava's own strength-training push (new "
+        "workout log, muscle maps) and Cora's expansion into nutrition+strength "
+        "logging (found this run) both move directly into territory Vital Sync "
+        "claims as differentiating.",
         "NEW THIS WEEK: activation, not just retention, is now separately measured "
         "— users who don't complete 3 workouts in their first week churn 4-5x faster "
         "than those who do. The global fitness-app market is estimated at $13.9B in "
@@ -524,89 +645,131 @@ WEEK_DATA = {
         "source this run).",
     ],
     "gap_types": [
-        ("-", "Security/trust blocker, unresolved a week later", "Squad authorization "
-         "/ privacy", "RE-CONFIRMED BROKEN this run: list/leaderboard routes still "
-         "take no auth, no privacy filtering exists despite the field being present. "
-         "Still the sharpest concrete Squad risk, now aging without a fix."),
-        ("-", "Foundational risk, unresolved a week later", "Database ownership "
-         "integrity", "RE-CONFIRMED BROKEN this run: ownership columns are still "
-         "nullable with no foreign-key enforcement, underneath an application layer "
-         "that assumes real per-user scoping."),
+        ("-", "Security/trust blocker, unresolved for 3 weeks, PROVISIONAL",
+         "Squad authorization / privacy", "RE-CONFIRMED BROKEN this run: "
+         "list/leaderboard routes still take no auth, no privacy filtering exists "
+         "despite the field being present. Still the sharpest concrete Squad risk "
+         "confirmed in the mirror, now aging without a fix."),
+        ("-", "Foundational risk, unresolved for 3 weeks, PROVISIONAL", "Database "
+         "ownership integrity", "RE-CONFIRMED BROKEN this run: ownership columns "
+         "are still nullable with no foreign-key enforcement, underneath an "
+         "application layer that assumes real per-user scoping."),
         ("-", "RESOLVED (was foundational blocker)", "Multi-user data scoping",
          "RE-CONFIRMED RESOLVED this run at the route level via fresh direct source "
          "read — was the top blocker through Brief 06."),
-        ("A", "Vital Sync behind", "Recovery/Alignment DATA SUPPLY (not logic)", "The "
-         "scoring algorithms are real and competitive-grade; Cora/Vora/Bevel/NATE win "
-         "only because they have wearable data feeding equivalent logic — and Google's "
-         "Health Premium Gemini Coach shows the same play at platform scale. Vital "
-         "Sync's engine has zero wearable connections. (Competitor detail RE-CHECKED "
-         "this week: unchanged.)"),
-        ("A", "Vital Sync behind", "Directive Engine", "RE-CONFIRMED ABSENT this run: "
-         "no executable Directive Engine or Alignment-to-mission connection exists. "
-         "Competitors don't have this either, but it's Vital Sync's own stated "
-         "differentiation model, so the gap is self-inflicted, not just competitive."),
-        ("B", "Parity", "Core gamification (XP, streaks, badges)", "Table stakes in "
-         "this niche — FitCraft, Workout Quest, Habitica match or exceed on raw "
-         "mechanics depth. (RE-CHECKED this week for FitCraft: unchanged; Workout "
-         "Quest/Habitica not re-checked.)"),
-        ("C", "Vital Sync ahead (once real)", "Alignment engine + AI chat coach + real "
-         "Squad activity", "The underlying engineering is genuinely competitive-grade, "
-         "and Squads' activity remains confirmed real, not simulated. Gap is data "
-         "supply, the missing Directive layer, and Squad authorization — not "
-         "algorithm quality."),
+        ("A", "Vital Sync behind, gap widening sharply", "Recovery/Alignment DATA "
+         "SUPPLY (not logic)", "The scoring algorithms are real and competitive-"
+         "grade; Cora/Vora/Bevel/NATE win only because they have wearable data "
+         "feeding equivalent logic. CHANGED THIS WEEK (recovered from PR #2, "
+         "independently re-verified): Apple's free 2026-09-09 Health redesign "
+         "(Readiness score + AI Insights, no subscription) now offers the same "
+         "category of output at platform scale, for free — a bigger version of "
+         "the threat Google Health Premium's paid equivalent already posed. "
+         "Cora also added strength+nutrition logging this week. Vital Sync's "
+         "engine has zero wearable connections — the data-supply gap is widening "
+         "sharply, not just holding steady."),
+        ("A", "Vital Sync behind, PROVISIONAL", "Directive Engine", "RE-CONFIRMED "
+         "ABSENT this run (including a direct read of getTomorrowDirective()'s "
+         "seed-pool-lookup implementation): no executable Directive Engine or "
+         "Alignment-to-mission connection exists. Competitors don't have this "
+         "either, but it's Vital Sync's own stated differentiation model, so the "
+         "gap is self-inflicted, not just competitive."),
+        ("A", "Vital Sync behind, gap widening", "Training depth", "RE-CONFIRMED "
+         "still shallow this run (four-field schema, no sets/reps/weight). CHANGED "
+         "THIS WEEK: Strava's continued strength-training push (new workout log, "
+         "muscle maps, expanded partner ecosystem) is real, shipped competitive "
+         "depth in exactly this area."),
+        ("B", "Parity, competitors converging faster", "Core gamification (XP, "
+         "streaks, badges) + 'AI coach' claim", "Table stakes in this niche — "
+         "FitCraft, Workout Quest, Habitica match or exceed on raw mechanics "
+         "depth. CHANGED THIS WEEK: FitCraft added multiple AI trainer personas "
+         "and Workout Quest added an 'AI-Fitness Chat' feature — the 'has an AI "
+         "coach' claim alone is converging toward parity industry-wide (depth/"
+         "genuineness of each UNVERIFIED); Vital Sync's real GPT-4o-mini coach "
+         "needs its context-depth advantage made visible, not just claimed."),
+        ("C", "Vital Sync ahead (once real), PROVISIONAL", "Alignment engine + AI "
+         "chat coach + real Squad activity", "The underlying engineering is "
+         "genuinely competitive-grade, and Squads' activity remains confirmed "
+         "real, not simulated. Gap is data supply, the missing Directive layer, "
+         "and Squad authorization — not algorithm quality."),
         ("D", "Open market gap, newly sharpened", "Fatigue-aware gamification",
          "Nobody in the tracked competitive set ties streak/reward mechanics to real "
-         "recovery data. NEW THIS WEEK: Gentler Streak's 'Morning Check-In' "
-         "notifications are the closest market validation found yet (fatigue-aware "
-         "guidance without a gamification layer to fuse it to). Still confirmed to "
-         "depend on the Directive Engine existing first — don't build this before "
-         "that."),
+         "recovery data. Gentler Streak's iOS 27 update (Siri App Intents, On-"
+         "Screen Awareness) extends its lead as the closest market validation "
+         "found yet (fatigue-aware guidance without a gamification layer to fuse "
+         "it to). Still confirmed to depend on the Directive Engine existing "
+         "first — don't build this before that."),
     ],
     "opportunities": [
         # (rank, title, evidence, bucket, gap, ai, confidence)
-        (1, "Fix Squad authorization / privacy", "RE-CONFIRMED BROKEN this run: "
-         "GET /squads and GET /squads/leaderboard have no auth check and no privacy "
-         "filtering. A real access-control gap, not cosmetic, unresolved for a "
-         "full week now.",
+        (1, "Fix Squad authorization / privacy [PROVISIONAL — see Product Source "
+         "Freshness]", "RE-CONFIRMED BROKEN this run: GET /squads and GET "
+         "/squads/leaderboard have no auth check and no privacy filtering. A real "
+         "access-control gap, not cosmetic, unresolved for 3 weeks of calendar "
+         "time now. PROVISIONAL only because the GitHub mirror is now STALE-"
+         "classified — the finding itself is unchanged and re-verified.",
          "BUILD NOW", "-", "No AI Needed", "HIGH"),
-        (2, "Enforce database-level ownership", "RE-CONFIRMED BROKEN this run: "
-         "nullable ownership columns, no foreign keys, underneath a now-real "
-         "application-level scoping layer, unresolved for a full week now.",
+        (2, "Enforce database-level ownership [PROVISIONAL — see Product Source "
+         "Freshness]", "RE-CONFIRMED BROKEN this run: nullable ownership columns, "
+         "no foreign keys, underneath a now-real application-level scoping layer, "
+         "unresolved for 3 weeks of calendar time now.",
          "BUILD NOW", "-", "No AI Needed", "HIGH"),
-        (3, "Build the Alignment -> Directive -> Mission connection", "RE-CONFIRMED "
-         "ABSENT this run: missions are chosen by onboarding-weighted randomness, "
-         "not by Alignment output. The connective step in Vital Sync's own "
+        (3, "Build the Alignment -> Directive -> Mission connection [PROVISIONAL — "
+         "see Product Source Freshness]", "RE-CONFIRMED ABSENT this run: missions "
+         "are chosen by onboarding-weighted randomness, not by Alignment output. "
+         "This run additionally read getTomorrowDirective()'s implementation "
+         "directly — a fixed `pool[seed % length]` lookup, confirming it is not "
+         "Alignment-driven. The connective step in Vital Sync's own "
          "differentiation model still doesn't exist.",
          "BUILD NOW", "A", "AI Assisted", "HIGH"),
-        (4, "Fix the marketing/product mismatch", "RE-VERIFIED this run against the "
-         "CURRENT commit (0435f9ea) — last week's flagged re-check is done: "
-         "landing.tsx still shows two 'Coming Soon' badges and 'Pricing will be "
-         "announced before launch.' No longer resting on a superseded commit, so "
-         "promoted back to BUILD NOW/HIGH from last week's provisional downgrade.",
+        (4, "Fix the marketing/product mismatch [PROVISIONAL — see Product Source "
+         "Freshness]", "RE-VERIFIED this run against the same 0435f9ea commit for "
+         "a third consecutive run: landing.tsx still shows two 'Coming Soon' "
+         "badges and 'Pricing will be announced before launch.' vitalsyncify.com "
+         "itself remains unreachable (7th consecutive check, EGRESS_BLOCKED) — a "
+         "human manually checking the live deployed site would close this gap "
+         "fastest.",
          "BUILD NOW", "Trust", "No AI Needed", "HIGH"),
-        (5, "Connect Apple Health as first wearable", "Broadest reach, lowest effort; "
-         "feeds the already-working Alignment/Recovery algorithms with real data. "
-         "Competitive urgency reinforced this week by WHOOP's $575M Series G and "
-         "Google Health Premium's continued stability — capital keeps flowing to "
-         "wearable-data-driven coaching. Not reverified against Vital Sync's source "
-         "this run beyond confirming wearables remain absent per the last export.",
-         "BUILD NEXT", "A", "No AI Needed", "HIGH"),
+        (5, "Connect Apple Health as first wearable [MOVED UP: BUILD NEXT -> BUILD "
+         "NOW]", "Broadest reach, lowest effort; feeds the already-working "
+         "Alignment/Recovery algorithms with real data. Moved to BUILD NOW this "
+         "run on recovered, independently re-verified evidence: Apple's "
+         "2026-09-09 Health app redesign ships a free Readiness score + AI "
+         "Insights tab to every iPhone/Watch user, no subscription — the exact "
+         "value proposition Vital Sync's Alignment engine offers, now available "
+         "free at platform scale. Reported Apple Fitness+ layoffs the same week "
+         "suggest Apple is doubling down on free AI Health features over paid "
+         "fitness content. Cora's strength+nutrition expansion and Strava's new "
+         "$2.2B funding round (both found this run) add further urgency. Not "
+         "reverified against Vital Sync's own source this run beyond confirming "
+         "wearables remain absent per the last export — the urgency here is "
+         "entirely external/competitive, not a change in Vital Sync's own state.",
+         "BUILD NOW", "A", "No AI Needed", "HIGH"),
         (6, "Surface the real AI chat coach more prominently, and widen its context",
          "/coach/message is live GPT-4o-mini — its context excludes Alignment/"
          "Recovery/workout/nutrition data (confirmed Brief 07, not reverified this "
-         "run). Two separate improvements: visibility, and context depth.",
+         "run). Newly urgent: Workout Quest and FitCraft both added their own "
+         "'AI coach' features this run (genuineness UNVERIFIED), so simply having "
+         "an AI coach is converging toward industry parity — Vital Sync's real, "
+         "already-working GPT-4o-mini integration needs its context-depth "
+         "advantage made visible and real, not just claimed. Two separate "
+         "improvements: visibility, and context depth.",
          "BUILD NEXT", "C", "AI Core", "MEDIUM"),
-        (7, "Real training depth (sets/reps/weight/overload)", "RE-CONFIRMED "
-         "unchanged this run: workouts table still has no sets/reps/weight fields "
-         "at all.",
+        (7, "Real training depth (sets/reps/weight/overload) [PROVISIONAL — see "
+         "Product Source Freshness]", "RE-CONFIRMED unchanged this run: workouts "
+         "table still has no sets/reps/weight fields at all. Competitive gap "
+         "widened this week: Strava shipped a new workout log and muscle-map "
+         "feature set in exactly this territory.",
          "BUILD NEXT", "A", "No AI Needed", "HIGH"),
         (8, "Fatigue-aware streak mechanic", "Streak downgrades gracefully instead of "
          "breaking, when real recovery data is low. Still confirmed to depend on "
          "the Directive Engine (#3) and wearables (#5) landing first — do not build "
-         "before those. Market validation sharpened this week: Gentler Streak now "
-         "ships fatigue/overreach-aware check-ins (without a gamification layer), "
-         "the closest real-world precedent found yet, though this doesn't change "
-         "the internal dependency order.", "EXPERIMENT", "D", "AI Assisted", "MEDIUM"),
+         "before those. Market validation extended this week: Gentler Streak's "
+         "iOS 27 update (Siri App Intents, On-Screen Awareness) layers further "
+         "onto its already-tracked fatigue/overreach-aware check-ins (without a "
+         "gamification layer) — still the closest real-world precedent found, but "
+         "this doesn't change the internal dependency order.",
+         "EXPERIMENT", "D", "AI Assisted", "MEDIUM"),
         (9, "Full nutrition goals (carbs/fat)", "Protein/water/calorie targets exist; "
          "carbs/fat still missing. Not reverified this run.",
          "IMPROVE EXISTING", "A", "AI Assisted", "MEDIUM"),
@@ -616,131 +779,177 @@ WEEK_DATA = {
         (11, "Track Bitletics' real-reward redemption model", "Converts activity into "
          "redeemable in-game loot/raffle tickets rather than only in-app XP/badges — "
          "a genuinely different reward mechanic than any of the 5 deep-dived "
-         "competitors. RE-CHECKED this week: still pre-launch beta, free-at-launch, "
-         "no subscription required at launch; its Q2/Q3 2026 window is now roughly "
-         "two weeks from expiring (Q3 2026 ends Sept 30) with no ship date found. "
-         "Too early to act on, worth tracking closely over the next brief or two.",
+         "competitors. RE-CHECKED this week: still pre-launch, still identical "
+         "language across its own blog/store pages, no evidence of an actual "
+         "launch found. Its Q2/Q3 2026 window (Q3 ends Sept 30) now expires "
+         "within 2 days of this report with nothing shipped — sharpened to "
+         "'window about to lapse.' Next brief should explicitly check whether it "
+         "shipped or the window lapsed.",
          "MONITOR", "D", "No AI Needed", "LOW"),
         (12, "Monitor Google Health Premium's Gemini Coach as a platform-scale threat, "
          "not a build target", "Formerly Fitbit Premium — RE-CHECKED this week: "
-         "confirmed unchanged, no new expansion found. Google ships the same "
-         "'wearable data -> adaptive recovery/training guidance' output Vital Sync's "
-         "Alignment engine produces, at a growing distribution scale. Not something "
-         "Vital Sync can out-build directly; sharpens the case for #5 (connect a "
-         "wearable) and for leaning on cross-system Alignment (training+nutrition+"
-         "recovery together) as the differentiator Google doesn't offer.", "MONITOR",
-         "A", "No AI Needed", "MEDIUM"),
-        (13, "Track RazFit as a low-friction, short-session entrant", "RE-CHECKED "
-         "this week: still built around 1-10 minute equipment-free bodyweight "
-         "sessions and a badge reward system, pitched as \"consistency over "
-         "intensity.\" Ongoing subscription price still UNKNOWN; scale/traction "
-         "still unconfirmed. No change from last week — still MONITOR only.",
-         "MONITOR", "D", "No AI Needed", "LOW"),
-        (14, "Track Gentler Streak's fatigue-aware check-in mechanic", "NEW THIS "
-         "WEEK: added as its own tracked line after its 'Morning Check-In "
-         "Notifications' feature surfaced during this run's competitor refresh. "
-         "$8.99/mo or $39.99/yr, no gamification layer at all — not a direct "
-         "competitor to Vital Sync's core loop, but the clearest real-world "
-         "precedent yet for tying daily guidance to real recovery signals. Relevant "
-         "to #8 as market validation, not as a feature to copy directly (Gentler "
-         "Streak's whole brand is the anti-gamification, anti-streak-anxiety "
-         "positioning).", "MONITOR", "D", "No AI Needed", "MEDIUM"),
+         "confirmed unchanged, no new expansion found (live in 37 countries per "
+         "this run's sources, consistent with the prior rollout). Google ships the "
+         "same 'wearable data -> adaptive recovery/training guidance' output Vital "
+         "Sync's Alignment engine produces, at a growing distribution scale. Not "
+         "something Vital Sync can out-build directly; sharpens the case for #5 "
+         "(connect a wearable) and for leaning on cross-system Alignment "
+         "(training+nutrition+recovery together) as the differentiator Google "
+         "doesn't offer.", "MONITOR", "A", "No AI Needed", "MEDIUM"),
+        (13, "Track RazFit as a low-friction, short-session entrant", "CHANGED THIS "
+         "WEEK: ongoing subscription pricing is now CONFIRMED — Weekly Premium "
+         "$2.99, Annual Premium $29.99 (resolving last brief's UNKNOWN), still "
+         "with a 3-day free trial. AI coaches named Orion and Lyss (previously "
+         "unnamed). Still 1-10 minute equipment-free bodyweight sessions with a "
+         "badge reward system, \"consistency over intensity\" positioning. Scale/"
+         "traction still unconfirmed.",
+         "MONITOR", "D", "No AI Needed", "MEDIUM"),
+        (14, "Track Gentler Streak's fatigue-aware check-in mechanic", "CHANGED "
+         "THIS WEEK: shipped an iOS 27 update adding Siri App Intents and "
+         "On-Screen Awareness support, on top of its already-tracked 'Morning "
+         "Check-In Notifications.' $8.99/mo or $39.99/yr, no gamification layer "
+         "at all — not a direct competitor to Vital Sync's core loop, but the "
+         "clearest real-world precedent yet for tying daily guidance to real "
+         "recovery signals. Relevant to #8 as market validation, not as a feature "
+         "to copy directly (Gentler Streak's whole brand is the anti-"
+         "gamification, anti-streak-anxiety positioning).",
+         "MONITOR", "D", "No AI Needed", "MEDIUM"),
     ],
     "opportunity_movement": [
-        "#1, #2, #3 (BUILD NOW) — UNCHANGED IN RANK, but RE-VERIFIED rather than "
-        "carried forward from memory: Vital-Sync HEAD is confirmed unchanged at "
-        "0435f9ea (`git log`/`git diff` against Brief 07's stored commit, and "
-        "against a fresh origin/main fetch, both empty), and the actual squads.ts, "
-        "profile.ts, schema files, and a full-source 'directive' grep were freshly "
-        "read this run — all three findings hold exactly as before. All three are "
-        "now a full week old with no fix landed; that aging is itself worth a "
-        "human's attention even though the score is unchanged.",
-        "#4 (Fix the marketing/product mismatch) — MOVED UP: BUILD NEXT/MEDIUM -> "
-        "BUILD NOW/HIGH. Brief 07 downgraded this pending re-check against the new "
-        "0435f9ea commit (its evidence rested on a superseded ef43285 read). That "
-        "re-check happened this run — landing.tsx at 0435f9ea still shows 'Coming "
-        "Soon' and undisclosed pricing — so the finding is now maximally current "
-        "and returns to BUILD NOW rather than sitting provisionally downgraded.",
-        "#5 (Connect Apple Health as first wearable, renumbered from #5) — STILL "
-        "BUILD NEXT/HIGH, no change in bucket. Competitive backdrop reinforced, not "
-        "newly urgent: WHOOP's $575M Series G and continued capital flow into "
-        "wearable-data coaching plays (found this run) sit alongside Google Health "
-        "Premium's confirmed-unchanged status. Vital Sync's own wearables status "
-        "was not independently re-grepped this run — carried from the last export.",
-        "#7 (Real training depth, renumbered from #7) — UNCHANGED bucket, but "
-        "RE-VERIFIED this run via direct schema read rather than carried forward — "
-        "workouts table confirmed still four fields, no sets/reps/weight.",
+        "#1, #2, #3, #4 (BUILD NOW) — UNCHANGED IN RANK, RE-VERIFIED for a third "
+        "consecutive run, but NEWLY FLAGGED PROVISIONAL this week: the GitHub "
+        "mirror (0435f9ea, still unmoved) crossed this workflow's 2+-consecutive-"
+        "unchanged-runs threshold and is reclassified STALE this run (see Product "
+        "Source Freshness). The actual squads.ts, profile.ts, schema files, a "
+        "full-source 'directive' grep, and getTomorrowDirective()'s implementation "
+        "were all freshly re-read this run — every finding holds exactly as "
+        "before. The bucket assignment (BUILD NOW) doesn't change, but every one "
+        "of these four now carries an explicit provisional caveat: the mirror's "
+        "standing as a current proxy for the real product is unconfirmed after 3 "
+        "weeks frozen (note: a run was skipped on 2026-09-21).",
+        "#5 (Connect Apple Health as first wearable) — MOVED UP: BUILD NEXT/HIGH "
+        "-> BUILD NOW/HIGH. Driven by recovered, independently re-verified "
+        "evidence: Apple's 2026-09-09 Health app redesign (free Readiness score "
+        "+ AI Insights tab, no subscription, ships to every iPhone/Watch user) "
+        "plus reported Fitness+ layoffs the same period. This finding originated "
+        "in PR #2's 2026-09-21 research and was recovered and independently "
+        "re-verified this run after a repo-owner correction (see this brief's "
+        "opening note) — it is not new research from this run alone. Cora's "
+        "strength+nutrition expansion and Strava's $2.2B funding round add "
+        "further, separately-found urgency. Vital Sync's own wearables status "
+        "was not independently re-grepped this run — carried from the last "
+        "export.",
+        "#6 (Surface + widen AI coach context) — STILL BUILD NEXT/MEDIUM, evidence "
+        "sharpened: Workout Quest and FitCraft both shipped their own 'AI coach' "
+        "features this run (genuineness UNVERIFIED), meaning the bare claim of "
+        "having an AI coach is converging toward parity — raises the value of "
+        "proving out Vital Sync's real GPT-4o-mini integration's context depth.",
+        "#7 (Real training depth) — UNCHANGED bucket, RE-VERIFIED again this run "
+        "via direct schema read (still four fields, no sets/reps/weight), and now "
+        "PROVISIONAL for the same mirror-staleness reason as #1-4. Competitive gap "
+        "widened, not just held steady: Strava shipped a new workout log and "
+        "muscle-map feature this run in exactly this territory.",
         "#8 (Fatigue-aware streak mechanic, EXPERIMENT) — UNCHANGED bucket, "
-        "evidence sharpened: Gentler Streak (found this run) now ships fatigue/"
-        "overreach-aware Morning Check-In notifications, the closest real-world "
-        "precedent found yet for this mechanic. Still gated on the Directive Engine "
-        "(#3) and wearables (#5) landing first — the new evidence strengthens the "
-        "market case, not the internal readiness, so the bucket doesn't move.",
+        "evidence extended: Gentler Streak's iOS 27 update (Siri App Intents, "
+        "On-Screen Awareness) layers onto its already-tracked Morning Check-In "
+        "notifications, still the closest real-world precedent for this mechanic. "
+        "Still gated on the Directive Engine (#3) and wearables (#5) landing "
+        "first — new evidence strengthens the market case, not the internal "
+        "readiness, so the bucket doesn't move.",
         "#11 (Track Bitletics, MONITOR) — NOT RE-RANKED, still LOW confidence. "
-        "RE-CHECKED this week: still pre-launch, still free-at-launch/no-"
-        "subscription-required as previously described, and its Q2/Q3 2026 window "
-        "is now roughly two weeks from expiring (Q3 ends Sept 30) with no ship date "
-        "found. Next run should explicitly check whether it shipped or the window "
-        "lapsed.",
+        "RE-CHECKED this week: still pre-launch, identical language across its own "
+        "pages, no evidence of a launch. Its Q2/Q3 2026 window now expires within "
+        "2 days of this report (Q3 ends Sept 30) with nothing shipped. Next run "
+        "should explicitly check whether it shipped or the window lapsed.",
         "#12 (Google Health Premium, MONITOR) — NOT RE-RANKED; RE-CHECKED this "
         "week, confirmed unchanged, no new expansion found. Stays MONITOR/MEDIUM — "
         "sharpens the case for #5, not a build target itself.",
-        "#13 (Track RazFit, MONITOR) — NOT RE-RANKED. RE-CHECKED this week: no "
-        "change found, pricing still UNKNOWN beyond the 3-day trial.",
-        "#14 (Track Gentler Streak, MONITOR) — NEW THIS WEEK. Found via this run's "
-        "competitor refresh (previously mentioned only in passing under #8, never "
-        "its own tracked line). Added at MEDIUM confidence — its pricing and "
-        "feature set are well-documented, but it isn't a gamification competitor to "
-        "Vital Sync, so it's tracked as market validation for #8, not a threat in "
-        "its own right.",
+        "#13 (Track RazFit, MONITOR) — CONFIDENCE RAISED LOW -> MEDIUM: its "
+        "ongoing subscription price is now CONFIRMED this run ($2.99/wk or "
+        "$29.99/yr, resolving the prior UNKNOWN), and its two AI coach personas "
+        "are now named (Orion, Lyss). Bucket unchanged (MONITOR) — scale/traction "
+        "still unconfirmed.",
+        "#14 (Track Gentler Streak, MONITOR) — NOT RE-RANKED, evidence extended: "
+        "its iOS 27 Siri-integration update (found this run) builds on last "
+        "brief's Morning Check-In finding. Still MONITOR/MEDIUM — tracked as "
+        "market validation for #8, not a threat in its own right.",
         "#9, #10 (nutrition goals, voice logging) — UNCHANGED, not reverified this "
         "run.",
-        "NO ITEMS RESOLVED OR REMOVED THIS RUN — a quieter week than Brief 07's "
-        "major reconciliation. The backlog's shape is stable; what changed is which "
-        "items are freshly re-verified (#1-3, #4, #7) versus carried forward "
-        "unchecked (#6, #9, #10), and that distinction is what this brief's "
-        "Product State Delta and this list are for.",
+        "NO ITEMS RESOLVED OR REMOVED THIS RUN, but ONE MOVED BUCKETS: #5 "
+        "(BUILD NEXT -> BUILD NOW, see above). What changed most this week is "
+        "the freshness classification itself (github_mirror: CURRENT_VERIFIED "
+        "-> STALE, corrected same-day to a 3rd-consecutive-check count after a "
+        "repo-owner correction — see this brief's opening note) and the "
+        "recovery of PR #2's Apple Health finding, rather than any change in "
+        "Vital Sync's own product-state findings — every product-state-"
+        "dependent item (#1-4, #7, #8, gap type A/C rows) now explicitly "
+        "carries a provisional caveat.",
     ],
     "sources": [
+        "CORRECTION NOTE (2026-09-28, same day as this brief's initial publish): "
+        "a repo-owner PR comment identified that this brief originally "
+        "mischaracterized 2026-09-21 as a missed automation run and undercounted "
+        "the GitHub mirror's unchanged streak at 2 checks instead of 3. Verified "
+        "against the actual closed PR #2 (its creation timestamp, base commit, "
+        "and body) before accepting the correction — the 09-21 run did fire and "
+        "reached the same STALE conclusion independently, but was never merged "
+        "into main. This also recovered PR #2's Apple Health finding (below), "
+        "independently re-verified via WebSearch rather than taken on the PR's "
+        "word alone.",
+        "Apple Health redesign — independently re-verified via WebSearch this "
+        "run (not accepted from PR #2's summary alone): apple.com/newsroom "
+        "(2026-09-09 announcement), TechCrunch (2026-09-09 coverage of the "
+        "Readiness/Health-Age redesign), MacRumors and 9to5Mac (Fitness+ layoffs "
+        "coverage, ~2026-09-20/22).",
         "github.com/faristjohar04-sketch/Vital-Sync — RE-CHECKED this run via "
         "`git log`/`git diff` against both the locally stored commit "
         "(0435f9ea79a871cd1578e2dc22e8e3055bebc50e) and a fresh `origin/main` "
-        "fetch — both empty, commit confirmed unchanged since Brief 07 "
-        "(2026-09-07). This is the 1st confirmed-unchanged check since that "
-        "advance, not yet the 2+-consecutive-runs threshold for reclassifying the "
-        "mirror STALE.",
+        "fetch — both empty, and a fresh clone independently confirmed the same "
+        "HEAD and commit date. This is the 3rd confirmed-unchanged check since "
+        "Brief 07's 2026-09-07 advance (2026-09-14, 2026-09-21 via PR #2, and "
+        "2026-09-28), which clears the 2+-consecutive-runs threshold — the "
+        "mirror is reclassified STALE this run. CORRECTED: an earlier version "
+        "of this brief wrongly claimed no run fired on 2026-09-21; a run did "
+        "fire and independently reached this same conclusion a week earlier "
+        "(PR #2), it just was never merged into main.",
         "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea — direct source "
         "RE-READS performed this run (same commit, fresh read, not assumed "
-        "unchanged from Brief 07): artifacts/api-server/src/routes/profile.ts (user "
+        "unchanged from Brief 08): artifacts/api-server/src/routes/profile.ts (user "
         "scoping), artifacts/api-server/src/routes/squads.ts (real activity + "
-        "authorization), lib/db/src/schema/workouts.ts and profile.ts (training "
+        "authorization, including a full grep for getGhostCompletions/ghost/"
+        "seededRand), lib/db/src/schema/workouts.ts and profile.ts (training "
         "depth + nullable ownership columns), a full-source grep for \"directive\" "
-        "(Directive Engine absence), and artifacts/vital-sync/src/pages/landing.tsx "
-        "(marketing/product mismatch — the re-check flagged last week, now done)",
+        "plus a direct read of getTomorrowDirective()'s implementation in both "
+        "dashboard.tsx and the mobile app (Directive Engine absence), and "
+        "artifacts/vital-sync/src/pages/landing.tsx (marketing/product mismatch)",
         "vital_sync_current_product_state.json — a structured audit export "
         "provided by the user on 2026-09-07/08, cross-checked against the commit "
-        "above in Brief 07's run. No newer export was provided this run; areas "
-        "resting solely on it are marked UNCHANGED — NOT REVERIFIED in this brief's "
-        "Current State table, not re-asserted as freshly confirmed.",
+        "above in Brief 07's run. No newer export has been provided in the three "
+        "runs since; areas resting solely on it are marked UNCHANGED — NOT "
+        "REVERIFIED in this brief's Current State table, now three weeks old.",
         "https://vitalsyncify.com — attempted directly this run (WebFetch): "
-        "EGRESS_BLOCKED, the 6th consecutive week this has failed from this "
+        "EGRESS_BLOCKED, the 7th consecutive check this has failed from this "
         "sandbox. Logged as SOURCE_UNAVAILABLE for the marketing-mismatch check, "
         "not treated as evidence of 'no marketing changes.'",
-        "WebSearch (this run, competitor/market refresh — first refresh in two "
-        "cycles): official/store pages for Vora, Cora, FitCraft; Bitletics' own "
-        "blog and app-store listings; RazFit's own comparison pages; Google/"
-        "TechCrunch/9to5Google/MobiHealthNews coverage of Google Health Premium; "
-        "Gentler Streak's App Store listing, review site, and blog; Crunchbase News "
-        "H1-2026 fitness-funding sector snapshot (WHOOP Series G, sector totals); "
-        "Athletech News (MyFitnessPal/Cal AI acquisition); Lifecycle Architect, "
-        "RetentionCheck, and a Fitness Refined 2026 churn/retention report set "
-        "(activation, Day-30 retention, churn-rate benchmarks); Reddit-sentiment "
-        "sourced via search (gamification fatigue, subscription-paywall complaints) "
-        "— direct WebFetch to competitor domains remains typically EGRESS_BLOCKED "
-        "in this sandbox, so WebSearch snippets were used throughout, as in prior "
-        "briefs.",
-        "Workout Quest, Habitica, Trainera/Bevel/NATE — surface-level watch only, "
-        "NOT re-checked this run; carried forward unchanged from Brief 07.",
+        "WebSearch (this run, competitor/market refresh): official/store pages "
+        "and recent coverage for Vora, Cora (corahealth.app blog/research report), "
+        "FitCraft, Workout Quest, Bitletics' own blog and app-store listings, "
+        "RazFit's App Store listing and comparison pages; Google/9to5Google/"
+        "MobiHealthNews/store.google.com coverage of Google Health Premium; "
+        "Gentler Streak's App Store listing and a 9to5Mac 2026-09-14 iOS 27 "
+        "update article; Crunchbase News H1-2026 fitness-funding sector snapshot "
+        "and a Strava-specific Crunchbase News funding article (WHOOP Series G, "
+        "Strava's $2.2B valuation round); Athletech News (MyFitnessPal/Cal AI "
+        "acquisition, carried forward); WHOOP press-center and Inc. coverage of "
+        "the Strava/WHOOP strength-training integration — direct WebFetch to "
+        "competitor domains remains typically EGRESS_BLOCKED in this sandbox, so "
+        "WebSearch snippets were used throughout, as in prior briefs.",
+        "Habitica, Trainera/Bevel/NATE — surface-level watch only, NOT re-checked "
+        "this run; carried forward unchanged from Brief 07.",
+        "Customer pain/praise clusters and churn/retention benchmarks were NOT "
+        "independently re-researched this run (effort focused on the freshness "
+        "gate and the competitor feature refresh above) — the clusters and figures "
+        "from Brief 08 are carried forward unchanged, not re-derived from memory.",
         "JMIR mHealth 2022 meta-analysis; 36-RCT gamification meta-analysis "
         "(10,079 participants); Oct 2025 British Journal of Health Psychology "
         "(app-set unreachable goals drive churn) — carried as background, not "
