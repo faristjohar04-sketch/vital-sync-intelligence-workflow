@@ -284,6 +284,29 @@ job genuinely can run unattended via bare `cron`, the same way Workflow
 
 ## Known constraints / gaps
 
+- **(2026-10-15, FIXED same day)** Two scheduled runs (Sep 28, Oct 12) took
+  43min-3hr instead of the normal ~190s — confirmed via
+  `tmp/marketing_intelligence_launchd.log` timestamps that the multi-hour
+  gap landed right at the very start of the run, before anything else had
+  even logged. Root cause: `product_intelligence.find_latest_report()`
+  used `Path.rglob()` (recursive) against `~/Desktop` and `~/Downloads` as
+  fallback search locations — both iCloud Desktop & Documents-synced on
+  this machine. A cron-spawned (non-interactive) process walking into an
+  iCloud-synced folder tree can stall waiting on iCloud to materialize
+  on-demand files, the same class of issue as the original Downloads-
+  folder TCC block in `project_launchd_spawn_block` — just a hang instead
+  of a hard `PermissionError` this time, which is why it took two
+  multi-hour occurrences (instead of an immediate crash) to notice. Fixed
+  by switching those two fallback directories to a non-recursive `glob()`
+  — the report files are never nested there anyway — and keeping `rglob`
+  only for the canonical `reports/vital_sync/` archive (not iCloud-synced,
+  genuinely nested by year/month). Also found: Oct 5's run is simply
+  missing from the log — no entry at all, success or failure — not yet
+  explained; worth another look if it recurs. Also worth noting as a
+  positive, not a bug: the Oct 15 verification run reclassified the
+  "Alignment Engine" feature from LIVE down to PARTIAL for one campaign —
+  the system correctly responding to the Product Freshness Gate's updated
+  state, exactly as designed.
 - **(2026-09-07, FIXED same day)** Every scheduled firing since the
   2026-08-22 cron migration had actually been failing silently: `tools/
   vital_sync_marketing.py --trigger` required `{Manual, Scheduled}`

@@ -34,9 +34,19 @@ FILENAME_RE = re.compile(r"Vital_Sync_Weekly_Intelligence_(\d{4}-\d{2}-\d{2})\.p
 
 SEARCH_DIRS = [
     REPO_ROOT / "reports" / "vital_sync",  # canonical, recursive
-    Path.home() / "Desktop",
-    Path.home() / "Downloads",
 ]
+# Desktop/Downloads are convenience fallbacks only (a report saved there and
+# not yet archived) — searched non-recursively (see find_latest_report).
+# Both are iCloud Desktop & Documents-synced on this machine (confirmed
+# 2026-10-15); an *rglob* into them was traced as the cause of two
+# scheduled runs taking 43min/3hr instead of ~190s (log timestamps showed
+# the multi-hour gap landing right at this search, before anything else had
+# even run) — a cron-spawned process waiting on iCloud to materialize
+# on-demand files one subfolder at a time, the same class of issue as the
+# Downloads-folder TCC block in project_launchd_spawn_block. The canonical
+# reports/vital_sync/ archive has had every report in every case checked so
+# far; these two are belt-and-suspenders, not load-bearing.
+FALLBACK_SEARCH_DIRS = [Path.home() / "Desktop", Path.home() / "Downloads"]
 
 # Priority-2 source in Workflow 02's source hierarchy (product-reality
 # refresh spec, section 3): Workflow 01's own structured, lifecycle-aware
@@ -81,21 +91,28 @@ def find_latest_report() -> tuple:
     report" / "use report date, not filesystem time") — or (None, None) if
     none found. Searches the repo's canonical archive first, then common
     Desktop/Downloads drop locations."""
-    candidates = []
     seen_dates = {}
+
+    def _consider(path):
+        match = FILENAME_RE.search(path.name)
+        if not match:
+            return
+        report_date = datetime.strptime(match.group(1), "%Y-%m-%d").date()
+        # Prefer the repo's own archive copy if the same date shows up in
+        # multiple locations (Desktop/Downloads are just convenience
+        # copies of the same report).
+        if report_date not in seen_dates or "reports/vital_sync" in str(path):
+            seen_dates[report_date] = path
+
     for base in SEARCH_DIRS:
-        if not base.exists():
-            continue
-        for path in base.rglob("Vital_Sync_Weekly_Intelligence_*.pdf"):
-            match = FILENAME_RE.search(path.name)
-            if not match:
-                continue
-            report_date = datetime.strptime(match.group(1), "%Y-%m-%d").date()
-            # Prefer the repo's own archive copy if the same date shows up
-            # in multiple locations (Desktop/Downloads are just convenience
-            # copies of the same report).
-            if report_date not in seen_dates or "reports/vital_sync" in str(path):
-                seen_dates[report_date] = path
+        if base.exists():
+            for path in base.rglob("Vital_Sync_Weekly_Intelligence_*.pdf"):
+                _consider(path)
+    for base in FALLBACK_SEARCH_DIRS:
+        if base.exists():
+            for path in base.glob("Vital_Sync_Weekly_Intelligence_*.pdf"):  # non-recursive — see FALLBACK_SEARCH_DIRS
+                _consider(path)
+
     if not seen_dates:
         return None, None
     latest_date = max(seen_dates)
