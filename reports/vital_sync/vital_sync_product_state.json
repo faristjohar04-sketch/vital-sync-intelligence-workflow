@@ -34,7 +34,6 @@
   "overall_freshness": "STALE",
   "overall_confidence": "MEDIUM",
   "warning": "WARNING: CURRENT VITAL SYNC PRODUCT STATE COULD NOT BE VERIFIED. PRODUCT BUILD RECOMMENDATIONS ARE PROVISIONAL.",
-
   "areas": {
     "user_scoping": {
       "status": "PARTIAL",
@@ -146,12 +145,12 @@
     },
     "wearables": {
       "status": "MISSING",
-      "evidence": "No HealthKit/Apple Health/Health Connect/Garmin/WHOOP/Oura/Fitbit/Strava integration found as of last check. Not reverified this run (no new export, no targeted grep run against this specific commit this week).",
-      "source": "vital_sync_current_product_state.json export (2026-09-07), consistent with prior briefs",
-      "source_date": "2026-09-07",
-      "freshness": "UNCHANGED — NOT REVERIFIED",
+      "evidence": "RECOVERED during 2026-10-22 git-state reconciliation (see automation_log.jsonl): the 2026-09-21 run (PR #2, never merged due to the push-access outage) ran a fresh full-source, case-insensitive grep across the entire Vital-Sync repo for HealthKit/Health Connect/Garmin/WHOOP/Oura/Fitbit/Apple Health/Strava at commit 0435f9ea — zero matches. The commit has not changed since (confirmed unchanged through the 2026-09-28 and 2026-10-05 runs this reconciliation also recovers), so this remains the most rigorous verification on file for this specific area and supersedes the weaker 2026-09-07-export-sourced evidence this field previously carried forward.",
+      "source": "github.com/faristjohar04-sketch/Vital-Sync @ 0435f9ea (full-source grep for wearable-integration keywords, run 2026-09-21, recovered from PR #2 on 2026-10-22)",
+      "source_date": "2026-09-21",
+      "freshness": "UNCHANGED — VERIFIED (2026-09-21 direct grep; commit confirmed unchanged through 2026-10-05)",
       "confidence": "HIGH",
-      "lifecycle": "ACTIVE — still the top data-supply gap for Alignment/Recovery."
+      "lifecycle": "ACTIVE — still the top data-supply gap for Alignment/Recovery. The 2026-09-21 run flagged rising competitive urgency on this gap (see Product Opportunities in that run's report) — not independently re-assessed by the 2026-09-28/10-05 runs, carried here as a pointer, not re-asserted as this run's own finding."
     },
     "database_integrity": {
       "status": "BROKEN",
@@ -199,7 +198,6 @@
       "lifecycle": "ACTIVE — unchanged in substance for a fourth consecutive check; whether the deployed site or Replit source have moved beyond this frozen mirror remains genuinely unknown."
     }
   },
-
   "resolved_findings": [
     {
       "area": "alignment",
